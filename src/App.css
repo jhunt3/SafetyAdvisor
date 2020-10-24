@@ -1,0 +1,19 @@
+/* Top-level shared styles */
+/* You can keep styles that are shared by different components here */
+
+html {
+  height: 100%;
+}
+
+body {
+  color: darkslategrey;
+  background-color: rgb(66, 60, 60);
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.map {
+  width: 65%;
+  height: 100%;
+  float: right;
+
+}
