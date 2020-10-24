@@ -11,7 +11,12 @@ body {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
-.map {
+.fullMap {
+  width: 100%;
+  height: 100%;
+}
+
+.sideMap {
   width: 65%;
   height: 100%;
   float: right;
