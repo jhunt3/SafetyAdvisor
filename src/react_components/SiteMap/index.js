@@ -7,9 +7,6 @@ const mapStyle = {
 };
 
 class SiteMap extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   generateMarkers() {
     return this.props.locations.map((loc) => {
@@ -19,7 +16,7 @@ class SiteMap extends React.Component {
                        lat: loc.lat,
                        lng: loc.lng
                      }}
-                     onClick={() => {this.props.openLocPage(loc.id)}}
+                     onClick={() => {this.props.openLocPage(loc.id);}}
               />
     });
   }

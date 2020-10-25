@@ -2,26 +2,26 @@
 import React from 'react';
 
 import './App.css';
+import LocationData from './LocationData';
 import SiteMap from './react_components/SiteMap';
-
-const locations = [
-  // Sidney Smith
-  {id: 0, lat: 43.663098, lng: -79.398568},
-  // Bookstore
-  {id: 1, lat: 43.659213, lng: -79.396960},
-  // Isabel Bader
-  {id: 2, lat: 43.667246, lng: -79.392524}
-]
+import LocationPage from './react_components/LocationPage';
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       mapClass: "fullMap",
-      currLocId: -1
+      currLocId: -1,
+      locData: new LocationData()
     };
+    // Adds hardcoded location data
+    this.state.locData.addLocation("Sidney Smith", "Lecture Hall", 43.663098, -79.398568);
+    this.state.locData.addLocation("UofT Bookstore", "Store", 43.659213, -79.396960);
+    this.state.locData.addLocation("Isabel Bader Theatre", "Theatre", 43.667246, -79.392524);
+
     this.openLocPage = this.openLocPage.bind(this);
   }
+  // Marker Handler
   openLocPage(id) {
     const otherSetting = (this.state.mapClass === "fullMap") ? "sideMap" : "fullMap";
     if ((this.state.currLocId === -1) || (this.state.currLocId === id)) {
@@ -29,14 +29,26 @@ export class App extends React.Component {
     } else {
       this.setState({currLocId: id});
     }
-    console.log(this.state);
   }
+
+  // We might want to use routers instead; this works for now.
+  renderSidePage() {
+    if (this.state.mapClass === "sideMap") {
+      return (<div className="sidePage">
+        <LocationPage locData={this.state.locData.getLoc(this.state.currLocId)}/>
+      </div>);
+    } else {
+      return;
+    }
+  }
+
   render() {
     return (
       <div>
-        <div className={this.state.mapClass}>
-          <SiteMap locations={locations} openLocPage={this.openLocPage}/>
-        </div>
+          {this.renderSidePage()}
+          <div className={this.state.mapClass}>
+          <SiteMap locations={this.state.locData.getGeoLocData()} openLocPage={this.openLocPage}/>
+          </div>
       </div>
       
     );

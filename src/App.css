@@ -1,14 +1,15 @@
 /* Top-level shared styles */
 /* You can keep styles that are shared by different components here */
+@import url("//fonts.googleapis.com/css?family=Raleway");
 
 html {
   height: 100%;
 }
 
 body {
-  color: darkslategrey;
-  background-color: rgb(66, 60, 60);
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  color: black;
+  background-color: #e0e0e0;;
+  font-family: "Raleway", Helvetica, sans-serif;
 }
 
 .fullMap {
@@ -20,5 +21,10 @@ body {
   width: 65%;
   height: 100%;
   float: right;
+}
 
+.sidePage {
+  width: 35%;
+  height: 100%;
+  float: left;
 }

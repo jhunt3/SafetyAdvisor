@@ -1,0 +1,42 @@
+
+.body {
+  position: absolute;
+  width: 35%;
+  height: 100%;
+}
+.locImage {
+  display: block;
+  position: relative;
+  top: 0px;
+  width: 100%;
+  height: 45%;
+}
+.infoContainer {
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-bottom: 1px black solid; 
+}
+
+.titleContainer {
+  width: 50%;
+  display:inline-block;
+  position: relative;
+}
+h1 {
+  font-weight: bolder;
+}
+h3{
+  color: #464545
+}
+.ratingsContainer {
+  width: 50%;
+  display:inline-block;
+  position: relative;
+  text-align: right;
+}
+.reviewsContainer {
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+}
