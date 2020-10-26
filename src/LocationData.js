@@ -9,11 +9,8 @@ class LocationData {
             id: this.locations.length,
             name: name,
             venueType: venueType,
-            geoLoc: {
-                id: this.locations.length,
-                lat: lat,
-                lng: lng
-            },
+            lat: lat,
+            lng: lng,
             avgRating: 2.5,
             numRatings: 0,
             tags: tags.map((tagName) => {return {name: tagName, val: 0}}),
@@ -42,8 +39,19 @@ class LocationData {
         return this.locations[id];
     }
 
+    getGeoLoc(id) {
+        const target = this.locations[id];
+        return {
+            name: target.name,
+            id: id,
+            lat: target.lat,
+            lng: target.lng,
+            tags: target.tags
+        };
+    }
+
     getGeoLocData() {
-        return this.locations.map((loc) => {return loc.geoLoc});
+        return this.locations.map((loc) => {return this.getGeoLoc(loc.id)});
     }
 }
 
