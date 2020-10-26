@@ -17,7 +17,6 @@
   margin-right: 10px;
   border-bottom: 1px black solid; 
 }
-
 .titleContainer {
   width: 50%;
   display:inline-block;
@@ -34,6 +33,8 @@ h3{
   display:inline-block;
   position: relative;
   text-align: right;
+}
+.tagContainer {
 }
 .reviewsContainer {
   position: relative;

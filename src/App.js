@@ -6,6 +6,9 @@ import LocationData from './LocationData';
 import SiteMap from './react_components/SiteMap';
 import LocationPage from './react_components/LocationPage';
 
+const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Checks Temperature",
+"Patio"];
+
 export class App extends React.Component {
   constructor(props) {
     super(props);
@@ -15,9 +18,13 @@ export class App extends React.Component {
       locData: new LocationData()
     };
     // Adds hardcoded location data
-    this.state.locData.addLocation("Sidney Smith", "Lecture Hall", 43.663098, -79.398568);
-    this.state.locData.addLocation("UofT Bookstore", "Store", 43.659213, -79.396960);
-    this.state.locData.addLocation("Isabel Bader Theatre", "Theatre", 43.667246, -79.392524);
+    this.state.locData.addLocation("Sidney Smith", "Lecture Hall", 43.663098, -79.398568, defaultTags);
+    this.state.locData.addLocation("UofT Bookstore", "Store", 43.659213, -79.396960, defaultTags);
+    this.state.locData.addLocation("Isabel Bader Theatre", "Theatre", 43.667246, -79.392524, defaultTags);
+
+    this.state.locData.updateTags(0, [{name: defaultTags[4], val: 60}, {name: defaultTags[1], val: 95}, {name: defaultTags[0], val: 20}]);
+    this.state.locData.updateTags(1, [{name: defaultTags[2], val: 42.5}, {name: defaultTags[3], val: 0.5}]);
+    this.state.locData.updateTags(2, [{name: defaultTags[5], val: 100}]);
 
     this.openLocPage = this.openLocPage.bind(this);
   }

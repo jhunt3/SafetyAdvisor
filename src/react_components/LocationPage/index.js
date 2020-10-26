@@ -1,9 +1,20 @@
 import React from 'react';
 import StarRatings from 'react-star-ratings';
 
+import TagIndicator from './../TagIndicator';
+
 import "./styles.css";
 
 class LocationPage extends React.Component {
+
+  generateTagIndicators(tags) {
+    return tags.map((tag) => {return <TagIndicator 
+                                        name={tag.name}
+                                        val={tag.val}
+                                      />
+    });
+  }
+
   render() {
     return (
       <div className="body">
@@ -15,10 +26,13 @@ class LocationPage extends React.Component {
           </div>
           <div className="ratingsContainer">
             <StarRatings rating={this.props.locData.avgRating}
+                        starRatedColor="grey"
+                        starEmptyColor="darkgrey"
                         starDimension='30px'
                         starSpacing='10px'/>
             <h3>({this.props.locData.numRatings} Ratings)</h3>
           </div>
+          {this.generateTagIndicators(this.props.locData.tags.filter((tag) => {return tag.val !== 0}))}
         </div>
         <div className="reviewsContainer">
           <h2>Ratings</h2>
