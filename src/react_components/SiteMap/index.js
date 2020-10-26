@@ -93,7 +93,7 @@ class SiteMap extends React.Component {
           <InfoWindow marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
                     style={infoWindowStyle}>
-              <h1>{this.state.activePlace.name}</h1>
+              <h1 className="name">{this.state.activePlace.name}</h1>
               {this.generateTagIndicators(this.state.activePlace)}
           </InfoWindow>
         </Map>
