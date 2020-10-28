@@ -15,7 +15,7 @@
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
-  border-bottom: 1px black solid; 
+  border-bottom: 1px black solid;
 }
 .titleContainer {
   width: 50%;
@@ -34,8 +34,36 @@ h3{
   position: relative;
   text-align: right;
 }
+
 .reviewsContainer {
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.profileIconContainer {
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.profileIcon {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+.usernameContainer {
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.reviewContainer {
+    float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
