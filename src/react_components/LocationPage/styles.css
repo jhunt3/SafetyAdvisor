@@ -28,7 +28,7 @@ h1 {
 h3{
   color: #464545
 }
-.ratingsContainer {
+.avgRatingsContainer {
   width: 50%;
   display:inline-block;
   position: relative;
@@ -43,6 +43,7 @@ h3{
 
 .profileIconContainer {
 	float: left;
+    width: 5%;
 	margin-top: 10px;
 	margin-left: 10px;
 	margin-right: 10px;
@@ -56,14 +57,20 @@ h3{
 
 .usernameContainer {
 	float: left;
+    width: 60%;
 	margin-top: 10px;
 	margin-left: 10px;
 	margin-right: 10px;
+}
+
+.reviewRatingContainer {
+  float: left;
+  width: 20%;
 }
 
 .reviewContainer {
     float: left;
 	margin-top: 10px;
 	margin-left: 10px;
-	margin-right: 10px;
+	width:90%;
 }

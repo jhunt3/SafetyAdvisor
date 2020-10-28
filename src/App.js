@@ -26,7 +26,8 @@ export class App extends React.Component {
     this.state.locData.updateTags(1, [{name: defaultTags[2], val: 42.5}, {name: defaultTags[3], val: 0.5}]);
     this.state.locData.updateTags(2, [{name: defaultTags[5], val: 100}]);
 
-    this.state.locData.addReview(0, "John Doe", 4.0, "Lots of hand sanitizer on hand!")
+    this.state.locData.addReview(0, "johnsmith", 4.0, "Lots of hand sanitizer on hand!")
+    this.state.locData.addReview(0, "janedoe", 1.0, "Washrooms infrequently cleaned.")
 
     this.openLocPage = this.openLocPage.bind(this);
   }

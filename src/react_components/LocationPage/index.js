@@ -24,7 +24,7 @@ class LocationPage extends React.Component {
             <h1>{this.props.locData.name}</h1>
             <h3>{this.props.locData.venueType}</h3>
           </div>
-          <div className="ratingsContainer">
+          <div className="avgRatingsContainer">
             <StarRatings rating={this.props.locData.avgRating}
                         starRatedColor="grey"
                         starEmptyColor="darkgrey"
@@ -32,7 +32,8 @@ class LocationPage extends React.Component {
                         starSpacing='10px'/>
             <h3>({this.props.locData.numRatings} Ratings)</h3>
           </div>
-          {this.generateTagIndicators(this.props.locData.tags.filter((tag) => {return tag.val !== 0}))}
+          {this.generateTagIndicators(this.props.locData.tags.filter((tag) =>
+              {return tag.val !== 0}))}
         </div>
         <div className="reviewsContainer">
         <h2>Ratings</h2>
@@ -44,7 +45,7 @@ class LocationPage extends React.Component {
                 <div className="usernameContainer">
                     <strong>{review.username}</strong>
                 </div>
-                <div className="ratingsContainer">
+                <div className="reviewRatingContainer">
                     <StarRatings rating={review.rating}
                         starRatedColor="grey"
                         starEmptyColor="darkgrey"
