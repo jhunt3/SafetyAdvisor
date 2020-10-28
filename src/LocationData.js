@@ -4,7 +4,7 @@ class LocationData {
         this.locations = [];
     }
 
-    addLocation(name, venueType, lat, lng, tags) { 
+    addLocation(name, venueType, lat, lng, tags) {
         this.locations.push({
             id: this.locations.length,
             name: name,
@@ -14,11 +14,23 @@ class LocationData {
             avgRating: 2.5,
             numRatings: 0,
             tags: tags.map((tagName) => {return {name: tagName, val: 0}}),
-            imagePath:`${process.env.PUBLIC_URL}/assets/images/venue_${this.locations.length}.jpg`
+            imagePath:`${process.env.PUBLIC_URL}/assets/images/venue_${this.locations.length}.jpg`,
+            reviews: []
         });
     };
 
-    updateTagVal(id, tagName ,newVal) {
+    addReview(id, username, rating, review){
+        this.locations[id].reviews.push({
+            username: username,
+            rating: rating,
+            imagePath: `${process.env.PUBLIC_URL}/assets/images/profile.png`,
+            review: review
+        })
+        this.locations.avgRating = (this.locations.avgRating * this.locations.numRatings + rating ) / (this.locations.numRatings + 1)
+        this.locations.numRatings = this.locations.numRatings + 1
+    }
+
+    updateTagVal(id, tagName, newVal) {
         const ind = this.locations[id].tags.findIndex((val) => {return val.name === tagName});
         if (ind !== -1) {
             this.locations[id].tags[ind].val = newVal;
