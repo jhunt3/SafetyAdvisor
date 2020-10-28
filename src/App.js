@@ -26,6 +26,8 @@ export class App extends React.Component {
     this.state.locData.updateTags(1, [{name: defaultTags[2], val: 42.5}, {name: defaultTags[3], val: 0.5}]);
     this.state.locData.updateTags(2, [{name: defaultTags[5], val: 100}]);
 
+    this.state.locData.addReview(0, "John Doe", 4.0, "Lots of hand sanitizer on hand!")
+
     this.openLocPage = this.openLocPage.bind(this);
   }
   // Marker Handler
@@ -57,11 +59,10 @@ export class App extends React.Component {
           <SiteMap locations={this.state.locData.getGeoLocData()} openLocPage={this.openLocPage}/>
           </div>
       </div>
-      
+
     );
   }
 
 }
 
 export default App;
-
