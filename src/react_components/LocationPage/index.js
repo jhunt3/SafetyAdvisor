@@ -8,7 +8,7 @@ import "./styles.css";
 class LocationPage extends React.Component {
 
   generateTagIndicators(tags) {
-    return tags.map((tag) => {return <TagIndicator 
+    return tags.map((tag) => {return <TagIndicator
                                         name={tag.name}
                                         val={tag.val}
                                       />
@@ -35,7 +35,28 @@ class LocationPage extends React.Component {
           {this.generateTagIndicators(this.props.locData.tags.filter((tag) => {return tag.val !== 0}))}
         </div>
         <div className="reviewsContainer">
-          <h2>Ratings</h2>
+        <h2>Ratings</h2>
+        {this.props.locData.reviews.map(review => (
+            <div className="review">
+                <div className="profileIconContainer">
+                    <img className="profileIcon" src={review.imagePath}/>
+                </div>
+                <div className="usernameContainer">
+                    <strong>{review.username}</strong>
+                </div>
+                <div className="ratingsContainer">
+                    <StarRatings rating={review.rating}
+                        starRatedColor="grey"
+                        starEmptyColor="darkgrey"
+                        starDimension='20px'
+                        starSpacing='2px'/>
+                </div>
+                <div className="reviewContainer">
+                    {review.review}
+                </div>
+            </div>
+        ))}
+
         </div>
       </div>
     );
@@ -44,4 +65,3 @@ class LocationPage extends React.Component {
 }
 
 export default LocationPage;
-
