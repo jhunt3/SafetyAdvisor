@@ -36,14 +36,16 @@ class LocationPage extends React.Component {
               {return tag.val !== 0}))}
         </div>
         <div className="reviewsContainer">
-        <h2>Ratings</h2>
+        <h2>Reviews</h2>
         {this.props.locData.reviews.map(review => (
             <div className="review">
                 <div className="profileIconContainer">
                     <img className="profileIcon" src={review.imagePath}/>
                 </div>
                 <div className="usernameContainer">
-                    <strong>{review.username}</strong>
+                    <a className="username" onClick={() => {
+                      this.props.openUserPage(review.username);
+                    }}>{review.username}</a>
                 </div>
                 <div className="reviewRatingContainer">
                     <StarRatings rating={review.rating}
