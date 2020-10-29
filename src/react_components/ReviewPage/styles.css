@@ -35,17 +35,21 @@ h3{
   text-align: right;
 }
 
-.reviewsContainer {
+.comment {
+    text-align:center;
+
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
 }
 
-.profileIconContainer {
-	float: left;
+.commentText {
+ width: 300px;
+ height:200px;
 	margin-top: 10px;
 	margin-left: 10px;
 	margin-right: 10px;
+	line-height:10px;
 }
 
 .profileIcon {
@@ -54,11 +58,13 @@ h3{
 	border-radius: 50%;
 }
 
-.usernameContainer {
-	float: left;
-	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
+.backButton {
+position: absolute;
+	top: 10px;
+	left: 10px;
+    background-color: black;
+    color:white;
+
 }
 
 .reviewContainer {
@@ -66,8 +72,4 @@ h3{
 	margin-top: 10px;
 	margin-left: 10px;
 	margin-right: 10px;
-}
-#reviewLink:hover{
-    color: #95a5a6;
-    cursor: pointer;
 }

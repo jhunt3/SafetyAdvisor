@@ -1,0 +1,30 @@
+
+.tagContainer {
+  position: relative;
+  display:inline-block;
+  height: 30px;
+  background-color: darkgrey;
+  text-align: center;
+  margin: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+
+}
+.tagContainer:hover{
+    cursor:pointer;
+}
+.tagName {
+  top:6px;
+  position: relative;
+  z-index: 1;
+}
+.filled {
+  position: absolute;
+  top: 0px;
+  z-index: 0;
+  height: 100%;
+  background-color: grey;
+}
+input:checked + .tagName{
+    font-weight: bold;
+}

@@ -1,10 +1,11 @@
 /* New cleaned up version of App.js */
 import React from 'react';
-
+import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 import './App.css';
 import LocationData from './LocationData';
 import SiteMap from './react_components/SiteMap';
 import LocationPage from './react_components/LocationPage';
+import ReviewPage from './react_components/ReviewPage';
 
 const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Checks Temperature",
 "Patio"];
@@ -15,7 +16,8 @@ export class App extends React.Component {
     this.state = {
       mapClass: "fullMap",
       currLocId: -1,
-      locData: new LocationData()
+      locData: new LocationData(),
+      sidePageClass:"locPage"
     };
     // Adds hardcoded location data
     this.state.locData.addLocation("Sidney Smith", "Lecture Hall", 43.663098, -79.398568, defaultTags);
@@ -42,13 +44,30 @@ export class App extends React.Component {
 
   // We might want to use routers instead; this works for now.
   renderSidePage() {
+    console.log(this.state.sidePageClass);
     if (this.state.mapClass === "sideMap") {
-      return (<div className="sidePage">
-        <LocationPage locData={this.state.locData.getLoc(this.state.currLocId)}/>
-      </div>);
+        if(this.state.sidePageClass === "locPage"){
+          return (<div className="sidePage">
+            <LocationPage locData={this.state.locData.getLoc(this.state.currLocId)} leaveReview={this.leaveReview}/>
+          </div>);
+        }
+        if(this.state.sidePageClass === "leaveReviewPage"){
+          return (<div className="sidePage">
+            <ReviewPage locData={this.state.locData.getLoc(this.state.currLocId)} backToLocPage={this.backToLocPage}/>
+          </div>);
+        }
+
     } else {
       return;
     }
+  }
+  leaveReview = () => {
+    this.setState({sidePageClass: "leaveReviewPage"});
+
+  }
+  backToLocPage = () => {
+    this.setState({sidePageClass: "locPage"});
+
   }
 
   render() {

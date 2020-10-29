@@ -23,6 +23,7 @@ class LocationPage extends React.Component {
           <div className="titleContainer">
             <h1>{this.props.locData.name}</h1>
             <h3>{this.props.locData.venueType}</h3>
+            <p id="reviewLink" onClick={this.props.leaveReview}>Leave Review</p>
           </div>
           <div className="ratingsContainer">
             <StarRatings rating={this.props.locData.avgRating}
@@ -61,6 +62,7 @@ class LocationPage extends React.Component {
       </div>
     );
   }
+
 
 }
 
