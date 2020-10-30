@@ -21,22 +21,22 @@ class LocationPage extends React.Component {
         <img className="locImage" src={this.props.locData.imagePath}/>
         <div className="infoContainer">
           <div className="titleContainer">
-            <h1>{this.props.locData.name}</h1>
-            <h3>{this.props.locData.venueType}</h3>
+            <h1 id="nameHeader">{this.props.locData.name}</h1>
+            <h3 id="venueHeader">{this.props.locData.venueType}</h3>
           </div>
           <div className="avgRatingsContainer">
             <StarRatings rating={this.props.locData.avgRating}
                         starRatedColor="grey"
                         starEmptyColor="darkgrey"
-                        starDimension='30px'
-                        starSpacing='10px'/>
-            <h3>({this.props.locData.numRatings} Ratings)</h3>
+                        starDimension='2vw'
+                        starSpacing='0.2vw'/>
+            <h3 id="noRatings">({this.props.locData.numRatings} Ratings)</h3>
           </div>
           {this.generateTagIndicators(this.props.locData.tags.filter((tag) =>
               {return tag.val !== 0}))}
         </div>
         <div className="reviewsContainer">
-        <h2>Reviews</h2>
+        <h2 id="reviewHeader">Reviews</h2>
         {this.props.locData.reviews.map(review => (
             <div className="review">
                 <div className="profileIconContainer">
@@ -51,8 +51,8 @@ class LocationPage extends React.Component {
                     <StarRatings rating={review.rating}
                         starRatedColor="grey"
                         starEmptyColor="darkgrey"
-                        starDimension='20px'
-                        starSpacing='2px'/>
+                        starDimension='1.5vw'
+                        starSpacing='0.15vw'/>
                 </div>
                 <div className="reviewContainer">
                     {review.review}

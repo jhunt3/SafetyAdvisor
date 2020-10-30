@@ -3,6 +3,7 @@
   position: absolute;
   width: 35%;
   height: 100%;
+  overflow: auto;
 }
 .locImage {
   display: block;
@@ -22,11 +23,19 @@
   display:inline-block;
   position: relative;
 }
-h1 {
+#nameHeader {
+  font-size: 2vw;
   font-weight: bolder;
 }
-h3{
+#venueHeader{
+  font-size: 1.5vw;
   color: #464545
+}
+#noRatings {
+  font-size: 1vw;
+}
+#reviewHeader {
+  font-size: 2vw;;
 }
 .avgRatingsContainer {
   width: 50%;
@@ -34,49 +43,6 @@ h3{
   position: relative;
   text-align: right;
 }
-
-.reviewsContainer {
-  position: relative;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.profileIconContainer {
-	float: left;
-    width: 5%;
-	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
-}
-
-.profileIcon {
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-}
-
-.usernameContainer {
-	float: left;
-    width: 60%;
-	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
-}
-
-.username {
-    color: black;
-	text-decoration: none;
-    font-weight: bold;
-}
-
-.reviewRatingContainer {
-  float: left;
-  width: 20%;
-}
-
-.reviewContainer {
-    float: left;
-	margin-top: 10px;
-	margin-left: 10px;
-	width:90%;
+.reviews {
+  margin-top: 5px;
 }
