@@ -35,10 +35,11 @@ export class App extends React.Component {
     this.state.userData.addReview(0, 0, 4.0, "Lots of hand sanitizer on hand!")
     this.state.userData.addReview(0, 1, 1.0, "Washrooms infrequently cleaned.")
     this.state.locData.addReview(0, "johnsmith", 4.0, "Lots of hand sanitizer on hand!")
-    this.state.locData.addReview(0, "janedoe", 1.0, "Washrooms infrequently cleaned.")
+    this.state.locData.addReview(0, "janedoe", 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
 
     this.openLocPage = this.openLocPage.bind(this);
     this.openUserPage = this.openUserPage.bind(this);
+    this.closeSidePage = this.closeSidePage.bind(this);
   }
   // Marker Handler
   openLocPage(id) {
@@ -57,10 +58,12 @@ export class App extends React.Component {
     if (this.state.mapClass === "sideMap") {
         if (this.state.currUserId !== -1) {
             return (<div className="sidePage">
+              <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
               <UserPage locData={this.state.locData.locations} userData={this.state.userData.getUser(this.state.currUserId)}/>
             </div>);
         } else{
             return (<div className="sidePage">
+              <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
               <LocationPage locData={this.state.locData.getLoc(this.state.currLocId)} openUserPage={this.openUserPage}/>
             </div>);
         }
@@ -68,6 +71,10 @@ export class App extends React.Component {
     } else {
       return;
     }
+  }
+
+  closeSidePage() {
+    this.setState({currUserId: -1, mapClass: "fullMap", currLocId: -1});
   }
 
   render() {

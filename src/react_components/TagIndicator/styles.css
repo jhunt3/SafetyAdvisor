@@ -4,7 +4,7 @@
   display:inline-flex;
   background-color: darkgrey;
   text-align: center;
-  margin: 5px;
+  margin: 0.5vw;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -21,4 +21,7 @@
   z-index: 0;
   height: 100%;
   background-color: grey;
+}
+.tagContainer:hover {
+  cursor: crosshair;
 }

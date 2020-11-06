@@ -18,13 +18,28 @@ body {
 }
 
 .sideMap {
+  position: absolute;
+  right:0px;
   width: 65%;
   height: 100%;
   float: right;
+  overflow: hidden;
 }
 
 .sidePage {
   width: 35%;
   height: 100%;
   float: left;
+}
+
+.exitButton {
+  z-index: 3;
+  top: 1vw;
+  margin-left: 32%;
+  width: 2vw;
+  height: 2vw;
+  position: absolute;
+}
+.exitButton:hover {
+  cursor:pointer
 }

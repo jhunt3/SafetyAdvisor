@@ -68,6 +68,10 @@ h3{
   font-weight: bold;
 }
 
+.username:hover {
+  cursor:pointer
+}
+
 .reviewRatingContainer {
   display: inline-block;
   margin-left: 5%;
@@ -78,7 +82,7 @@ h3{
   float: left;
   font-size: 1vw;
 	margin-top: 10px;
-	margin-left: 10%;
+	margin-left: 15%;
 	width:80%;
 }
 

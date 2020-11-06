@@ -43,7 +43,7 @@ class LocationPage extends React.Component {
                     <img className="profileIcon" src={review.imagePath}/>
                 </div>
                 <div className="usernameContainer">
-                    <a className="username" onClick={() => {
+                    <a className="username" title={`Go to ${review.username}'s page`} onClick={() => {
                       this.props.openUserPage(review.username);
                     }}>{review.username}</a>
                 </div>

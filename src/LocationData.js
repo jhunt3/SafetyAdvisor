@@ -26,8 +26,9 @@ class LocationData {
             imagePath: `${process.env.PUBLIC_URL}/assets/images/profile.png`,
             review: review
         })
-        this.locations.avgRating = (this.locations.avgRating * this.locations.numRatings + rating ) / (this.locations.numRatings + 1)
-        this.locations.numRatings = this.locations.numRatings + 1
+        this.locations[id].avgRating = ((this.locations[id].numRatings == 0) ? rating :
+            (this.locations[id].avgRating * this.locations[id].numRatings + rating ) / (this.locations[id].numRatings + 1));
+        this.locations[id].numRatings = this.locations[id].numRatings + 1
     }
 
     updateTagVal(id, tagName, newVal) {
@@ -56,6 +57,7 @@ class LocationData {
         return {
             name: target.name,
             id: id,
+            rating: target.avgRating,
             lat: target.lat,
             lng: target.lng,
             tags: target.tags
