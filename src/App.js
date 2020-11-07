@@ -7,6 +7,7 @@ import UserData from './UserData';
 import SiteMap from './react_components/SiteMap';
 import LocationPage from './react_components/LocationPage';
 import UserPage from './react_components/UserPage';
+import ReviewPage from './react_components/ReviewPage'
 
 const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Checks Temperature", "Patio"];
 
@@ -19,6 +20,7 @@ export class App extends React.Component {
       currUserId: -1,
       locData: new LocationData(),
       userData: new UserData(),
+      sidePageClass:"locPage"
     };
     // Adds hardcoded location data
     this.state.locData.addLocation("Sidney Smith", "Lecture Hall", 43.663098, -79.398568, defaultTags);
@@ -52,19 +54,27 @@ export class App extends React.Component {
   }
   openUserPage(username) {
     this.setState({currUserId: username});
+    this.setState({sidePageClass: "userPage"});
+
   }
   // We might want to use routers instead; this works for now.
   renderSidePage() {
     if (this.state.mapClass === "sideMap") {
-        if (this.state.currUserId !== -1) {
+        if (this.state.currUserId !== -1 && this.state.sidePageClass === 'userPage') {
             return (<div className="sidePage">
               <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
               <UserPage locData={this.state.locData.locations} userData={this.state.userData.getUser(this.state.currUserId)}/>
             </div>);
-        } else{
+        }
+        if(this.state.sidePageClass === "leaveReviewPage"){
+            return (<div className="sidePage">
+            <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
+            <ReviewPage locData={this.state.locData.getLoc(this.state.currLocId)} backToLocPage={this.backToLocPage}/>
+          </div>);
+        }else{
             return (<div className="sidePage">
               <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
-              <LocationPage locData={this.state.locData.getLoc(this.state.currLocId)} openUserPage={this.openUserPage}/>
+              <LocationPage locData={this.state.locData.getLoc(this.state.currLocId)} openUserPage={this.openUserPage} leaveReview={this.leaveReview}/>
             </div>);
         }
 
@@ -72,7 +82,14 @@ export class App extends React.Component {
       return;
     }
   }
+  leaveReview = () => {
+    this.setState({sidePageClass: "leaveReviewPage"});
 
+  }
+  backToLocPage = () => {
+    this.setState({sidePageClass: "locPage"});
+
+  }
   closeSidePage() {
     this.setState({currUserId: -1, mapClass: "fullMap", currLocId: -1});
   }
