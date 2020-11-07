@@ -1,21 +1,25 @@
+
 .tagContainer {
   position: relative;
-  display:inline-block;
-  height: 30px;
+  display:inline-flex;
   background-color: darkgrey;
   text-align: center;
-  margin: 5px;
+  margin: 0.5vw;
   border-radius: 10px;
   overflow: hidden;
-
 }
 .tagContainer:hover{
     cursor:pointer;
 }
 .tagName {
-  top:6px;
+  font-size: 1vw;
+  padding: 6px;
+  display: inline-flex;
   position: relative;
   z-index: 1;
+}
+.checkbox{
+    z-index:1;
 }
 .filled {
   position: absolute;
