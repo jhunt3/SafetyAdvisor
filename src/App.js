@@ -173,7 +173,7 @@ export class App extends React.Component {
           {this.renderSidePage()}
           {this.renderOverlayPage()}
           <div className={this.state.mapClass}>
-          <button className = "searchButton" onClick={this.openSearchPage}>Search</button>
+          <button className = "searchButton purpleButton" onClick={this.openSearchPage}>Search</button>
           <SiteMap locations={this.state.locData.getGeoLocData()} openLocPage={this.openLocPage}/>
           <div id="loginButtonMain" className="purpleButton" onClick={this.handleLogin}>{(this.state.userLoggedIn === "") ? "Register/Login" : "Logout"}</div>
           </div>

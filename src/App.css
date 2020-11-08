@@ -35,9 +35,13 @@ body {
 .searchButton {
   z-index: 1;
   position: absolute;
-  top: 1%;
-  right: 3%;
-  font-size: 20px;
+  top: 5%;
+  right: 6vh;
+  font-size: 2vh;
+}
+
+.searchButton:hover {
+  cursor:help;
 }
 
 .exitButton {
