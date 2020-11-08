@@ -17,7 +17,8 @@ class SearchPage extends React.Component {
   render() {
     return(
         <div className="searchResultsContainer">
-            <h2>Results</h2>
+            <h2 id="resultsHeader">Results</h2>
+            <button className="backButton" onClick={this.props.backToSearchPage}>Back</button>
             {this.props.locData.map(location => (
                 <div className="review">
                     <div className="reviewInfoContainer">
@@ -35,8 +36,8 @@ class SearchPage extends React.Component {
                             <StarRatings rating={location.avgRating}
                                         starRatedColor="grey"
                                         starEmptyColor="darkgrey"
-                                        starDimension='25px'
-                                        starSpacing='3px'/>
+                                        starDimension='1.5vw'
+                                        starSpacing='0.15vw'/>
                             <h3 className="resultSubtitle">({location.numRatings} Ratings)</h3>
                         </div>
                         {this.generateTagIndicators(location.tags.filter((tag) =>

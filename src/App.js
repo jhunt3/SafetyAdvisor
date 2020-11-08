@@ -71,7 +71,12 @@ export class App extends React.Component {
   }
 
   openSearchPage() {
-    this.setState({showSearchPage: true, currSearchQuery: -1, currLocId: -1, mapClass: "sideMap"});
+    if (!this.state.showSearchPage) {
+      this.setState({showSearchPage: true, currSearchQuery: -1, currLocId: -1, mapClass: "sideMap"});
+    }
+    else {
+      this.setState({showSearchPage: false, currSearchQuery: -1, currLocId: -1, mapClass: "fullMap"});
+    }
   }
 
   setSearchResult(query) {
@@ -84,11 +89,14 @@ export class App extends React.Component {
         if (this.state.showSearchPage) {
           if (this.state.currSearchQuery === -1) {
             return (<div className="sidePage">
+              <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
               <SearchForm setSearchResult={this.setSearchResult}/>
             </div>);
           } else {
             return (<div className="sidePage">
-              <SearchPage locData={this.state.locData.getLocationsWithQuery(this.state.currSearchQuery)} userData={this.state.userData.getUser(this.state.currUserId)} openLocPage={this.openLocPage} />
+              <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
+              <SearchPage locData={this.state.locData.getLocationsWithQuery(this.state.currSearchQuery)} userData={this.state.userData.getUser(this.state.currUserId)} 
+              openLocPage={this.openLocPage} backToSearchPage={this.backToSearchPage} />
             </div>);
           }  
         }
@@ -152,10 +160,14 @@ export class App extends React.Component {
   }
   backToLocPage = () => {
     this.setState({sidePageClass: "locPage"});
-
   }
+
+  backToSearchPage = () => {
+    this.setState({currSearchQuery: -1});
+  }
+
   closeSidePage() {
-    this.setState({currUserId: -1, mapClass: "fullMap", currLocId: -1});
+    this.setState({currUserId: -1, mapClass: "fullMap", currLocId: -1, currSearchQuery: -1, showSearchPage: false});
     this.setState({sidePageClass: "locPage"});
   }
 

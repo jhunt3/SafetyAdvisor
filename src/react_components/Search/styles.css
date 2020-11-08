@@ -70,11 +70,15 @@
 }
 
 .resultTitle {
-  margin-top: 5px;
+  margin-top: 2vh;
   margin-bottom: 5px;
 }
 
 .resultSubtitle {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+#resultsHeader {
+  padding-top: 2vh;
 }
