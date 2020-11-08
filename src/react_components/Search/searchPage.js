@@ -23,13 +23,13 @@ class SearchPage extends React.Component {
                 <div className="review">
                     <div className="reviewInfoContainer">
 
-                        <img className="searchLocImage" src={location.imagePath}/>
+                        <img className="searchLocImage" alt="searchLocationImage" src={location.imagePath}/>
                    
                         <div className="titleContainer">
                             
-                            <a className="resultTitle" onClick={() => {
+                            <p className="resultTitle" onClick={() => {
                             this.props.openLocPage(location.id);
-                            }}>{location.name}</a>
+                            }}>{location.name}</p>
                             <h3 className="resultSubtitle">{location.venueType}</h3>
                         </div>
                         <div className="avgRatingsContainer">

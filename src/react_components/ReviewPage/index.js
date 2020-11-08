@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import StarRatingComponent from 'react-star-rating-component';
 
 import ButtonTagIndicator from './../ButtonTagIndicator';
@@ -27,7 +26,7 @@ class ReviewPage extends React.Component {
     const { rating } = this.state;
     return (
       <div className="body">
-        <img className="locImage" src={this.props.locData.imagePath}/>
+        <img className="locImage" alt="locationImage" src={this.props.locData.imagePath}/>
         <button className="backButton" onClick={this.props.backToLocPage}>Back</button>
         <div className="infoContainer">
           <div className="titleContainer">

@@ -82,14 +82,14 @@ class LoginPage extends React.Component {
             <label>
               Username:
               <br></br>
-              <input type="text" name="user" value={this.state.user} onChange={this.handleChangeUser}  name="username"/>
+              <input type="text" name="user" value={this.state.user} onChange={this.handleChangeUser}/>
             </label>
             <br></br>
             <br></br>
             <label>
               Password:
               <br></br>
-              <input type="password" name="pass" value={this.state.pass} onChange={this.handleChangePass} name="password"/>
+              <input type="password" name="pass" value={this.state.pass} onChange={this.handleChangePass}/>
             </label>
             <br></br>
             <br></br>
@@ -109,21 +109,21 @@ class LoginPage extends React.Component {
             <label>
               Username:
               <br></br>
-              <input type="text" name="user" onChange={this.handleChangeUser} value={this.state.user} name="username"/>
+              <input type="text" name="user" onChange={this.handleChangeUser} value={this.state.user}/>
             </label>
             <br></br>
             <br></br>
             <label>
               Password:
               <br></br>
-              <input type="password" name="pass" onChange={this.handleChangePass} value={this.state.pass} name="password"/>
+              <input type="password" name="pass" onChange={this.handleChangePass} value={this.state.pass}/>
             </label>
             <br></br>
             <br></br>
             <label>
               Repeat Password:
               <br></br>
-              <input type="password" name="passVerification" onChange={this.handleChangePassVerification} value={this.state.passVerification} name="Password"/>
+              <input type="password" name="passVerification" onChange={this.handleChangePassVerification} value={this.state.passVerification}/>
             </label>
             <br></br>
             <br></br>

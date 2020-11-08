@@ -37,12 +37,12 @@ export class App extends React.Component {
     this.state.locData.updateTags(1, [{name: defaultTags[2], val: 42.5}, {name: defaultTags[3], val: 0.5}]);
     this.state.locData.updateTags(2, [{name: defaultTags[5], val: 100}]);
 
-    this.state.userData.addUser("johnsmith", "js")
+    this.state.userData.addUser("user", "js")
     this.state.userData.addUser("janedoe", "jd")
 
     this.state.userData.addReview(0, 0, 4.0, "Lots of hand sanitizer on hand!")
-    this.state.userData.addReview(0, 1, 1.0, "Washrooms infrequently cleaned.")
-    this.state.locData.addReview(0, "johnsmith", 4.0, "Lots of hand sanitizer on hand!")
+    this.state.userData.addReview(0, 1, 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
+    this.state.locData.addReview(0, "user", 4.0, "Lots of hand sanitizer on hand!")
     this.state.locData.addReview(0, "janedoe", 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
 
     this.openLocPage = this.openLocPage.bind(this);
@@ -91,18 +91,22 @@ export class App extends React.Component {
     });
   }
 
+  renderExitButton() {
+    return <img className="exitButton" alt='exitButton' src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>;
+  }
+
   // We might want to use routers instead; this works for now.
   renderSidePage() {
     if (this.state.mapClass === "sideMap") {
         if (this.state.showSearchPage) {
           if (this.state.currSearchQuery === -1) {
             return (<div className="sidePage">
-              <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
+              {this.renderExitButton()}
               <SearchForm setSearchResult={this.setSearchResult}/>
             </div>);
           } else {
             return (<div className="sidePage">
-              <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
+              {this.renderExitButton()}
               <SearchPage locData={this.state.locData.getLocationsWithQuery(this.state.currSearchQuery)} userData={this.state.userData.getUser(this.state.currUserId)} 
               openLocPage={this.openLocPage} backToSearchPage={this.backToSearchPage} />
             </div>);
@@ -110,19 +114,19 @@ export class App extends React.Component {
         }
         if (this.state.currUserId !== -1 && this.state.sidePageClass === 'userPage') {
             return (<div className="sidePage">
-              <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
+              {this.renderExitButton()}
               <UserPage locData={this.state.locData.locations} deleteReview={this.deleteReview} userData={this.state.userData.getUser(this.state.currUserId)}
               currentUser={this.state.userLoggedIn}/>
             </div>);
         }
         if(this.state.sidePageClass === "leaveReviewPage"){
             return (<div className="sidePage">
-            <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
+            {this.renderExitButton()}
             <ReviewPage locData={this.state.locData.getLoc(this.state.currLocId)} backToLocPage={this.backToLocPage}/>
           </div>);
-        }else{
+        } else{
             return (<div className="sidePage">
-              <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
+              {this.renderExitButton()}
               <LocationPage locData={this.state.locData.getLoc(this.state.currLocId)} openUserPage={this.openUserPage} 
               leaveReview={this.leaveReview} currentUser={this.state.userLoggedIn} deleteReview={this.deleteReview}/>
             </div>);

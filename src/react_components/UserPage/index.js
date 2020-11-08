@@ -9,7 +9,7 @@ class UserPage extends React.Component {
   render() {
     return (
       <div className="body">
-        <img className="profilePic" src={this.props.userData.imagePath}/>
+        <img className="profilePic" alt="profilePic" src={this.props.userData.imagePath}/>
 
         <div className="userInfoContainer">
             <div className="userTitleContainer">
@@ -22,7 +22,7 @@ class UserPage extends React.Component {
             {this.props.userData.reviews.map(review => (
                 <div className="review">
                     <div className="profileIconContainer">
-                        <img className="profileIcon" src={this.props.locData[review.location_id].imagePath}/>
+                        <img className="profileIcon" alt="profileIcon" src={this.props.locData[review.location_id].imagePath}/>
                     </div>
                     <div className="usernameContainer">
                         <strong>{this.props.locData[review.location_id].name}</strong>

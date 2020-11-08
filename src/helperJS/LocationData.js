@@ -30,7 +30,7 @@ class LocationData {
             review: review
         })
         this.reviewId++;
-        this.locations[id].avgRating = ((this.locations[id].numRatings == 0) ? rating :
+        this.locations[id].avgRating = ((this.locations[id].numRatings === 0) ? rating :
             (this.locations[id].avgRating * this.locations[id].numRatings + rating ) / (this.locations[id].numRatings + 1));
         this.locations[id].numRatings = this.locations[id].numRatings + 1
     }
@@ -81,12 +81,10 @@ class LocationData {
         const targets = [];
         for (const loc of this.locations) {
             const locationNameLowercase = loc.name.toLowerCase();
-            console.log(locationNameLowercase);
             if (locationNameLowercase.includes(query.toLowerCase())) {
                 targets.push(loc);
             }
         }
-        console.log(targets);
         return targets;
     }
 }

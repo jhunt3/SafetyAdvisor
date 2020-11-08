@@ -20,7 +20,7 @@ class LocationPage extends React.Component {
     return (
       <div className="body">
         <div id="addReviewButton" className="purpleButton" onClick={this.props.leaveReview}>+ Review</div>
-        <img className="locImage" src={this.props.locData.imagePath}/>
+        <img className="locImage" alt="locationImage" src={this.props.locData.imagePath}/>
         <div className="infoContainer">
           <div className="titleContainer">
             <h1 id="nameHeader">{this.props.locData.name}</h1>
@@ -42,12 +42,12 @@ class LocationPage extends React.Component {
         {this.props.locData.reviews.map(review => (
             <div className="review">
                 <div className="profileIconContainer">
-                    <img className="profileIcon" src={review.imagePath}/>
+                    <img className="profileIcon" alt="profileIcon" src={review.imagePath}/>
                 </div>
                 <div className="usernameContainer">
-                    <a className="username" title={`Go to ${review.username}'s page`} onClick={() => {
+                    <p className="username" title={`Go to ${review.username}'s page`} onClick={() => {
                       this.props.openUserPage(review.username);
-                    }}>{review.username}</a>
+                    }}>{review.username}</p>
                 </div>
                 <div className="reviewRatingContainer">
                     <StarRatings rating={review.rating}

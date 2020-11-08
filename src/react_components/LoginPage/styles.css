@@ -17,6 +17,7 @@
   background-color: #e0e0e0;
   text-align: center;
   overflow: hidden;
+  border: 1px solid black
 }
 
 .loginHeader {

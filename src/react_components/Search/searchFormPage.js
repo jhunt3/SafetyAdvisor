@@ -1,5 +1,4 @@
 import React from 'react';
-import TagIndicator from '../TagIndicator';
 
 import "./styles.css";
 
