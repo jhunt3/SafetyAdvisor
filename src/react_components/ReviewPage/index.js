@@ -33,28 +33,30 @@ class ReviewPage extends React.Component {
         <div className="infoContainer">
           <div className="titleContainer">
 
-            <h1>{this.props.locData.name}</h1>
-            <h3>{this.props.locData.venueType}</h3>
+            <h1 id="nameHeader">{this.props.locData.name}</h1>
+            <h3 id="venueHeader">{this.props.locData.venueType}</h3>
           </div>
           <div className="ratingsContainer">
 
         <StarRatingComponent
           name="rate1"
           starCount={5}
+          starColor={"grey"}
+          emptyStarColor={"darkgrey"}
           value={rating}
           onStarClick={this.onStarClick.bind(this)}
         />
 
           </div>
-          <p>Please select safety features present</p>
-          {this.generateButtonTagIndicators(this.props.locData.tags.filter((tag) => {return tag.val !== 0}))}
+          <p className="reviewPageText">Please select safety features present</p>
+          {this.generateButtonTagIndicators(this.props.locData.tags)}
         </div>
-        <p >Comments:</p>
+        <p id="commentHeader" className="reviewPageText">Comments:</p>
       <form className="comment" onSubmit={this.handleSubmit}>
         <label>
           <textarea className="commentText" type="text" value={this.state.value} onChange={this.handleChange} />        </label>
           <br></br>
-        <input type="submit" value="Submit" />
+        <input id="submitButton" className="purpleButton" type="submit" value="Submit" />
       </form>
       </div>
     );

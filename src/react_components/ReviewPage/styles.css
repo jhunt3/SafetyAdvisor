@@ -1,7 +1,7 @@
 .body {
-  position: absolute;
   width: 35%;
   height: 100%;
+  overflow: auto;
 }
 .locImage {
   display: block;
@@ -14,24 +14,22 @@
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
-  border-bottom: 1px black solid;
 }
 .titleContainer {
   width: 50%;
   display:inline-block;
   position: relative;
 }
-h1 {
-  font-weight: bolder;
-}
-h3{
-  color: #464545
-}
+
 .ratingsContainer {
   width: 50%;
   display:inline-block;
   position: relative;
   text-align: right;
+}
+
+.reviewPageText {
+  font-size: 1.25vw;
 }
 
 .comment {
@@ -43,11 +41,11 @@ h3{
 }
 
 .commentText {
- width: 300px;
- height:200px;
-	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
+  width: 30vw;
+  height:20vh;
+	margin-top: 1vh;
+	margin-left: 1vw;
+	margin-right: 1vw;
 	line-height:10px;
 }
 
@@ -58,12 +56,23 @@ h3{
 }
 
 .backButton {
-position: absolute;
+  position: absolute;
 	top: 10px;
 	left: 10px;
     background-color: black;
     color:white;
+}
 
+.backButton {
+  position: absolute;
+	top: 10px;
+	left: 10px;
+    background-color: black;
+    color:white;
+}
+
+.backButton:hover {
+  cursor: pointer
 }
 
 .reviewContainer {
@@ -71,4 +80,12 @@ position: absolute;
 	margin-top: 10px;
 	margin-left: 10px;
 	margin-right: 10px;
+}
+
+#commentHeader {
+  margin-left: 10px
+}
+
+#submitButton {
+  position: relative;
 }

@@ -1,6 +1,5 @@
 
 .body {
-  
   width: 35%;
   height: 100%;
   overflow: auto;
@@ -24,7 +23,7 @@
   position: relative;
 }
 #nameHeader {
-  font-size: 2vw;
+  font-size: 1.8vw;
   font-weight: bolder;
 }
 #venueHeader{
@@ -35,7 +34,7 @@
   font-size: 1vw;
 }
 #reviewHeader {
-  font-size: 2vw;;
+  font-size: 1.5vw;;
 }
 .avgRatingsContainer {
   width: 50%;
@@ -45,4 +44,28 @@
 }
 .reviews {
   margin-top: 5px;
+}
+.purpleButton {
+  display:inline-flex;
+  background-color:#5A00EE;
+  color: #e0e0e0;
+  border: 1px black solid;
+  text-align: center;
+  font-weight: bolder;
+  margin: 0.5vw;
+  border-radius: 5px;
+  padding-top: 0.5vh;
+  padding-bottom: 0.5vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  overflow: hidden;
+  z-index: 2;
+  position: absolute;
+  top: 38%;
+  right: 2%
+}
+
+.purpleButton:hover {
+  cursor: pointer;
+  background-color: #8466DF;
 }
