@@ -9,7 +9,8 @@ import LocationPage from './react_components/LocationPage';
 import UserPage from './react_components/UserPage';
 import SearchPage from './react_components/Search/searchPage';
 import SearchForm from './react_components/Search/searchFormPage';
-
+import ReviewPage from './react_components/ReviewPage'
+import LoginPage from './react_components/LoginPage'
 const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Checks Temperature", "Patio"];
 
 export class App extends React.Component {
@@ -17,12 +18,15 @@ export class App extends React.Component {
     super(props);
     this.state = {
       mapClass: "fullMap",
+      overlayClass: "none",
+      userLoggedIn: "",
       currLocId: -1,
       currUserId: -1,
       currSearchQuery: -1,
       showSearchPage: false,
       locData: new LocationData(),
       userData: new UserData(),
+      sidePageClass:"locPage"
     };
     // Adds hardcoded location data
     this.state.locData.addLocation("Sidney Smith", "Lecture Hall", 43.663098, -79.398568, defaultTags);
@@ -39,25 +43,30 @@ export class App extends React.Component {
     this.state.userData.addReview(0, 0, 4.0, "Lots of hand sanitizer on hand!")
     this.state.userData.addReview(0, 1, 1.0, "Washrooms infrequently cleaned.")
     this.state.locData.addReview(0, "johnsmith", 4.0, "Lots of hand sanitizer on hand!")
-    this.state.locData.addReview(0, "janedoe", 1.0, "Washrooms infrequently cleaned.")
+    this.state.locData.addReview(0, "janedoe", 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
 
     this.openLocPage = this.openLocPage.bind(this);
     this.openUserPage = this.openUserPage.bind(this);
     this.openSearchPage = this.openSearchPage.bind(this);
     this.setSearchResult =this.setSearchResult.bind(this);
+    this.closeSidePage = this.closeSidePage.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.closeOverlay = this.closeOverlay.bind(this);
   }
   // Marker Handler
   openLocPage(id) {
     const otherSetting = (this.state.mapClass === "fullMap") ? "sideMap" : "fullMap";
+    this.setState({sidePageClass: "locPage"});
     if (((this.state.currLocId === -1) || (this.state.currLocId === id)) && !(this.state.showSearchPage)) {
       this.setState({currUserId: -1, showSearchPage: false, mapClass: otherSetting, currLocId: ((this.state.currLocId === id) ? -1 : id)});
     } else {
-      console.log("2");
       this.setState({currUserId: -1, showSearchPage: false, currLocId: id});
     }
   }
   openUserPage(username) {
     this.setState({currUserId: username});
+    this.setState({sidePageClass: "userPage"});
+
   }
 
   openSearchPage() {
@@ -82,30 +91,74 @@ export class App extends React.Component {
             </div>);
           }  
         }
-        if (this.state.currUserId !== -1) {
+        if (this.state.currUserId !== -1 && this.state.sidePageClass === 'userPage') {
             return (<div className="sidePage">
+              <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
               <UserPage locData={this.state.locData.locations} userData={this.state.userData.getUser(this.state.currUserId)}/>
             </div>);
-        } else{
-            console.log(this.state.locData);
-            console.log(this.state.currLocId);
+        }
+        if(this.state.sidePageClass === "leaveReviewPage"){
             return (<div className="sidePage">
-              <LocationPage locData={this.state.locData.getLoc(this.state.currLocId)} openUserPage={this.openUserPage}/>
+            <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
+            <ReviewPage locData={this.state.locData.getLoc(this.state.currLocId)} backToLocPage={this.backToLocPage}/>
+          </div>);
+        }else{
+            return (<div className="sidePage">
+              <img className="exitButton" src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>
+              <LocationPage locData={this.state.locData.getLoc(this.state.currLocId)} openUserPage={this.openUserPage} leaveReview={this.leaveReview}/>
             </div>);
         }
 
     } else {
+
       return;
     }
+  }
+
+  renderOverlayPage() {
+    console.log(this.state.overlayClass);
+    if (this.state.overlayClass === "loginPage") {
+      return (<div className="loginPage">
+              <LoginPage closeHandler={this.closeOverlay}/>
+            </div>);
+    } else {
+      return ;
+    }
+  }
+
+  closeOverlay() {
+    this.setState({overlayClass: "none"})
+  }
+
+  leaveReview = () => {
+    this.setState({sidePageClass: "leaveReviewPage"});
+
+  }
+  backToLocPage = () => {
+    this.setState({sidePageClass: "locPage"});
+
+  }
+  closeSidePage() {
+    this.setState({currUserId: -1, mapClass: "fullMap", currLocId: -1});
+    this.setState({sidePageClass: "locPage"});
+  }
+
+  handleLogin() {
+    if (this.state.userLoggedIn === "") {
+      this.setState({overlayClass: "loginPage"})
+    }
+    this.setState({userLoggedIn: ""})
   }
 
   render() {
     return (
       <div>
           {this.renderSidePage()}
+          {this.renderOverlayPage()}
           <div className={this.state.mapClass}>
           <button className = "searchButton" onClick={this.openSearchPage}>Search</button>
           <SiteMap locations={this.state.locData.getGeoLocData()} openLocPage={this.openLocPage}/>
+          <div id="loginButtonMain" className="purpleButton" onClick={this.handleLogin}>{(this.state.userLoggedIn === "") ? "Register/Login" : "Logout"}</div>
           </div>
       </div>
 

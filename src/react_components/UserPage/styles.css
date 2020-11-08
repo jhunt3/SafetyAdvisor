@@ -34,6 +34,10 @@ h3{
   color: #464545;
 }
 
+.review {
+  margin-top: 1vh
+}
+
 .reviewsContainer {
   position: relative;
   margin-left: 10px;
@@ -44,8 +48,7 @@ h3{
 .profileIconContainer {
 	float: left;
   width: 10%;
-  height:10%;
-  margin-right: 5%;
+  height:10%
 }
 
 .profileIcon {
@@ -68,6 +71,10 @@ h3{
   font-weight: bold;
 }
 
+.username:hover {
+  cursor:pointer
+}
+
 .reviewRatingContainer {
   display: inline-block;
   margin-left: 5%;
@@ -77,8 +84,8 @@ h3{
 .reviewContainer {
   float: left;
   font-size: 1vw;
-	margin-top: 10px;
-	margin-left: 10%;
+	margin-top: 1vh;
+	margin-left: 15%;
 	width:80%;
 }
 

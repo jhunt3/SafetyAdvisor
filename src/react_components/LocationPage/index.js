@@ -18,6 +18,7 @@ class LocationPage extends React.Component {
   render() {
     return (
       <div className="body">
+        <div id="addReviewButton" className="purpleButton" onClick={this.props.leaveReview}>+ Review</div>
         <img className="locImage" src={this.props.locData.imagePath}/>
         <div className="infoContainer">
           <div className="titleContainer">
@@ -43,7 +44,7 @@ class LocationPage extends React.Component {
                     <img className="profileIcon" src={review.imagePath}/>
                 </div>
                 <div className="usernameContainer">
-                    <a className="username" onClick={() => {
+                    <a className="username" title={`Go to ${review.username}'s page`} onClick={() => {
                       this.props.openUserPage(review.username);
                     }}>{review.username}</a>
                 </div>
