@@ -2,6 +2,7 @@ import React from 'react';
 import StarRatings from 'react-star-ratings';
 
 import "./styles.css";
+import { showDeleteButton } from './../../helperJS/userFunctionalityHelperFunctions';
 
 class UserPage extends React.Component {
 
@@ -32,6 +33,7 @@ class UserPage extends React.Component {
                             starEmptyColor="darkgrey"
                             starDimension='20px'
                             starSpacing='2px'/>
+                        {showDeleteButton(this.props.currentUser, this.props.userData.username , review.location_id, review.reviewId, this.props.deleteReview)}
                     </div>
                     <div className="reviewContainer">
                         {review.review}

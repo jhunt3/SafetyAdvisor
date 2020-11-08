@@ -1,6 +1,7 @@
 
 class UserData {
     constructor() {
+        this.reviewId = 0;
         this.users = [];
     }
 
@@ -19,8 +20,10 @@ class UserData {
             username: this.users[user_id].username,
             rating: rating,
             review: review,
-            location_id: location_id,
+            reviewId: this.reviewId,
+            location_id: location_id
         })
+        this.reviewId++;
     }
 
     getUser(username) {
@@ -33,7 +36,10 @@ class UserData {
 
     }
 
-
+    removeReview(uid, reviewId) {
+        this.users[uid].reviews = this.users[uid].reviews.filter((review) => {return review.reviewId !== reviewId});
+        return this;
+    }
 }
 
 export default UserData;

@@ -2,6 +2,7 @@ import React from 'react';
 import StarRatings from 'react-star-ratings';
 
 import TagIndicator from './../TagIndicator';
+import { showDeleteButton } from './../../helperJS/userFunctionalityHelperFunctions';
 
 import "./styles.css";
 
@@ -54,6 +55,7 @@ class LocationPage extends React.Component {
                         starEmptyColor="darkgrey"
                         starDimension='1.5vw'
                         starSpacing='0.15vw'/>
+                    {showDeleteButton(this.props.currentUser, review.username, this.props.locData.id, review.reviewId, this.props.deleteReview)}
                 </div>
                 <div className="reviewContainer">
                     {review.review}

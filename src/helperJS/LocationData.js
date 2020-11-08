@@ -1,6 +1,8 @@
 
+
 class LocationData {
     constructor() {
+        this.reviewId = 0;
         this.locations = [];
     }
 
@@ -24,11 +26,18 @@ class LocationData {
             username: username,
             rating: rating,
             imagePath: `${process.env.PUBLIC_URL}/assets/images/profile.png`,
+            reviewId: this.reviewId,
             review: review
         })
+        this.reviewId++;
         this.locations[id].avgRating = ((this.locations[id].numRatings == 0) ? rating :
             (this.locations[id].avgRating * this.locations[id].numRatings + rating ) / (this.locations[id].numRatings + 1));
         this.locations[id].numRatings = this.locations[id].numRatings + 1
+    }
+
+    removeReview(locationId, reviewId) {
+        this.locations[locationId].reviews = this.locations[locationId].reviews.filter((review) => {return review.reviewId !== reviewId});
+        return this;
     }
 
     updateTagVal(id, tagName, newVal) {
