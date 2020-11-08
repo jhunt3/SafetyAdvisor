@@ -2,15 +2,16 @@ import React from 'react';
 import StarRatings from 'react-star-ratings';
 
 import "./styles.css";
-import { showDeleteButton } from './../../helperJS/userFunctionalityHelperFunctions';
+import { showDeleteButton, showDeleteUserButton } from './../../helperJS/userFunctionalityHelperFunctions';
 
 class UserPage extends React.Component {
 
   render() {
     return (
       <div className="body">
+        <button className="backButton" onClick={this.props.backToLocPage}>Back</button>
+        {showDeleteUserButton(this.props.currentUser, this.props.userData.username, this.props.deleteUser)}
         <img className="profilePic" alt="profilePic" src={this.props.userData.imagePath}/>
-
         <div className="userInfoContainer">
             <div className="userTitleContainer">
               <h1>{this.props.userData.username}</h1>
@@ -24,7 +25,7 @@ class UserPage extends React.Component {
                     <div className="profileIconContainer">
                         <img className="profileIcon" alt="profileIcon" src={this.props.locData[review.location_id].imagePath}/>
                     </div>
-                    <div className="usernameContainer">
+                    <div className="usernameContainer" onClick={() => {this.props.openLocPage(review.location_id);}}>
                         <strong>{this.props.locData[review.location_id].name}</strong>
                     </div>
                     <div className="reviewRatingContainer">

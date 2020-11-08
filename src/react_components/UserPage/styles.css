@@ -71,7 +71,7 @@ h3{
   font-weight: bold;
 }
 
-.username:hover {
+.usernameContainer:hover {
   cursor:pointer
 }
 
@@ -89,3 +89,13 @@ h3{
 	width:80%;
 }
 
+.deleteUserButton {
+  position: absolute;
+  height: 3vh;
+  left: 1vw;
+  bottom: 1vh;
+}
+
+.deleteUserButton:hover {
+  cursor: pointer;
+}

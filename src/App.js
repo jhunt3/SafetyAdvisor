@@ -54,12 +54,13 @@ export class App extends React.Component {
     this.closeOverlay = this.closeOverlay.bind(this);
     this.handleLoginAttempt = this.handleLoginAttempt.bind(this);
     this.deleteReview = this.deleteReview.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
   }
   // Marker Handler
   openLocPage(id) {
     const otherSetting = (this.state.mapClass === "fullMap") ? "sideMap" : "fullMap";
     this.setState({sidePageClass: "locPage"});
-    if (((this.state.currLocId === -1) || (this.state.currLocId === id)) && !(this.state.showSearchPage)) {
+    if (((this.state.currLocId === -1) || (this.state.currLocId === id)) && !(this.state.showSearchPage || this.state.currUserId !== -1)) {
       this.setState({currUserId: -1, showSearchPage: false, mapClass: otherSetting, currLocId: ((this.state.currLocId === id) ? -1 : id)});
     } else {
       this.setState({currUserId: -1, showSearchPage: false, currLocId: id});
@@ -91,6 +92,11 @@ export class App extends React.Component {
     });
   }
 
+  deleteUser(username) {
+    this.closeSidePage();
+    this.setState({userData: this.state.userData.removeUser(username, this.state.locData)});
+  }
+
   renderExitButton() {
     return <img className="exitButton" alt='exitButton' src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} title={'Close Side Panel'} onClick={this.closeSidePage}/>;
   }
@@ -116,7 +122,7 @@ export class App extends React.Component {
             return (<div className="sidePage">
               {this.renderExitButton()}
               <UserPage locData={this.state.locData.locations} deleteReview={this.deleteReview} userData={this.state.userData.getUser(this.state.currUserId)}
-              currentUser={this.state.userLoggedIn}/>
+              currentUser={this.state.userLoggedIn} deleteUser={this.deleteUser} openLocPage={this.openLocPage} backToLocPage={this.backToLocPage}/>
             </div>);
         }
         if(this.state.sidePageClass === "leaveReviewPage"){
@@ -182,7 +188,6 @@ export class App extends React.Component {
 
   closeSidePage() {
     this.setState({currUserId: -1, mapClass: "fullMap", currLocId: -1, currSearchQuery: -1, showSearchPage: false});
-    this.setState({sidePageClass: "locPage"});
   }
 
   handleLogin() {

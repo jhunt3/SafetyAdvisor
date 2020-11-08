@@ -74,6 +74,10 @@
   margin-bottom: 5px;
 }
 
+.resultTitle:hover {
+  cursor: pointer;
+}
+
 .resultSubtitle {
   margin-top: 5px;
   margin-bottom: 5px;

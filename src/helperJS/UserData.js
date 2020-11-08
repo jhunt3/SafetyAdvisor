@@ -36,6 +36,23 @@ class UserData {
 
     }
 
+    removeUser(username, locationData) {
+        const user = this.getUser(username);
+
+        for (let i=0; i < user.reviews.length; i++) {
+            locationData.removeReview(user.reviews[i].location_id, user.reviews[i].reviewId);
+        }
+
+        this.users = this.users.filter((user) => {return user.username !== username});
+
+        let i = 0;
+        this.users.forEach((user) => {
+            user.uid = i;
+            i++;
+        })
+        return this;
+    }
+
     removeReview(uid, reviewId) {
         this.users[uid].reviews = this.users[uid].reviews.filter((review) => {return review.reviewId !== reviewId});
         return this;
