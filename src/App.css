@@ -28,3 +28,11 @@ body {
   height: 100%;
   float: left;
 }
+
+.searchButton {
+  z-index: 1;
+  position: absolute;
+  top: 1%;
+  right: 3%;
+  font-size: 20px;
+}

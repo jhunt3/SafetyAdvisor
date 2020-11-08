@@ -1,0 +1,80 @@
+.body {
+    position: absolute;
+    width: 35%;
+    height: 100%;
+  }
+  
+.searchResultsContainer {
+  margin-left: 5%;
+}
+
+.resultNameContainer {
+  float: left;
+  width: 60%;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.resultHorizontalLine {
+  display: inline-block;
+  text-align: left;
+}
+
+.reviewRatingContainer {
+  float: left;
+  width: 20%;
+}
+
+.imageContainer {
+  width: 10%;
+  float: left;
+  align-content: center;
+  position: relative;
+  text-align: center;
+}
+
+.searchLocImage {
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  position: relative;
+  top: 0px;
+  width: 50px;
+  height: 50px;
+}
+
+.titleContainer {
+  width: 40%;
+  margin-left: 20px;
+  display:inline-block;
+  position: relative;
+}
+
+.avgRatingsContainer {
+  width: 40%;
+  display:inline-block;
+  position: relative;
+  text-align: right;
+}
+
+.reviewInfoContainer {
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px black solid;
+  float: left;
+  width: 90%;
+}
+
+.resultTitle {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.resultSubtitle {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

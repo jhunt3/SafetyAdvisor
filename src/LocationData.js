@@ -65,6 +65,19 @@ class LocationData {
     getGeoLocData() {
         return this.locations.map((loc) => {return this.getGeoLoc(loc.id)});
     }
+
+    getLocationsWithQuery(query) {
+        const targets = [];
+        for (const loc of this.locations) {
+            const locationNameLowercase = loc.name.toLowerCase();
+            console.log(locationNameLowercase);
+            if (locationNameLowercase.includes(query.toLowerCase())) {
+                targets.push(loc);
+            }
+        }
+        console.log(targets);
+        return targets;
+    }
 }
 
 export default LocationData;
