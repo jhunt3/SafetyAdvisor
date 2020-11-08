@@ -6,12 +6,20 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props) 
     this.state =  {
-      pageState: "prompt"
+      pageState: "prompt",
+      user: "",
+      pass: "",
+      passVerification: ""
     }
 
     this.login = this.login.bind(this);
     this.register = this.register.bind(this);
     this.prompt = this.prompt.bind(this);
+    this.handleChangeUser = this.handleChangeUser.bind(this);
+    this.handleChangePass = this.handleChangePass.bind(this);
+    this.handleChangePassVerification = this.handleChangePassVerification.bind(this);
+    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+    this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
   }
 
   login() {
@@ -22,6 +30,29 @@ class LoginPage extends React.Component {
   }
   prompt() {
     this.setState({pageState: "prompt"})
+  }
+
+  handleLoginSubmit(e) {
+    e.preventDefault();
+    if(this.props.handleLoginAttempt(this.state.user, this.state.pass)) {
+      return;
+    } 
+  }
+  handleRegisterSubmit(e) {
+    e.preventDefault();
+    if (this.state.pass !== this.state.passVerification) {
+      console.log("Failed");
+    }
+  }
+
+  handleChangeUser(e) {
+    this.setState({user: e.target.value});
+  }
+  handleChangePass(e) {
+    this.setState({pass: e.target.value});
+  }
+  handleChangePassVerification(e) {
+    this.setState({passVerification: e.target.value});
   }
 
   renderPromptPage() {
@@ -47,18 +78,18 @@ class LoginPage extends React.Component {
         <div className="loginBoxContainer">
         <button className="backButton" onClick={this.prompt}>Back</button>
         <h1 className="lessPadding">Login</h1>
-        <form className="accForm loginForm">
+        <form className="accForm loginForm" onSubmit={this.handleLoginSubmit}>
             <label>
               Username:
               <br></br>
-              <input type="text" name="username" name="username"/>
+              <input type="text" name="user" value={this.state.user} onChange={this.handleChangeUser}  name="username"/>
             </label>
             <br></br>
             <br></br>
             <label>
               Password:
               <br></br>
-              <input type="password" name="password" name="password"/>
+              <input type="password" name="pass" value={this.state.pass} onChange={this.handleChangePass} name="password"/>
             </label>
             <br></br>
             <br></br>
@@ -74,25 +105,25 @@ class LoginPage extends React.Component {
         <div className="loginBoxContainer">
           <button className="backButton" onClick={this.prompt}>Back</button>
           <h1 className="lessPadding">Register</h1>
-          <form className="accForm registerForm">
+          <form className="accForm registerForm" onSubmit={this.handleRegisterSubmit}>
             <label>
               Username:
               <br></br>
-              <input type="text" name="username" name="username"/>
+              <input type="text" name="user" onChange={this.handleChangeUser} value={this.state.user} name="username"/>
             </label>
             <br></br>
             <br></br>
             <label>
               Password:
               <br></br>
-              <input type="password" name="password" name="password"/>
+              <input type="password" name="pass" onChange={this.handleChangePass} value={this.state.pass} name="password"/>
             </label>
             <br></br>
             <br></br>
             <label>
               Repeat Password:
               <br></br>
-              <input type="password" name="repeatPassword" name="Password"/>
+              <input type="password" name="passVerification" onChange={this.handleChangePassVerification} value={this.state.passVerification} name="Password"/>
             </label>
             <br></br>
             <br></br>

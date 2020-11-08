@@ -47,6 +47,7 @@ export class App extends React.Component {
     this.closeSidePage = this.closeSidePage.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.closeOverlay = this.closeOverlay.bind(this);
+    this.handleLoginAttempt = this.handleLoginAttempt.bind(this);
   }
   // Marker Handler
   openLocPage(id) {
@@ -90,11 +91,26 @@ export class App extends React.Component {
     }
   }
 
+  // Placeholder
+  handleLoginAttempt(user, pass) {
+    if (user === "admin" && pass === "admin") {
+      this.setState({userLoggedIn: user});
+      this.closeOverlay()
+      return true;
+    }
+    else if (user === "user" && pass === "user") {
+      this.setState({userLoggedIn: user});
+      this.closeOverlay();
+      return true;
+    }
+    return false;
+  }
+  
+
   renderOverlayPage() {
-    console.log(this.state.overlayClass);
     if (this.state.overlayClass === "loginPage") {
       return (<div className="loginPage">
-              <LoginPage closeHandler={this.closeOverlay}/>
+              <LoginPage closeHandler={this.closeOverlay} handleLoginAttempt={this.handleLoginAttempt}/>
             </div>);
     } else {
       return ;
@@ -121,8 +137,9 @@ export class App extends React.Component {
   handleLogin() {
     if (this.state.userLoggedIn === "") {
       this.setState({overlayClass: "loginPage"})
+    } else {
+      this.setState({userLoggedIn: ""})
     }
-    this.setState({userLoggedIn: ""})
   }
 
   render() {
