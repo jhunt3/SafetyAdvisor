@@ -8,6 +8,7 @@ import SiteMap from './react_components/SiteMap';
 import LocationPage from './react_components/LocationPage';
 import UserPage from './react_components/UserPage';
 import ReviewPage from './react_components/ReviewPage'
+import LoginPage from './react_components/LoginPage'
 
 const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Checks Temperature", "Patio"];
 
@@ -16,6 +17,8 @@ export class App extends React.Component {
     super(props);
     this.state = {
       mapClass: "fullMap",
+      overlayClass: "none",
+      userLoggedIn: "",
       currLocId: -1,
       currUserId: -1,
       locData: new LocationData(),
@@ -42,6 +45,8 @@ export class App extends React.Component {
     this.openLocPage = this.openLocPage.bind(this);
     this.openUserPage = this.openUserPage.bind(this);
     this.closeSidePage = this.closeSidePage.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.closeOverlay = this.closeOverlay.bind(this);
   }
   // Marker Handler
   openLocPage(id) {
@@ -84,6 +89,22 @@ export class App extends React.Component {
       return;
     }
   }
+
+  renderOverlayPage() {
+    console.log(this.state.overlayClass);
+    if (this.state.overlayClass === "loginPage") {
+      return (<div className="loginPage">
+              <LoginPage closeHandler={this.closeOverlay}/>
+            </div>);
+    } else {
+      return ;
+    }
+  }
+
+  closeOverlay() {
+    this.setState({overlayClass: "none"})
+  }
+
   leaveReview = () => {
     this.setState({sidePageClass: "leaveReviewPage"});
 
@@ -97,12 +118,21 @@ export class App extends React.Component {
     this.setState({sidePageClass: "locPage"});
   }
 
+  handleLogin() {
+    if (this.state.userLoggedIn === "") {
+      this.setState({overlayClass: "loginPage"})
+    }
+    this.setState({userLoggedIn: ""})
+  }
+
   render() {
     return (
       <div>
           {this.renderSidePage()}
+          {this.renderOverlayPage()}
           <div className={this.state.mapClass}>
           <SiteMap locations={this.state.locData.getGeoLocData()} openLocPage={this.openLocPage}/>
+          <div id="loginButtonMain" className="purpleButton" onClick={this.handleLogin}>{(this.state.userLoggedIn === "") ? "Register/Login" : "Logout"}</div>
           </div>
       </div>
 

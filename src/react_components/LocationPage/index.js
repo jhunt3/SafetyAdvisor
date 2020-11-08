@@ -18,7 +18,7 @@ class LocationPage extends React.Component {
   render() {
     return (
       <div className="body">
-        <div className="purpleButton" onClick={this.props.leaveReview}>+ Review</div>
+        <div id="addReviewButton" className="purpleButton" onClick={this.props.leaveReview}>+ Review</div>
         <img className="locImage" src={this.props.locData.imagePath}/>
         <div className="infoContainer">
           <div className="titleContainer">

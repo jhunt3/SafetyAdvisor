@@ -27,7 +27,6 @@ class ReviewPage extends React.Component {
     const { rating } = this.state;
     return (
       <div className="body">
-
         <img className="locImage" src={this.props.locData.imagePath}/>
         <button className="backButton" onClick={this.props.backToLocPage}>Back</button>
         <div className="infoContainer">
