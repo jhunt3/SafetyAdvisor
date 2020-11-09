@@ -34,10 +34,6 @@ h3{
   color: #464545;
 }
 
-.review {
-  margin-top: 1vh
-}
-
 .reviewsContainer {
   position: relative;
   margin-left: 10px;
@@ -45,57 +41,62 @@ h3{
   overflow: auto;
 }
 
-.profileIconContainer {
-	float: left;
+#reviewHeader {
+  margin-bottom: 10px;
+}
+
+.review .profileIconContainer {
+  float: left;
   width: 10%;
   height:10%
 }
 
-.profileIcon {
+.review .profileIcon {
   display: inline-block;
-	width: 100%;
-	height: 100%;
-	border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
 
-.usernameContainer {
+.review .usernameContainer {
+  display: inline-block;
   margin-top: 2%;
   display: inline-block;
   width: 50%;
 }
 
-.username {
+.review .username {
   color: black;
   text-decoration: none;
   font-size: 1.5vw;
   font-weight: bold;
 }
 
-.usernameContainer:hover {
-  cursor:pointer
+.review .usernameContainer:hover {
+  cursor: pointer;
 }
 
-.reviewRatingContainer {
+.review .reviewRatingContainer {
   display: inline-block;
   margin-left: 5%;
   width: 30%;
 }
 
-.reviewContainer {
+.review .reviewContainer {
   float: left;
   font-size: 1vw;
-	margin-top: 1vh;
-	margin-left: 15%;
-	width:80%;
+  margin-top: 1vh;
+  margin-left: 15%;
+  width:80%;
 }
 
-.deleteUserButton {
+.review .deleteUserButton {
   position: absolute;
   height: 3vh;
   left: 1vw;
   bottom: 1vh;
 }
 
-.deleteUserButton:hover {
+.review .deleteUserButton:hover {
   cursor: pointer;
 }

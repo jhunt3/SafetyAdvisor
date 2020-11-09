@@ -3,7 +3,7 @@
     width: 35%;
     height: 100%;
   }
-  
+
 .searchResultsContainer {
   margin-left: 5%;
 }
@@ -44,7 +44,7 @@
   height: 50px;
 }
 
-.titleContainer {
+.reviewInfoContainer .titleContainer {
   width: 40%;
   margin-left: 20px;
   display:inline-block;
