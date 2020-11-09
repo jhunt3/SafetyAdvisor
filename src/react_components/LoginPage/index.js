@@ -36,13 +36,31 @@ class LoginPage extends React.Component {
     e.preventDefault();
     if(this.props.handleLoginAttempt(this.state.user, this.state.pass)) {
       return;
-    } 
+    } else if (this.state.user === "") {
+      alert("Username field is blank.");
+      return;
+    } else if (this.state.pass === "") {
+      alert("Password field is blank.");
+      return;
+    }
+    alert("Login Failed.");
   }
   handleRegisterSubmit(e) {
     e.preventDefault();
-    if (this.state.pass !== this.state.passVerification) {
-      console.log("Failed");
+    if (this.state.user === "") {
+      alert("Username field is blank.");
+      return;
+    } else if (this.state.pass === "") {
+      alert("Password field is blank.");
+      return;
+    } else if (this.state.passVerification === "") {
+      alert("Password Verification field is blank.");
+      return;
+    } else if (this.state.pass !== this.state.passVerification) {
+      alert("Passwords do not match.");
+      return;
     }
+    alert("Registration has not been implemented yet.");
   }
 
   handleChangeUser(e) {

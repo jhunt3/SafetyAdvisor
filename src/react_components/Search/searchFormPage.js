@@ -18,6 +18,11 @@ class SearchForm extends React.Component {
   }
 
   handleSubmit(event) {
+    if (this.state.value === "Venue Name") {
+      event.preventDefault();
+      alert("Please enter a valid search query.");
+      return;
+    }
     this.props.setSearchResult(this.state.value);
   }
 

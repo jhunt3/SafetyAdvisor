@@ -131,7 +131,7 @@ export class App extends React.Component {
         if(this.state.sidePageClass === "leaveReviewPage"){
             return (<div className="sidePage">
             {this.renderExitButton()}
-            <ReviewPage locData={this.state.locData.getLoc(this.state.currLocId)} backToLocPage={this.backToLocPage}/>
+            <ReviewPage locData={this.state.locData.getLoc(this.state.currLocId)} backToLocPage={this.backToLocPage} currentUser={this.state.userLoggedIn}/>
           </div>);
         } else{
             return (<div className="sidePage">

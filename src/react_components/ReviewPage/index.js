@@ -12,6 +12,16 @@ class ReviewPage extends React.Component {
     this.state = {
       rating: 1
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    if (this.props.currentUser === "") {
+      alert("You must login to submit a review.");
+      return;
+    }
+    alert("Review submission not implemented.");
   }
 
   generateButtonTagIndicators(tags) {
