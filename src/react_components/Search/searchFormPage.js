@@ -6,7 +6,7 @@ class SearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Search'
+      value: 'Venue Name'
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,14 +23,15 @@ class SearchForm extends React.Component {
 
   render() {
     return(
-        <div className="searchResultsContainer">
-            <h2>Search</h2>
+        <div className="searchResultsFormContainer">
+            <h2 id="searchHeader">Search for Venues</h2>
+            <br></br>
             <form onSubmit={this.handleSubmit}>
-                <label>
-                Name:
                 <input type="text" value={this.state.value} onChange={this.handleChange}/>
-                </label>
-                <input type="submit" value="Submit" />
+                <br></br>
+                <br></br>
+                <br></br>
+                <input class="purpleButton searchButtonFormPage" type="submit" value="Submit" />
             </form>
         </div>
     )

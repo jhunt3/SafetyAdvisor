@@ -8,6 +8,11 @@
   margin-left: 5%;
 }
 
+.searchResultsFormContainer {
+  padding-top: 50%;
+  text-align: center;
+}
+
 .resultNameContainer {
   float: left;
   width: 60%;
@@ -85,4 +90,12 @@
 
 #resultsHeader {
   padding-top: 2vh;
+}
+
+.searchButtonFormPage {
+  position: relative;
+}
+
+#searchHeader {
+  font-size: 3vh;
 }
