@@ -1,8 +1,3 @@
-.body {
-  width: 35%;
-  height: 100%;
-  overflow: auto;
-}
 .locImage {
   display: block;
   position: relative;
@@ -10,11 +5,13 @@
   width: 100%;
   height: 45%;
 }
+
 .infoContainer {
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
 }
+
 .titleContainer {
   width: 50%;
   display:inline-block;

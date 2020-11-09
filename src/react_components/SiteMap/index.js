@@ -11,6 +11,19 @@ const mapStyle = {
   height: '100%'
 };
 
+const hideStyle = [
+    {
+        featureType: "poi",
+        elementType: "labels",
+        stylers: [{ visibility: "off" }]
+    },
+    {
+        featureType: "transit",
+        elementType: "labels",
+        stylers: [{ visibility: "off" }]
+    }
+]
+
 const infoWindowStyle = {
   width: '100%',
   height: '100%',
@@ -29,8 +42,8 @@ class SiteMap extends React.Component {
 
     this.onMarkerMouseover = this.onMarkerMouseover.bind(this);
     this.onMarkerMouseout = this.onMarkerMouseout.bind(this);
-  } 
-  
+  }
+
   onMarkerMouseover(props, marker, e) {
     if (!this.state.showingInfoWindow) {
       this.setState({
@@ -52,7 +65,7 @@ class SiteMap extends React.Component {
   generateTagIndicators(activePlace) {
     if (activePlace.tags) {
       const tags = activePlace.tags.filter((tag) => {return tag.val !== 0});
-      return tags.map((tag) => {return <TagIndicator 
+      return tags.map((tag) => {return <TagIndicator
                                           name={tag.name}
                                           val={tag.val}
                                         />
@@ -89,11 +102,12 @@ class SiteMap extends React.Component {
 
   render() {
     return (
-        <Map 
+        <Map
           google={this.props.google}
           zoom={16}
           style={mapStyle}
-          initialCenter={{ lat: 43.663, lng: -79.392}}>
+          initialCenter={{ lat: 43.663, lng: -79.392}}
+          styles={hideStyle}>
           {this.generateMarkers()}
           <InfoWindow marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
@@ -102,13 +116,13 @@ class SiteMap extends React.Component {
               {this.generateTagIndicators(this.state.activePlace)}
           </InfoWindow>
         </Map>
-        
+
     );
   }
 
 }
 
+
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyAoQit1a6-1wL8EneYqGTO4aFTfmpixG4Y'
 })(SiteMap);
-

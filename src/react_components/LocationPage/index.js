@@ -22,7 +22,7 @@ class LocationPage extends React.Component {
         <div id="addReviewButton" className="purpleButton" onClick={this.props.leaveReview}>+ Review</div>
         <img className="locImage" alt="locationImage" src={this.props.locData.imagePath}/>
         <div className="infoContainer">
-          <div className="titleContainer">
+          <div className="locationTitleContainer">
             <h1 id="nameHeader">{this.props.locData.name}</h1>
             <h3 id="venueHeader">{this.props.locData.venueType}</h3>
           </div>
@@ -30,8 +30,8 @@ class LocationPage extends React.Component {
             <StarRatings rating={this.props.locData.avgRating}
                         starRatedColor="grey"
                         starEmptyColor="darkgrey"
-                        starDimension='2vw'
-                        starSpacing='0.2vw'/>
+                        starDimension='1.5vw'
+                        starSpacing='0.1vw'/>
             <h3 id="noRatings">({this.props.locData.numRatings} Ratings)</h3>
           </div>
           {this.generateTagIndicators(this.props.locData.tags.filter((tag) =>

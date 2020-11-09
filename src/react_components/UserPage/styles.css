@@ -34,10 +34,6 @@ h3{
   color: #464545;
 }
 
-.review {
-  margin-top: 1vh
-}
-
 .reviewsContainer {
   position: absolute;
   padding-left: 5%;
@@ -78,14 +74,14 @@ h3{
 .username {
   position: absolute;
   color: black;
-  padding-left: 2vw;
+  padding-left: 1vw;
   text-decoration: none;
   font-size: 1.5vw;
   font-weight: bold;
 }
 
-.usernameContainer:hover {
-  cursor:pointer
+.review .usernameContainer:hover {
+  cursor: pointer;
 }
 
 .reviewRatingContainer {
@@ -97,7 +93,7 @@ h3{
   padding-top: 3vh;
 }
 
-.reviewContainer {
+.review .reviewContainer {
   float: left;
   display: block;
   font-size: 1vw;
@@ -109,13 +105,13 @@ h3{
   border-bottom: 1px solid black;
 }
 
-.deleteUserButton {
+.review .deleteUserButton {
   position: absolute;
   height: 3vh;
   left: 1vw;
   bottom: 1vh;
 }
 
-.deleteUserButton:hover {
+.review .deleteUserButton:hover {
   cursor: pointer;
 }

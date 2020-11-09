@@ -17,16 +17,19 @@
   margin-right: 10px;
   border-bottom: 1px black solid;
 }
-.titleContainer {
-  width: 50%;
+.locationTitleContainer {
   display:inline-block;
   position: relative;
+  width:60%;
 }
 #nameHeader {
   font-size: 1.8vw;
+  margin-bottom: 5px;
   font-weight: bolder;
 }
 #venueHeader{
+  margin-top:5px;
+  margin-bottom:5px;
   font-size: 1.5vw;
   color: #464545
 }
@@ -37,7 +40,6 @@
   font-size: 1.5vw;;
 }
 .avgRatingsContainer {
-  width: 50%;
   display:inline-block;
   position: relative;
   text-align: right;
