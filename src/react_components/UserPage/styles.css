@@ -35,38 +35,46 @@ h3{
 }
 
 .reviewsContainer {
-  position: relative;
-  margin-left: 10px;
-  margin-right: 10px;
+  position: absolute;
+  padding-left: 5%;
+  padding-right: 5%;
   overflow: auto;
-}
-
-#reviewHeader {
-  margin-bottom: 10px;
-}
-
-.review .profileIconContainer {
-  float: left;
-  width: 10%;
-  height:10%
-}
-
-.review .profileIcon {
-  display: inline-block;
-  width: 100%;
   height: 100%;
-  border-radius: 50%;
+  width: 90%;
 }
 
-.review .usernameContainer {
+.reviewDataContainer {
   display: inline-block;
-  margin-top: 2%;
-  display: inline-block;
-  width: 50%;
+  position: relative;
+  width: 100%;
+  height: 10vh;
 }
 
-.review .username {
+.profileIconContainer {
+  display:flex;
+  float: left;
+  width: 10vh;
+  height: 10vh;
+}
+.profileIcon {
+  object-fit:cover; 
+  width:100%; 
+  height:100%; 
+	border-radius: 50%;
+}
+
+.usernameContainer {
+  display:flex;
+  float: left;
+  height: 7vh;
+  width: 38%;
+  padding-top: 3vh;
+}
+
+.username {
+  position: absolute;
   color: black;
+  padding-left: 1vw;
   text-decoration: none;
   font-size: 1.5vw;
   font-weight: bold;
@@ -76,18 +84,25 @@ h3{
   cursor: pointer;
 }
 
-.review .reviewRatingContainer {
-  display: inline-block;
-  margin-left: 5%;
+.reviewRatingContainer {
+  top: 20%;
+  display:flex;
+  float: right;
   width: 30%;
+  height: 7vh;
+  padding-top: 3vh;
 }
 
 .review .reviewContainer {
   float: left;
+  display: block;
   font-size: 1vw;
-  margin-top: 1vh;
-  margin-left: 15%;
-  width:80%;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+	margin-left: 5vh;
+  width:90%;
+  padding-bottom: 1vh;
+  border-bottom: 1px solid black;
 }
 
 .review .deleteUserButton {

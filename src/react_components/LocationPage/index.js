@@ -41,21 +41,23 @@ class LocationPage extends React.Component {
         <h2 id="reviewHeader">Reviews</h2>
         {this.props.locData.reviews.map(review => (
             <div className="review">
-                <div className="profileIconContainer">
+                <div className="reviewDataContainer">
+                  <div className="profileIconContainer">
                     <img className="profileIcon" alt="profileIcon" src={review.imagePath}/>
-                </div>
-                <div className="usernameContainer">
-                    <p className="username" title={`Go to ${review.username}'s page`} onClick={() => {
-                      this.props.openUserPage(review.username);
-                    }}>{review.username}</p>
-                </div>
-                <div className="reviewRatingContainer">
-                    <StarRatings rating={review.rating}
-                        starRatedColor="grey"
-                        starEmptyColor="darkgrey"
-                        starDimension='1.5vw'
-                        starSpacing='0.15vw'/>
-                    {showDeleteButton(this.props.currentUser, review.username, this.props.locData.id, review.reviewId, this.props.deleteReview)}
+                  </div>
+                  <div className="usernameContainer"  title={`Go to ${review.username}'s page`} onClick={() => {
+                        this.props.openUserPage(review.username);
+                      }}>
+                      <span className="username">{review.username}</span>
+                  </div>
+                  <div className="reviewRatingContainer">
+                      <StarRatings rating={review.rating}
+                          starRatedColor="grey"
+                          starEmptyColor="darkgrey"
+                          starDimension='1.5vw'
+                          starSpacing='0.15vw'/>
+                      {showDeleteButton(this.props.currentUser, review.username, this.props.locData.id, review.reviewId, this.props.deleteReview)}
+                  </div>
                 </div>
                 <div className="reviewContainer">
                     {review.review}

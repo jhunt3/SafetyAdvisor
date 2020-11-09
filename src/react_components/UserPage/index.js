@@ -22,19 +22,23 @@ class UserPage extends React.Component {
             <h2>Reviews</h2>
             {this.props.userData.reviews.map(review => (
                 <div className="review">
+                  <div className="reviewDataContainer">
                     <div className="profileIconContainer">
                         <img className="profileIcon" alt="profileIcon" src={this.props.locData[review.location_id].imagePath}/>
                     </div>
-                    <div className="usernameContainer" onClick={() => {this.props.openLocPage(review.location_id);}}>
-                        <strong>{this.props.locData[review.location_id].name}</strong>
+                    <div className="usernameContainer" title={`Go to ${this.props.locData[review.location_id].name}'s page`} onClick={() => {
+                        this.props.openLocPage(review.location_id);
+                      }}>
+                      <span className="username">{this.props.locData[review.location_id].name}</span>
                     </div>
                     <div className="reviewRatingContainer">
                         <StarRatings rating={review.rating}
                             starRatedColor="grey"
                             starEmptyColor="darkgrey"
-                            starDimension='20px'
-                            starSpacing='2px'/>
+                            starDimension='1.5vw'
+                            starSpacing='0.15vw'/>
                         {showDeleteButton(this.props.currentUser, this.props.userData.username , review.location_id, review.reviewId, this.props.deleteReview)}
+                    </div>
                     </div>
                     <div className="reviewContainer">
                         {review.review}
