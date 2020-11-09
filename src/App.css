@@ -85,6 +85,11 @@ body {
   right: 6vh
 }
 
+#userPageButton {
+  bottom: 1vh;
+  right: 6vh
+}
+
 .loginPage {
   position: absolute;
   z-index: 4;

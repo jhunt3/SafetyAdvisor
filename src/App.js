@@ -37,11 +37,12 @@ export class App extends React.Component {
     this.state.locData.updateTags(1, [{name: defaultTags[2], val: 42.5}, {name: defaultTags[3], val: 0.5}]);
     this.state.locData.updateTags(2, [{name: defaultTags[5], val: 100}]);
 
+    this.state.userData.addUser("admin", "admin")
     this.state.userData.addUser("user", "js")
     this.state.userData.addUser("janedoe", "jd")
 
-    this.state.userData.addReview(0, 0, 4.0, "Lots of hand sanitizer on hand!")
-    this.state.userData.addReview(0, 1, 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
+    this.state.userData.addReview(0, 1, 4.0, "Lots of hand sanitizer on hand!")
+    this.state.userData.addReview(0, 2, 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
     this.state.locData.addReview(0, "user", 4.0, "Lots of hand sanitizer on hand!")
     this.state.locData.addReview(0, "janedoe", 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
 
@@ -67,9 +68,11 @@ export class App extends React.Component {
     }
   }
   openUserPage(username) {
-    this.setState({currUserId: username});
-    this.setState({sidePageClass: "userPage"});
-
+    if (this.state.sidePageClass === "userPage" && this.state.currUserId === username) {
+      this.closeSidePage();
+    } else {
+      this.setState({currUserId: username, sidePageClass: "userPage", mapClass: "sideMap"});
+    }
   }
 
   openSearchPage() {
@@ -179,7 +182,11 @@ export class App extends React.Component {
 
   }
   backToLocPage = () => {
-    this.setState({sidePageClass: "locPage"});
+    if (this.state.currLocId !== -1) {
+      this.setState({sidePageClass: "locPage"});
+    } else {
+      this.closeSidePage();
+    }
   }
 
   backToSearchPage = () => {
@@ -198,6 +205,15 @@ export class App extends React.Component {
     }
   }
 
+  renderUserPageButton() {
+    if (this.state.userLoggedIn !== "") {
+      return (<div id="userPageButton" className="purpleButton" onClick={() => {this.openUserPage(this.state.userLoggedIn)}}>
+        {`${this.state.userLoggedIn}'s Page`}
+      </div>);
+    }
+    return;
+  }
+
   render() {
     return (
       <div>
@@ -206,6 +222,7 @@ export class App extends React.Component {
           <div className={this.state.mapClass}>
           <button className = "searchButton purpleButton" onClick={this.openSearchPage}>Search</button>
           <SiteMap locations={this.state.locData.getGeoLocData()} openLocPage={this.openLocPage}/>
+          {this.renderUserPageButton()}
           <div id="loginButtonMain" className="purpleButton" onClick={this.handleLogin}>{(this.state.userLoggedIn === "") ? "Register/Login" : "Logout"}</div>
           </div>
       </div>

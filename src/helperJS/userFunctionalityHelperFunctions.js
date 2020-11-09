@@ -6,7 +6,7 @@ export const showDeleteButton = (currentUser, username, locId, reviewId, deleteR
 };
 
 export const showDeleteUserButton = (currentUser, username, deleteUser) => {
-  if (currentUser === "admin") {
+  if (currentUser === "admin" && username !== "admin" ) {
     return (<img className="deleteUserButton" alt="deleteUserButton" src={`${process.env.PUBLIC_URL}/assets/images/trash.png`} onClick={() => {deleteUser(username)}} title="Delete User"/>);
   }
   return;
