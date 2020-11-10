@@ -12,7 +12,7 @@ class UserPage extends React.Component {
         <button className="backButton" onClick={this.props.backToLocPage}>Back</button>
         {showDeleteUserButton(this.props.currentUser, this.props.userData.username, this.props.deleteUser)}
         <div className="userInfoContainer">
-        <img className="profilePic" alt="profilePic" src={this.props.userData.imagePath}/>  
+        <img className="profilePic" alt="profilePic" src={this.props.userData.imagePath}/>
             <div className="userTitleContainer">
               <h1>{this.props.userData.username}</h1>
               <h3>{this.props.userData.reviews.length} Review</h3>
@@ -26,23 +26,26 @@ class UserPage extends React.Component {
                     <div className="profileIconContainer">
                         <img className="profileIcon" alt="profileIcon" src={this.props.locData[review.location_id].imagePath}/>
                     </div>
-                    <div className="usernameContainer" title={`Go to ${this.props.locData[review.location_id].name}'s page`} onClick={() => {
-                        this.props.openLocPage(review.location_id);
-                      }}>
-                      <span className="username">{this.props.locData[review.location_id].name}</span>
-                    </div>
-                    <div className="reviewRatingContainer">
-                        <StarRatings rating={review.rating}
-                            starRatedColor="grey"
-                            starEmptyColor="darkgrey"
-                            starDimension='1.5vw'
-                            starSpacing='0.15vw'/>
-                        {showDeleteButton(this.props.currentUser, this.props.userData.username , review.location_id, review.reviewId, this.props.deleteReview)}
-                    </div>
+                    <div className="firstLine">
+                        <div className="usernameContainer" title={`Go to ${this.props.locData[review.location_id].name}'s page`} onClick={() => {
+                            this.props.openLocPage(review.location_id);
+                          }}>
+                          <span className="username">{this.props.locData[review.location_id].name}</span>
+                        </div>
+                        <div className="reviewRatingContainer">
+                            <StarRatings rating={review.rating}
+                                starRatedColor="grey"
+                                starEmptyColor="darkgrey"
+                                starDimension='1.5vw'
+                                starSpacing='0.15vw'/>
+                            {showDeleteButton(this.props.currentUser, this.props.userData.username , review.location_id, review.reviewId, this.props.deleteReview)}
+                        </div>
                     </div>
                     <div className="reviewContainer">
                         {review.review}
                     </div>
+                  </div>
+
                 </div>
             ))}
         </div>

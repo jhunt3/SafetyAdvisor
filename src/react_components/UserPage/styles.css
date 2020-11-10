@@ -43,8 +43,13 @@ h3{
 .reviewDataContainer {
   display: block;
   position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  float: left;
   width: 100%;
-  height: 5vh;
+  border-bottom: 1px black solid;
 }
 
 .profileIconContainer {
@@ -54,9 +59,9 @@ h3{
   height: 5vw;
 }
 .profileIcon {
-  object-fit:cover; 
-  width:100%; 
-  height:100%; 
+  object-fit:cover;
+  width:100%;
+  height:100%;
 	border-radius: 50%;
 }
 
@@ -96,10 +101,9 @@ h3{
   font-size: 1vw;
   margin-top: 2vh;
   margin-bottom: 2vh;
-	margin-left: 5vh;
-  width:90%;
+  margin-left: 18vh;
+  width: 80%;
   padding-bottom: 1vh;
-  border-bottom: 1px solid black;
 }
 
 .deleteUserButton {

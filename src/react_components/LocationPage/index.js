@@ -58,10 +58,12 @@ class LocationPage extends React.Component {
                           starSpacing='0.15vw'/>
                       {showDeleteButton(this.props.currentUser, review.username, this.props.locData.id, review.reviewId, this.props.deleteReview)}
                   </div>
+                  <div className="reviewContainer">
+                      {review.review}
+                  </div>
+
                 </div>
-                <div className="reviewContainer">
-                    {review.review}
-                </div>
+
             </div>
         ))}
 
