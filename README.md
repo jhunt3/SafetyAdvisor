@@ -40,7 +40,7 @@ Login by clicking "Register/Login" on the upper right handside, "Login", and ent
 When logged in, administrators can:
 
 - delete the past reviews of any user on the site
-- delete any user (except for "admin")
+- delete any user (except for "admin") by clicking the trashcan on the bottom left handside of each user page
 - logout (by clicking "Logout" on the upper right handside)
 
 ## Third Party Packages Used

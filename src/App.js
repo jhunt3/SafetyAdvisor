@@ -42,9 +42,9 @@ export class App extends React.Component {
     this.state.userData.addUser("janedoe", "jd")
 
     this.state.userData.addReview(0, 1, 4.0, "Lots of hand sanitizer on hand!")
-    this.state.userData.addReview(0, 2, 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
+    this.state.userData.addReview(0, 2, 4.5, "Washrooms frequently cleaned. Friendly staff!")
     this.state.locData.addReview(0, "user", 4.0, "Lots of hand sanitizer on hand!")
-    this.state.locData.addReview(0, "janedoe", 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
+    this.state.locData.addReview(0, "janedoe", 4.5, "Washrooms frequently cleaned. Friendly staff!")
 
     this.openLocPage = this.openLocPage.bind(this);
     this.openUserPage = this.openUserPage.bind(this);
@@ -116,10 +116,10 @@ export class App extends React.Component {
           } else {
             return (<div className="sidePage">
               {this.renderExitButton()}
-              <SearchPage locData={this.state.locData.getLocationsWithQuery(this.state.currSearchQuery)} userData={this.state.userData.getUser(this.state.currUserId)} 
+              <SearchPage locData={this.state.locData.getLocationsWithQuery(this.state.currSearchQuery)} userData={this.state.userData.getUser(this.state.currUserId)}
               openLocPage={this.openLocPage} backToSearchPage={this.backToSearchPage} />
             </div>);
-          }  
+          }
         }
         if (this.state.currUserId !== -1 && this.state.sidePageClass === 'userPage') {
             return (<div className="sidePage">
@@ -136,7 +136,7 @@ export class App extends React.Component {
         } else{
             return (<div className="sidePage">
               {this.renderExitButton()}
-              <LocationPage locData={this.state.locData.getLoc(this.state.currLocId)} openUserPage={this.openUserPage} 
+              <LocationPage locData={this.state.locData.getLoc(this.state.currLocId)} openUserPage={this.openUserPage}
               leaveReview={this.leaveReview} currentUser={this.state.userLoggedIn} deleteReview={this.deleteReview}/>
             </div>);
         }
@@ -161,7 +161,7 @@ export class App extends React.Component {
     }
     return false;
   }
-  
+
 
   renderOverlayPage() {
     if (this.state.overlayClass === "loginPage") {
