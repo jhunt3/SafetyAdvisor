@@ -60,11 +60,11 @@ export class App extends React.Component {
   // Marker Handler
   openLocPage(id) {
     const otherSetting = (this.state.mapClass === "fullMap") ? "sideMap" : "fullMap";
-    this.setState({sidePageClass: "locPage"});
     if (((this.state.currLocId === -1) || (this.state.currLocId === id)) && !(this.state.showSearchPage || this.state.currUserId !== -1)) {
-      this.setState({currUserId: -1, showSearchPage: false, mapClass: otherSetting, currLocId: ((this.state.currLocId === id) ? -1 : id)});
+      this.setState({currUserId: -1, showSearchPage: false, mapClass: otherSetting, currLocId: ((this.state.currLocId === id) ? -1 : id),
+        sidePageClass: "locPage"});
     } else {
-      this.setState({currUserId: -1, showSearchPage: false, currLocId: id});
+      this.setState({currUserId: -1, showSearchPage: false, currLocId: id, sidePageClass: "locPage"});
     }
   }
   openUserPage(username) {
