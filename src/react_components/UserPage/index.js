@@ -11,8 +11,8 @@ class UserPage extends React.Component {
       <div className="body">
         <button className="backButton" onClick={this.props.backToLocPage}>Back</button>
         {showDeleteUserButton(this.props.currentUser, this.props.userData.username, this.props.deleteUser)}
-        <img className="profilePic" alt="profilePic" src={this.props.userData.imagePath}/>
         <div className="userInfoContainer">
+        <img className="profilePic" alt="profilePic" src={this.props.userData.imagePath}/>  
             <div className="userTitleContainer">
               <h1>{this.props.userData.username}</h1>
               <h3>{this.props.userData.reviews.length} Review</h3>
