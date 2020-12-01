@@ -1,0 +1,27 @@
+
+.tagContainer {
+  position: relative;
+  display:inline-flex;
+  background-color: darkgrey;
+  text-align: center;
+  margin: 0.5vw;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.tagName {
+  font-size: 1vw;
+  padding: 6px;
+  display: inline-flex;
+  position: relative;
+  z-index: 1;
+}
+.filled {
+  position: absolute;
+  top: 0px;
+  z-index: 0;
+  height: 100%;
+  background-color: grey;
+}
+.tagContainer:hover {
+  cursor: crosshair;
+}
