@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 
 import "./styles.css";
 
@@ -75,7 +76,7 @@ class LoginPage extends React.Component {
 
   renderPromptPage() {
     return (<div>
-        <div className="backgroundLogin" onClick={this.props.closeHandler}></div>
+        <div className="backgroundLogin" onClick={this.props.history.goBack}></div>
         <div className="loginBoxContainer">
           <h1 className="loginHeader">Do you already have an account?</h1>
           <div className="loginYes">
@@ -92,7 +93,7 @@ class LoginPage extends React.Component {
 
   renderLoginPage() {
     return (<div>
-        <div className="backgroundLogin" onClick={this.props.closeHandler}></div>
+        <div className="backgroundLogin" onClick={this.props.history.goBack}></div>
         <div className="loginBoxContainer">
         <button className="backButton" onClick={this.prompt}>Back</button>
         <h1 className="lessPadding">Login</h1>
@@ -119,7 +120,7 @@ class LoginPage extends React.Component {
 
   renderRegisterPage() {
     return (<div>
-        <div className="backgroundLogin" onClick={this.props.closeHandler}></div>
+        <div className="backgroundLogin" onClick={this.props.history.goBack}></div>
         <div className="loginBoxContainer">
           <button className="backButton" onClick={this.prompt}>Back</button>
           <h1 className="lessPadding">Register</h1>
@@ -168,4 +169,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);

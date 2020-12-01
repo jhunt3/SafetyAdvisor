@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import StarRatings from 'react-star-ratings';
 import TagIndicator from '../TagIndicator';
 
@@ -15,10 +16,13 @@ class SearchPage extends React.Component {
   }
 
   generateSearchResults() {
-      if (this.props.locData.length === 0) {
+      const path = this.props.history.location.pathname.split('/');
+      const query = path[path.length - 1];
+      const locData = this.props.locData.getLocationsWithQuery(query);
+      if (locData.length === 0) {
         return <h4>No results found.</h4>;
       }
-      return (this.props.locData.map(location => (
+      return (locData.map(location => (
         <div className="review">
             <div className="reviewInfoContainer">
 
@@ -27,7 +31,7 @@ class SearchPage extends React.Component {
                 <div className="titleContainer">
                     
                     <p className="resultTitle" onClick={() => {
-                    this.props.openLocPage(location.id);
+                    this.props.history.push(`/loc/${location.id}`);
                     }}>{location.name}</p>
                     <h3 className="resultSubtitle">{location.venueType}</h3>
                 </div>
@@ -50,10 +54,10 @@ class SearchPage extends React.Component {
     return(
         <div className="searchResultsContainer">
             <h2 id="resultsHeader">Results</h2>
-            <button className="backButton" onClick={this.props.backToSearchPage}>Back</button>
+            <button className="backButton" onClick={this.props.history.goBack}>Back</button>
             {this.generateSearchResults()}
         </div>
     )
   }   
 }
-export default SearchPage;
+export default withRouter(SearchPage);

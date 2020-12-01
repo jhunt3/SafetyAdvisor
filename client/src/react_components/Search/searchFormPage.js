@@ -1,6 +1,7 @@
 import React from 'react';
 
 import "./styles.css";
+import { withRouter } from "react-router-dom";
 
 class SearchForm extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class SearchForm extends React.Component {
       alert("Please enter a valid search query.");
       return;
     }
-    this.props.setSearchResult(this.state.value);
+    this.props.history.push(`/search/${this.state.value}`);
   }
 
   render() {
@@ -42,4 +43,4 @@ class SearchForm extends React.Component {
     )
   }   
 }
-export default SearchForm;
+export default withRouter(SearchForm);

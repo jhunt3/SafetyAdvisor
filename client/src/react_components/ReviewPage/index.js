@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import StarRatingComponent from 'react-star-rating-component';
 
 import ButtonTagIndicator from './../ButtonTagIndicator';
@@ -34,15 +35,17 @@ class ReviewPage extends React.Component {
 
   render() {
     const { rating } = this.state;
+    const path = this.props.history.location.pathname.split('/')
+    const locId = path[path.length - 2];
     return (
       <div className="body">
-        <img className="locImage" alt="locationImage" src={this.props.locData.imagePath}/>
-        <button className="backButton" onClick={this.props.backToLocPage}>Back</button>
+        <img className="locImage" alt="locationImage" src={this.props.locData.getLoc(locId).imagePath}/>
+        <button className="backButton" onClick={this.props.history.goBack}>Back</button>
         <div className="infoContainer">
           <div className="titleContainer">
 
-            <h1 id="nameHeader">{this.props.locData.name}</h1>
-            <h3 id="venueHeader">{this.props.locData.venueType}</h3>
+            <h1 id="nameHeader">{this.props.locData.getLoc(locId).name}</h1>
+            <h3 id="venueHeader">{this.props.locData.getLoc(locId).venueType}</h3>
           </div>
           <div className="ratingsContainer">
 
@@ -57,7 +60,7 @@ class ReviewPage extends React.Component {
 
           </div>
           <p className="reviewPageText">Please select safety features present</p>
-          {this.generateButtonTagIndicators(this.props.locData.tags)}
+          {this.generateButtonTagIndicators(this.props.locData.getLoc(locId).tags)}
         </div>
         <p id="commentHeader" className="reviewPageText">Comments:</p>
       <form className="comment" onSubmit={this.handleSubmit}>
@@ -75,4 +78,4 @@ class ReviewPage extends React.Component {
 
 }
 
-export default ReviewPage;
+export default withRouter(ReviewPage);

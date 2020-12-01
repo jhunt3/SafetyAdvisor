@@ -1,5 +1,6 @@
 import React from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react';
+import { withRouter } from "react-router-dom";
 
 import TagIndicator from './../TagIndicator';
 
@@ -90,7 +91,13 @@ class SiteMap extends React.Component {
                     }}
                     tags={loc.tags}
                     onClick={() => {
-                      this.props.openLocPage(loc.id);
+                      const path = this.props.history.location.pathname.split('/');
+                      if (path[path.length - 1] === "" || parseInt(path[path.length - 1]) !== loc.id) {
+                        this.props.history.push(`/loc/${loc.id}`);
+                      } else {
+                        this.props.history.push(`/`);
+                      }
+                      
                       this.onMarkerMouseout();
                     }}
                     onMouseover={this.onMarkerMouseover}
@@ -123,6 +130,6 @@ class SiteMap extends React.Component {
 }
 
 
-export default GoogleApiWrapper({
+export default withRouter(GoogleApiWrapper({
   apiKey: 'AIzaSyAoQit1a6-1wL8EneYqGTO4aFTfmpixG4Y'
-})(SiteMap);
+})(SiteMap));
