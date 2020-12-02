@@ -6,7 +6,7 @@ import { Route, Switch, withRouter, Link } from "react-router-dom";
 import './App.css';
 import LocationData from './helperJS/LocationData';
 import UserData from './helperJS/UserData';
-import { checkSession } from "./helperJS/user";
+import { checkSession, logout } from "./helperJS/loginHelper";
 import SiteMap from './react_components/SiteMap';
 import LocationPage from './react_components/LocationPage';
 import UserPage from './react_components/UserPage';
@@ -99,6 +99,19 @@ export class App extends React.Component {
     return;
   }
 
+  renderLoginButton() {
+    if (this.state.currentUser === null) {
+      return (
+        <Link to={"/login"}>
+          <div id="loginButtonMain" className="purpleButton">Register/Login</div>
+        </Link>
+      );
+    } 
+    return (
+      <div id="loginButtonMain" className="purpleButton" onClick={() => {logout(this)}}>Logout</div>
+    );
+  }
+
   render() {
     const path = this.props.history.location.pathname.split('/');
     return (
@@ -149,14 +162,12 @@ export class App extends React.Component {
             }/>
         </Switch>
         { /* Map  */ } 
-        <div className={(path[path.length - 1] === "") ? "fullMap" : "sideMap"}>
+        <div className={(path[path.length - 1] === "" || path[path.length - 1] === 'login') ? "fullMap" : "sideMap"}>
           <Link to={"/search"}>
             <button className = "searchButton purpleButton">Search</button>
           </Link>
           <SiteMap locations={this.state.locData.getGeoLocData()} toggleMap={this.toggleMapClass}/>
-          <Link to={"/login"}>
-            <div id="loginButtonMain" className="purpleButton">{(this.state.userLoggedIn === "") ? "Register/Login" : "Logout"}</div>
-          </Link>
+          {this.renderLoginButton()}
         </div>
       </div>
     );

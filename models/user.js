@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs')
 // Making a Mongoose model a little differently: a Mongoose Schema
 // Allows us to add additional functionality.
 const UserSchema = new mongoose.Schema({
-	email: {
+	username: {
 		type: String,
 		required: true,
 		minlength: 1,
@@ -67,6 +67,6 @@ UserSchema.statics.findByUsernamePassword = function(username, password) {
 }
 
 // make a model using the User schema
-const User = mongoose.model('User', UserSchema)
+const User = mongoose.model('User', UserSchema, "userLogin");
 module.exports = { User }
 

@@ -1,53 +1,9 @@
 /* Student mongoose model */
 const mongoose = require('mongoose')
 
-const LocationSchema = mongoose.Schema('Location', {
-	name: {
-		type: String,
-		required: true,
-		minlegth: 1,
-		trim: true
-	},
-	id: {
-		type: Number,
-		required: true,
-	},
-	venueType: {
-		type: String,
-		required: true,
-		minlegth: 1,
-		trim: true
-	},
-	lat: {
-		type: Number,
-		required: true,
-	},
-	lng: {
-		type: Number,
-		required: true,
-	},
-	avgRating: {
-		type: Number,
-		required: true,
-		default: 2.5
-	},
-	numRating: {
-		type: Number,
-		required: true,
-		default: 0
-	},
-	tags: {
-		type: [String],
-		required: true
-	},
-	imagePath: {
-		type: String,
-		required: true
-	},
-	reviews: {
-		type: [ReviewSchema],
-		required: true
-	}
+const tagSchema = new mongoose.Schema({
+	tag: String,
+	value: Number
 });
 
 const ReviewSchema = new mongoose.Schema({
@@ -56,6 +12,19 @@ const ReviewSchema = new mongoose.Schema({
 	imagePath: String,
 	reviewId: Number,
 	review: String
+});
+
+const LocationSchema = mongoose.Schema({
+	name: String,
+	id: Number,
+	venueType: String,
+	lat: Number,
+	lng: Number,
+	avgRating: Number,
+	numRating:  Number,
+	tags: [tagSchema],
+	imagePath: String,
+	reviews: [ReviewSchema]
 });
 
 const Location = mongoose.model('Location', LocationSchema);

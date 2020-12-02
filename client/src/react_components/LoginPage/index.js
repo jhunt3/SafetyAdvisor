@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 
-import { updateLoginForm, login } from "./../../helperJS/loginHelper";
+import { login } from "./../../helperJS/loginHelper";
 
 import "./styles.css";
 
@@ -44,9 +44,7 @@ class LoginPage extends React.Component {
       alert("Password field is blank.");
       return;
     } 
-    const { app } = this.props;
-    login(this, app);
-    alert("Login Failed.");
+    return login(this, this.props.app);
   }
   handleRegisterSubmit(e) {
     e.preventDefault();
