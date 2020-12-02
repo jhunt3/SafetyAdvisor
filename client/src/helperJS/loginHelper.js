@@ -43,10 +43,13 @@ export const login = (loginComp, app) => {
         .then(json => {
             if (json.currentUser !== undefined) {
                 app.setState({ currentUser: json.currentUser });
+                return true;
             }
         })
         .catch(error => {
-            console.log(error);
+            alert("Invalid Login.");
+            console.log("error");
+            return false;
         });
 };
 

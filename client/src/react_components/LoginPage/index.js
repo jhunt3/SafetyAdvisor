@@ -44,7 +44,10 @@ class LoginPage extends React.Component {
       alert("Password field is blank.");
       return;
     } 
-    return login(this, this.props.app);
+    if (login(this, this.props.app)) {
+      this.props.history.push('/');
+    }
+    return;
   }
   handleRegisterSubmit(e) {
     e.preventDefault();

@@ -91,10 +91,14 @@ export class App extends React.Component {
   }
 
   renderUserPageButton() {
-    if (this.state.userLoggedIn !== "") {
-      return (<div id="userPageButton" className="purpleButton" onClick={() => {this.openUserPage(this.state.userLoggedIn)}}>
-        {`${this.state.userLoggedIn}'s Page`}
-      </div>);
+    if (this.state.currentUser !== null) {
+      return (
+      <Link to={`/usr/${this.state.currentUser}`}>
+        <div id="userPageButton" className="purpleButton">
+          {`${this.state.currentUser}'s Page`}
+        </div>
+      </Link>
+      );
     }
     return;
   }
@@ -168,6 +172,7 @@ export class App extends React.Component {
           </Link>
           <SiteMap locations={this.state.locData.getGeoLocData()} toggleMap={this.toggleMapClass}/>
           {this.renderLoginButton()}
+          {this.renderUserPageButton()}
         </div>
       </div>
     );
