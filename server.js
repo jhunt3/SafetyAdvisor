@@ -18,6 +18,9 @@ const { User } = require("./models/user");
 // to validate object IDs
 const { ObjectID } = require("mongodb");
 
+// For static assets
+app.use('/static', express.static('client/public/assets/images'))
+
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());

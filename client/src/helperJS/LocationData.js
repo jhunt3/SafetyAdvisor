@@ -16,7 +16,7 @@ class LocationData {
             avgRating: 2.5,
             numRatings: 0,
             tags: tags.map((tagName) => {return {name: tagName, val: 0}}),
-            imagePath:`${process.env.PUBLIC_URL}/assets/images/venue_${this.locations.length}.jpg`,
+            imagePath:`/static/venue_${this.locations.length}.jpg`,
             reviews: []
         });
     };
@@ -25,7 +25,7 @@ class LocationData {
         this.locations[id].reviews.push({
             username: username,
             rating: rating,
-            imagePath: `${process.env.PUBLIC_URL}/assets/images/profile.png`,
+            imagePath: `/static/profile.png`,
             reviewId: this.reviewId,
             review: review
         })

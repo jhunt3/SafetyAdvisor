@@ -65,9 +65,10 @@ export class App extends React.Component {
   }
 
   renderExitButton() {
+    console.log(process.env.PUBLIC_URL)
     return (
       <Link to={"/"}>
-        <img className="exitButton" alt='exitButton' src={`${process.env.PUBLIC_URL}/assets/images/exit.png`} 
+        <img className="exitButton" alt='exitButton' src={`/static/exit.png`} 
         title={'Close Side Panel'}/>
       </Link>);
   }

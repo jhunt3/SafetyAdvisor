@@ -10,7 +10,7 @@ class UserData {
             uid: this.users.length,
             username: username,
             password: password,
-            imagePath: `${process.env.PUBLIC_URL}/assets/images/profile.png`,
+            imagePath: `/static/profile.png`,
             reviews: [],
         });
     };
