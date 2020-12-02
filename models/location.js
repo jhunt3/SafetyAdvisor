@@ -1,7 +1,7 @@
 /* Student mongoose model */
 const mongoose = require('mongoose')
 
-const LocationSchema = mongoose.Schema('Student', {
+const LocationSchema = mongoose.Schema('Location', {
 	name: {
 		type: String,
 		required: true,
@@ -45,7 +45,7 @@ const LocationSchema = mongoose.Schema('Student', {
 		required: true
 	},
 	reviews: {
-		type: [String],
+		type: [ReviewSchema],
 		required: true
 	}
 });

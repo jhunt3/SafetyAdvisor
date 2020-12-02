@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 
+import { updateLoginForm, login } from "./../../helperJS/loginHelper";
+
 import "./styles.css";
 
 class LoginPage extends React.Component {
@@ -35,15 +37,15 @@ class LoginPage extends React.Component {
 
   handleLoginSubmit(e) {
     e.preventDefault();
-    if(this.props.handleLoginAttempt(this.state.user, this.state.pass)) {
-      return;
-    } else if (this.state.user === "") {
+    if (this.state.user === "") {
       alert("Username field is blank.");
       return;
     } else if (this.state.pass === "") {
       alert("Password field is blank.");
       return;
-    }
+    } 
+    const { app } = this.props;
+    login(this, app);
     alert("Login Failed.");
   }
   handleRegisterSubmit(e) {

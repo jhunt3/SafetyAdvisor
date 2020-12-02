@@ -6,6 +6,7 @@ import { Route, Switch, withRouter, Link } from "react-router-dom";
 import './App.css';
 import LocationData from './helperJS/LocationData';
 import UserData from './helperJS/UserData';
+import { checkSession } from "./helperJS/user";
 import SiteMap from './react_components/SiteMap';
 import LocationPage from './react_components/LocationPage';
 import UserPage from './react_components/UserPage';
@@ -18,10 +19,10 @@ const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Ch
 export class App extends React.Component {
   constructor(props) {
     super(props);
+    checkSession(this);
     this.state = {
       mapClass: "fullMap",
-      userLoggedIn: "",
-      currUserId: -1,
+      currentUser: null,
       locData: new LocationData(),
       userData: new UserData(),
     };
@@ -106,7 +107,7 @@ export class App extends React.Component {
             { /* Login Page  */ } 
             <Route exact path="/login" render={ () => 
               <div className="loginPage">
-                <LoginPage closeHandler={this.closeOverlay} handleLoginAttempt={this.handleLoginAttempt} app={this}/>
+                <LoginPage app={this}/>
               </div>
             }/>
             { /* Location Page  */ } 
@@ -129,7 +130,7 @@ export class App extends React.Component {
               <div className="sidePage">
                 {this.renderExitButton()}
                 <UserPage locData={this.state.locData} deleteReview={this.deleteReview} userData={this.state.userData}
-              currentUser={this.state.userLoggedIn} deleteUser={this.deleteUser} backToLocPage={this.backToLocPage}/>
+              currentUser={this.state.userLoggedIn} deleteUser={this.deleteUser}/>
               </div>
             }/>
             { /* Search Query Page  */ } 
