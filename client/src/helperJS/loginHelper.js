@@ -23,16 +23,18 @@ export const checkSession = (app) => {
 
 // A function to send a GET request to logout the current user
 export const logout = (app) => {
-    const url = "/users/logout";
+    if (window.confirm("Are you sure you want to log out?")) {
+        const url = "/users/logout";
 
-    fetch(url)
-        .then(res => {
-            app.setState({
-                currentUser: null,
-                message: { type: "", body: "" }
+        fetch(url)
+            .then(res => {
+                app.setState({
+                    currentUser: null,
+                    message: { type: "", body: "" }
+                });
+            })
+            .catch(error => {
+                console.log(error);
             });
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    }
 };

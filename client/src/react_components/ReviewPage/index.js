@@ -27,7 +27,7 @@ class ReviewPage extends React.Component {
 
   generateButtonTagIndicators(tags) {
     return tags.map((tag) => {return <ButtonTagIndicator
-                                        name={tag.name}
+                                        name={tag.tag}
                                         val={tag.val}
                                       />
     });
@@ -43,7 +43,6 @@ class ReviewPage extends React.Component {
         <button className="backButton" onClick={this.props.history.goBack}>Back</button>
         <div className="infoContainer">
           <div className="titleContainer">
-
             <h1 id="nameHeader">{this.props.locData.getLoc(locId).name}</h1>
             <h3 id="venueHeader">{this.props.locData.getLoc(locId).venueType}</h3>
           </div>

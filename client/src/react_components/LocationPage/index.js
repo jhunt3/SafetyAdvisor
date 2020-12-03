@@ -38,7 +38,7 @@ class LocationPage extends React.Component {
 
   generateTagIndicators(tags) {
     return tags.map((tag) => {return <TagIndicator
-                                        name={tag.name}
+                                        name={tag.tag}
                                         val={tag.val}
                                       />
     });
