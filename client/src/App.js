@@ -106,7 +106,6 @@ export class App extends React.Component {
     if (this.state.locData === null) {
       return null;
     }
-    console.log(this.state.locData);
     const path = this.props.history.location.pathname.split('/');
     return (
       <div>

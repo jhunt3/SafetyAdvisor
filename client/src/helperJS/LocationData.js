@@ -8,7 +8,7 @@ export const getLocations = (app) => {
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get students");
+                alert("Could not get locations");
             }
         })
         .then((json) => {

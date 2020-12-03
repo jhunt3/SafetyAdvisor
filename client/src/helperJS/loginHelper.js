@@ -21,67 +21,6 @@ export const checkSession = (app) => {
         });
 };
 
-// A function to send a POST request with the user to be logged in
-export const login = (loginComp, app) => {
-    // Create our request constructor with all the parameters we need
-    const request = new Request("/users/login", {
-        method: "post",
-        body: JSON.stringify(loginComp.state),
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
-    });
-
-    // Send the request with fetch()
-    fetch(request)
-        .then(res => {
-            if (res.status === 200) {
-                return res.json();
-            }
-        })
-        .then(json => {
-            if (json.currentUser !== undefined) {
-                app.setState({ currentUser: json.currentUser });
-                return true;
-            }
-        })
-        .catch(error => {
-            alert("Invalid Login.");
-            console.log("error");
-            return false;
-        });
-};
-
-// A function to send a POST request with the user to be registered
-export const register = (loginComp, app) => {
-    // Create our request constructor with all the parameters we need
-    const request = new Request("/users/register", {
-        method: "post",
-        body: JSON.stringify(loginComp.state),
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
-    });
-
-    // Send the request with fetch()
-    fetch(request)
-        .then(res => {
-            if (res.status === 200) {
-                return res.json();
-            }
-        })
-        .then(json => {
-            if (json.currentUser !== undefined) {
-                app.setState({ currentUser: json.currentUser });
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};
-
 // A function to send a GET request to logout the current user
 export const logout = (app) => {
     const url = "/users/logout";

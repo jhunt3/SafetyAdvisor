@@ -1,8 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 
-import { login } from "./../../helperJS/loginHelper";
-
 import "./styles.css";
 
 class LoginPage extends React.Component {
@@ -44,9 +42,31 @@ class LoginPage extends React.Component {
       alert("Password field is blank.");
       return;
     } 
-    if (login(this, this.props.app)) {
-      this.props.history.push('/');
-    }
+    const request = new Request("/users/login", {
+      method: "post",
+      body: JSON.stringify(this.state),
+      headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json"
+      }
+    });
+    // Send the request with fetch()
+    fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then((json) => {
+            if (json.currentUser !== undefined) {
+                this.props.app.setState({ currentUser: json.currentUser });
+                this.props.history.push('/');
+            }
+        })
+        .catch((error) => {
+            alert("Invalid Login.");
+            console.log(error);
+        });
     return;
   }
   handleRegisterSubmit(e) {
@@ -64,7 +84,34 @@ class LoginPage extends React.Component {
       alert("Passwords do not match.");
       return;
     }
-    alert("Registration has not been implemented yet.");
+
+    const request = new Request("/api/users", {
+      method: "post",
+      body: JSON.stringify(this.state),
+      headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json"
+      }
+    });
+    // Send the request with fetch()
+    fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then((json) => {
+            if (json.currentUser !== undefined) {
+                this.props.app.setState({ currentUser: json.currentUser });
+                this.props.history.push('/');
+                alert("Registration Successful.");
+            }
+        })
+        .catch((error) => {
+            alert("Registration Failed.");
+            console.log(error);
+        });
+    return;
   }
 
   handleChangeUser(e) {
