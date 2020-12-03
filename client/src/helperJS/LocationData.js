@@ -40,6 +40,8 @@ export class LocationData {
             venueType: venueType,
             lat: lat,
             lng: lng,
+            avgRating: 0,
+            numRatings: 0,
             tags: defaultTags.map((tagName) => {return {tag: tagName, val: 0}})
         }),
         headers: {

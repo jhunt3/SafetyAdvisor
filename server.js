@@ -14,6 +14,7 @@ mongoose.set('useFindAndModify', false); // for some deprecation issues
 // import the mongoose models
 const { Location } = require("./models/location");
 const { User } = require("./models/user");
+const { Review } = require("./models/review");
 
 // to validate object IDs
 const { ObjectID } = require("mongodb");
@@ -170,23 +171,75 @@ app.get("/api/locationData", mongoChecker, async (req, res) => {
 app.post('/api/locations', mongoChecker, async (req, res) => {
     log(req.body)
 
-    // Create a new user
+    // Create a new location
     const loc = new Location({
         name: req.body.name,
         venueType: req.body.venueType,
         lat: req.body.lat,
         lng: req.body.lng,
-        avgRating: 2.5,
-        numRatings: 0,
+        avgRating: req.body.avgRating,
+        numRatings: req.body.numRatings,
         tags: req.body.tags,
-        imagePath:`/static/placeholder.jpg`,
-        reviews: []
+        imagePath:`/static/placeholder.jpg`
     })
 
     try {
-        // Save the user
+        // Save the location
         const newLoc = await loc.save()
         res.send(newLoc)
+    } catch (error) {
+        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
+            res.status(500).send('Internal server error')
+        } else {
+            log(error)
+            res.status(400).send('Bad Request') // bad request for changing the student.
+        }
+    }
+})
+
+// A route get review data for a location
+app.get("/api/loc/:id/reviewData", mongoChecker, async (req, res) => {
+    // Get the locationData
+    try {
+        const reviewData = await Review.find({ _id: req.params.id });
+        res.send(reviewData);
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+
+})
+
+// A route get review data for a user
+app.get("/api/usr/:id/reviewData", mongoChecker, async (req, res) => {
+    // Get the locationData
+    try {
+        const reviewData = await Review.find({ username: req.params.id });
+        res.send(reviewData);
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+
+})
+
+// A route to create a review
+app.post('/api/reviews', mongoChecker, async (req, res) => {
+    log(req.body)
+
+    // Create a new review
+    const review = new Review({
+        username: req.body.username,
+        locId: req.body.userId,
+        rating: req.body.rating,
+        imagePath: req.body.imagePath,
+        review: req.body.review
+    })
+
+    try {
+        // Save the review
+        const newReview = await review.save()
+        res.send(newReview)
     } catch (error) {
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
             res.status(500).send('Internal server error')

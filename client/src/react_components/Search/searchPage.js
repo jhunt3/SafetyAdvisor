@@ -31,7 +31,7 @@ class SearchPage extends React.Component {
                 <div className="titleContainer">
                     
                     <p className="resultTitle" onClick={() => {
-                    this.props.history.push(`/loc/${location.id}`);
+                    this.props.history.push(`/loc/${location._id}`);
                     }}>{location.name}</p>
                     <h3 className="resultSubtitle">{location.venueType}</h3>
                 </div>

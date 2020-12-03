@@ -9,6 +9,33 @@ import "./styles.css";
 
 class LocationPage extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state =  {
+      reviews: []
+    }
+  }
+
+  getReviews() {
+    // Since this is a GET request, simply call fetch on the URL
+    fetch(`${this.props.history.location.pathname}/reviewData`)
+        .then(res => {
+            if (res.status === 200) {
+                // return a promise that resolves with the JSON body
+                return res.json();
+            } else {
+                alert("Could not get reviews");
+            }
+        })
+        .then((json) => {
+            // the resolved promise with the JSON body
+            this.setState({ reviews: json });
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
   generateTagIndicators(tags) {
     return tags.map((tag) => {return <TagIndicator
                                         name={tag.name}
@@ -42,7 +69,7 @@ class LocationPage extends React.Component {
         </div>
         <div className="reviewsContainer">
         <h2 id="reviewHeader">Reviews</h2>
-        {this.props.locData.getLoc(locId).reviews.map(review => (
+        {this.state.reviews.map(review => (
             <div className="review">
                 <div className="reviewDataContainer">
                   <div className="profileIconContainer">
