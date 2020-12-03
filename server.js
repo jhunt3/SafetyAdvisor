@@ -148,8 +148,49 @@ app.post('/api/users', mongoChecker, async (req, res) => {
     }
 })
 
-// other student API routes can go here...
-// ...
+// A route get all location data
+app.get("/api/locationData", mongoChecker, async (req, res) => {
+    // Get the locationData
+    try {
+        const locationData = await Location.find()
+        res.send(locationData)
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+
+})
+
+// A route to create a location
+app.post('/api/locations', mongoChecker, async (req, res) => {
+    log(req.body)
+
+    // Create a new user
+    const loc = new Location({
+        name: req.body.name,
+        venueType: req.body.venueType,
+        lat: req.body.lat,
+        lng: req.body.lng,
+        avgRating: 2.5,
+        numRatings: 0,
+        tags: req.body.tags,
+        imagePath:`/static/placeholder.jpg`,
+        reviews: []
+    })
+
+    try {
+        // Save the user
+        const newLoc = await loc.save()
+        res.send(newLoc)
+    } catch (error) {
+        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
+            res.status(500).send('Internal server error')
+        } else {
+            log(error)
+            res.status(400).send('Bad Request') // bad request for changing the student.
+        }
+    }
+})
 
 /*** Webpage routes below **********************************/
 // Serve the build

@@ -6,7 +6,7 @@ class TagIndicator extends React.Component {
   render() {
     return (
       <div className="tagContainer" title={`${this.props.val}%`}>
-        <span className="tagName">{this.props.name}</span>
+        <span className="tagName">{this.props.tag}</span>
         <div className="filled" style={{width:`${this.props.val}%`}}/>
       </div>
     );

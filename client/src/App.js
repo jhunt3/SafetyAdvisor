@@ -4,7 +4,7 @@ import React from 'react';
 import { Route, Switch, withRouter, Link } from "react-router-dom";
 
 import './App.css';
-import LocationData from './helperJS/LocationData';
+import { getLocations } from './helperJS/LocationData';
 import UserData from './helperJS/UserData';
 import { checkSession, logout } from "./helperJS/loginHelper";
 import SiteMap from './react_components/SiteMap';
@@ -14,7 +14,7 @@ import SearchPage from './react_components/Search/searchPage';
 import SearchForm from './react_components/Search/searchFormPage';
 import ReviewPage from './react_components/ReviewPage'
 import LoginPage from './react_components/LoginPage'
-const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Checks Temperature", "Patio"];
+
 
 export class App extends React.Component {
   constructor(props) {
@@ -23,26 +23,29 @@ export class App extends React.Component {
     this.state = {
       mapClass: "fullMap",
       currentUser: null,
-      locData: new LocationData(),
+      locData: null,
       userData: new UserData(),
     };
     // Adds hardcoded location data
-    this.state.locData.addLocation("Sidney Smith", "Lecture Hall", 43.663098, -79.398568, defaultTags);
-    this.state.locData.addLocation("UofT Bookstore", "Store", 43.659213, -79.396960, defaultTags);
-    this.state.locData.addLocation("Isabel Bader Theatre", "Theatre", 43.667246, -79.392524, defaultTags);
+    /*
+    const ids = this.state.locData.state.locations.map((val) => {return val._id})
 
-    this.state.locData.updateTags(0, [{name: defaultTags[4], val: 60}, {name: defaultTags[1], val: 95}, {name: defaultTags[0], val: 20}]);
-    this.state.locData.updateTags(1, [{name: defaultTags[2], val: 42.5}, {name: defaultTags[3], val: 0.5}]);
-    this.state.locData.updateTags(2, [{name: defaultTags[5], val: 100}]);
+    this.state.locData.updateTags(ids[0], [{name: defaultTags[4], val: 60}, {name: defaultTags[1], val: 95}, {name: defaultTags[0], val: 20}]);
+    this.state.locData.updateTags(ids[1], [{name: defaultTags[2], val: 42.5}, {name: defaultTags[3], val: 0.5}]);
+    this.state.locData.updateTags(ids[2], [{name: defaultTags[5], val: 100}]);
+
+
+    this.state.userData.addReview(ids[0], 1, 4.0, "Lots of hand sanitizer on hand!")
+    this.state.userData.addReview(ids[0], 2, 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
+    this.state.locData.addReview(ids[0], "user", 4.0, "Lots of hand sanitizer on hand!")
+    this.state.locData.addReview(ids[0], "janedoe", 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
+    */
+
+    getLocations(this);
 
     this.state.userData.addUser("admin", "admin")
     this.state.userData.addUser("user", "js")
     this.state.userData.addUser("janedoe", "jd")
-
-    this.state.userData.addReview(0, 1, 4.0, "Lots of hand sanitizer on hand!")
-    this.state.userData.addReview(0, 2, 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
-    this.state.locData.addReview(0, "user", 4.0, "Lots of hand sanitizer on hand!")
-    this.state.locData.addReview(0, "janedoe", 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
 
     this.toggleMapClass = this.toggleMapClass.bind(this);
     this.deleteReview = this.deleteReview.bind(this);
@@ -73,24 +76,6 @@ export class App extends React.Component {
       </Link>);
   }
 
-  // Placeholder
-  handleLoginAttempt(user, pass) {
-    if (user === "admin" && pass === "admin") {
-      this.setState({userLoggedIn: user});
-      return true;
-    }
-    else if (user === "user" && pass === "user") {
-      this.setState({userLoggedIn: user});
-      return true;
-    }
-    return false;
-  }  
-
-  leaveReview = () => {
-    this.setState({sidePageClass: "leaveReviewPage"});
-
-  }
-
   renderUserPageButton() {
     if (this.state.currentUser !== null) {
       return (
@@ -118,6 +103,10 @@ export class App extends React.Component {
   }
 
   render() {
+    if (this.state.locData === null) {
+      return null;
+    }
+    console.log(this.state.locData);
     const path = this.props.history.location.pathname.split('/');
     return (
       <div>
@@ -132,15 +121,14 @@ export class App extends React.Component {
             <Route exact path="/loc/:id" render={ () => 
               <div className="sidePage">
                 {this.renderExitButton()}
-                <LocationPage locData={this.state.locData} openUserPage={this.openUserPage} 
-                leaveReview={this.leaveReview} currentUser={this.state.userLoggedIn} deleteReview={this.deleteReview}/>
+                <LocationPage locData={this.state.locData} openUserPage={this.openUserPage} currentUser={this.state.currentUser} deleteReview={this.deleteReview}/>
               </div>
             }/>
             { /* Add Review Page  */ } 
             <Route exact path="/loc/:id/addReview" render={ () => 
               <div className="sidePage">
                 {this.renderExitButton()}
-                <ReviewPage locData={this.state.locData} currentUser={this.state.userLoggedIn}/>
+                <ReviewPage locData={this.state.locData} currentUser={this.state.currentUser}/>
               </div>
             }/>
             { /* User Page  */ } 
@@ -148,7 +136,7 @@ export class App extends React.Component {
               <div className="sidePage">
                 {this.renderExitButton()}
                 <UserPage locData={this.state.locData} deleteReview={this.deleteReview} userData={this.state.userData}
-              currentUser={this.state.userLoggedIn} deleteUser={this.deleteUser}/>
+              currentUser={this.state.currentUser} deleteUser={this.deleteUser}/>
               </div>
             }/>
             { /* Search Query Page  */ } 

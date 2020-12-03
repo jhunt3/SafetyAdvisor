@@ -77,8 +77,8 @@ class SiteMap extends React.Component {
 
   generateMarkers() {
     return this.props.locations.flatMap((loc) => {
-      return <Marker key={loc.id}
-                    id={loc.id}
+      return <Marker key={loc._id}
+                    id={loc._id}
                     name={loc.name}
                     icon={{
                       url: `/static/markers/marker${Math.floor(loc.rating)}.png`,
@@ -92,8 +92,8 @@ class SiteMap extends React.Component {
                     tags={loc.tags}
                     onClick={() => {
                       const path = this.props.history.location.pathname.split('/');
-                      if (path[path.length - 1] === "" || parseInt(path[path.length - 1]) !== loc.id) {
-                        this.props.history.push(`/loc/${loc.id}`);
+                      if (path[path.length - 1] === "" || path[path.length - 1] !== loc._id) {
+                        this.props.history.push(`/loc/${loc._id}`);
                       } else {
                         this.props.history.push(`/`);
                       }

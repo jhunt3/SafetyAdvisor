@@ -1,28 +1,73 @@
+const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Checks Temperature", "Patio"];
 
+export const getLocations = (app) => {
+    // Since this is a GET request, simply call fetch on the URL
+    fetch('/api/locationData')
+        .then(res => {
+            if (res.status === 200) {
+                // return a promise that resolves with the JSON body
+                return res.json();
+            } else {
+                alert("Could not get students");
+            }
+        })
+        .then((json) => {
+            // the resolved promise with the JSON body
+            const locData = new LocationData();
+            locData.locations = json;
+            app.setState({ locData: locData });
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
 
-class LocationData {
+export class LocationData {
     constructor() {
-        this.reviewId = 0;
         this.locations = [];
     }
 
-    addLocation(name, venueType, lat, lng, tags) {
-        this.locations.push({
-            id: this.locations.length,
+    getLoc(id) {
+        return this.locations.find((obj) => {return obj._id === id});
+    }
+
+    addLocation(name, venueType, lat, lng) {
+        // Create our request constructor with all the parameters we need
+        const request = new Request('/api/locations', {
+        method: "post",
+        body: JSON.stringify({
             name: name,
             venueType: venueType,
             lat: lat,
             lng: lng,
-            avgRating: 2.5,
-            numRatings: 0,
-            tags: tags.map((tagName) => {return {name: tagName, val: 0}}),
-            imagePath:`/static/venue_${this.locations.length}.jpg`,
-            reviews: []
+            tags: defaultTags.map((tagName) => {return {tag: tagName, val: 0}})
+        }),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+            }
         });
+
+        // Send the request with fetch()
+        fetch(request)
+            .then(function (res) {
+                // Handle response we get from the API.
+                // Usually check the error codes to see what happened.
+                if (res.status === 200) {
+                    // If a location was added successfully, tell the user.
+                    alert("Success: Added a location.");
+                } else {
+                    // If server couldn't add the location, tell the user..
+                    alert("Error: Could not add location.");
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     addReview(id, username, rating, review){
-        this.locations[id].reviews.push({
+        this.getLoc(id).reviews.push({
             username: username,
             rating: rating,
             imagePath: `/static/profile.png`,
@@ -30,9 +75,9 @@ class LocationData {
             review: review
         })
         this.reviewId++;
-        this.locations[id].avgRating = ((this.locations[id].numRatings === 0) ? rating :
-            (this.locations[id].avgRating * this.locations[id].numRatings + rating ) / (this.locations[id].numRatings + 1));
-        this.locations[id].numRatings = this.locations[id].numRatings + 1
+        this.getLoc(id).avgRating = ((this.getLoc(id).numRatings === 0) ? rating :
+            (this.getLoc(id).avgRating * this.getLoc(id).numRatings + rating ) / (this.getLoc(id).numRatings + 1));
+        this.getLoc(id).numRatings = this.getLoc(id).numRatings + 1
     }
 
     removeReview(locationId, reviewId) {
@@ -41,9 +86,9 @@ class LocationData {
     }
 
     updateTagVal(id, tagName, newVal) {
-        const ind = this.locations[id].tags.findIndex((val) => {return val.name === tagName});
+        const ind = this.getLoc(id).tags.findIndex((val) => {return val.name === tagName});
         if (ind !== -1) {
-            this.locations[id].tags[ind].val = newVal;
+            this.getLoc(id).tags[ind].val = newVal;
         }
     }
 
@@ -54,18 +99,14 @@ class LocationData {
     }
 
     getTags(id) {
-        this.locations[id].tags.filter((tag) => {return tag.val !== 0});
-    }
-
-    getLoc(id) {
-        return this.locations[id];
+        this.getLoc(id).tags.filter((tag) => {return tag.val !== 0});
     }
 
     getGeoLoc(id) {
-        const target = this.locations[id];
+        const target = this.getLoc(id);
         return {
             name: target.name,
-            id: id,
+            _id: id,
             rating: target.avgRating,
             lat: target.lat,
             lng: target.lng,
@@ -74,7 +115,7 @@ class LocationData {
     }
 
     getGeoLocData() {
-        return this.locations.map((loc) => {return this.getGeoLoc(loc.id)});
+        return this.locations.map((loc) => {return this.getGeoLoc(loc._id)});
     }
 
     getLocationsWithQuery(query) {

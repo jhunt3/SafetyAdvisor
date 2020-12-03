@@ -1,11 +1,6 @@
 /* Student mongoose model */
 const mongoose = require('mongoose')
 
-const tagSchema = new mongoose.Schema({
-	tag: String,
-	value: Number
-});
-
 const ReviewSchema = new mongoose.Schema({
 	username: String,
 	rating: Number,
@@ -16,17 +11,19 @@ const ReviewSchema = new mongoose.Schema({
 
 const LocationSchema = mongoose.Schema({
 	name: String,
-	id: Number,
 	venueType: String,
 	lat: Number,
 	lng: Number,
 	avgRating: Number,
 	numRating:  Number,
-	tags: [tagSchema],
+	tags: [{
+		tag: String,
+		val: Number
+	}],
 	imagePath: String,
 	reviews: [ReviewSchema]
 });
 
-const Location = mongoose.model('Location', LocationSchema);
+const Location = mongoose.model('Location', LocationSchema, "Locations");
 
 module.exports = { Location }
