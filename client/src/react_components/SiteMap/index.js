@@ -93,6 +93,7 @@ class SiteMap extends React.Component {
                     onClick={() => {
                       const path = this.props.history.location.pathname.split('/');
                       if (path[path.length - 1] === "" || path[path.length - 1] !== loc._id) {
+                        this.props.history.push(`/`);
                         this.props.history.push(`/loc/${loc._id}`);
                       } else {
                         this.props.history.push(`/`);

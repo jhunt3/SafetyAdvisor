@@ -2,7 +2,7 @@
 .body {
   width: 35%;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
 }
 .locImage {
   display: block;
