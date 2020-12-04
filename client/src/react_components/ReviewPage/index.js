@@ -11,9 +11,11 @@ class ReviewPage extends React.Component {
     super();
 
     this.state = {
-      rating: 1
+      rating: 1,
+      review: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChangeReview = this.handleChangeReview.bind(this);
   }
 
   handleSubmit(e) {
@@ -22,8 +24,32 @@ class ReviewPage extends React.Component {
       alert("You must login to submit a review.");
       return;
     }
-    alert("Review submission not implemented.");
+    const path = this.props.history.location.pathname.split('/')
+    const locId = path[path.length - 2];
+    console.log(locId);
+    console.log(JSON.stringify(this.state));
+    const request = new Request(`/api/loc/${locId}/addReview`, {
+      method: "post",
+      body: JSON.stringify(this.state),
+      headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json"
+      }
+    });
+    // Send the request with fetch()
+    fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .catch((error) => {
+            alert("Review submission failed.");
+            console.log(error);
+        });
+    return;
   }
+
 
   generateButtonTagIndicators(tags) {
     return tags.map((tag) => {return <ButtonTagIndicator
@@ -31,6 +57,10 @@ class ReviewPage extends React.Component {
                                         val={tag.val}
                                       />
     });
+  }
+
+  handleChangeReview(e) {
+    this.setState({review: e.target.value});
   }
 
   render() {
@@ -64,7 +94,7 @@ class ReviewPage extends React.Component {
         <p id="commentHeader" className="reviewPageText">Comments:</p>
       <form className="comment" onSubmit={this.handleSubmit}>
         <label>
-          <textarea className="commentText" type="text" value={this.state.value} onChange={this.handleChange} />        </label>
+          <textarea className="commentText" type="text" value={this.state.value} onChange={this.handleChangeReview} />        </label>
           <br></br>
         <input id="submitButton" className="purpleButton" type="submit" value="Submit" />
       </form>
