@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 const ReviewSchema = new mongoose.Schema({
 	username: String,
-	locId: Number,
+	locId: String,
 	rating: Number,
 	imagePath: String,
 	review: String
