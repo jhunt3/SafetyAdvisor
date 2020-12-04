@@ -23,6 +23,7 @@ export class App extends React.Component {
     this.state = {
       mapClass: "fullMap",
       currentUser: null,
+      isAdmin: false,
       locData: null,
       userData: new UserData(),
     };
@@ -105,7 +106,7 @@ export class App extends React.Component {
             <Route exact path="/loc/:id" render={ () => 
               <div className="sidePage">
                 {this.renderExitButton()}
-                <LocationPage locData={this.state.locData} app={this} deleteReview={this.deleteReview}/>
+                <LocationPage locData={this.state.locData} app={this}/>
               </div>
             }/>
             { /* Add Review Page  */ } 
@@ -119,8 +120,7 @@ export class App extends React.Component {
             <Route exact path="/usr/:id" render={ () => 
               <div className="sidePage">
                 {this.renderExitButton()}
-                <UserPage locData={this.state.locData} deleteReview={this.deleteReview} userData={this.state.userData}
-              currentUser={this.state.currentUser} deleteUser={this.deleteUser}/>
+                <UserPage locData={this.state.locData} userData={this.state.userData}/>
               </div>
             }/>
             { /* Search Query Page  */ } 

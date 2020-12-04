@@ -59,7 +59,10 @@ class LoginPage extends React.Component {
         })
         .then((json) => {
             if (json.currentUser !== undefined) {
-                this.props.app.setState({ currentUser: json.currentUser });
+                this.props.app.setState({ 
+                  currentUser: json.currentUser,
+                  isAdmin: json.isAdmin
+                 });
                 this.props.history.push('/');
             }
         })

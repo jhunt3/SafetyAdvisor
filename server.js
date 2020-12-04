@@ -94,7 +94,11 @@ app.post("/users/login", (req, res) => {
             // We can check later if this exists to ensure we are logged in.
             req.session.user = user._id;
             req.session.username = user.username;
-            res.send({ currentUser: user.username });
+            req.session.isAdmin = user.isAdmin;
+            res.send({  
+                currentUser: user.username,
+                isAdmin: user.isAdmin
+             });
         })
         .catch((error) => {
             res.status(400).send(error)
@@ -116,7 +120,10 @@ app.get("/users/logout", (req, res) => {
 // A route to check if a user is logged in on the session
 app.get("/users/check-session", (req, res) => {
     if (req.session.user) {
-        res.send({ currentUser: req.session.username });
+        res.send({ 
+            currentUser: req.session.username,
+            isAdmin: req.session.isAdmin
+         });
     } else {
         res.status(401).send();
     }
@@ -135,7 +142,8 @@ app.post('/api/users', mongoChecker, async (req, res) => {
         // Create a new user
         const user = new User({
             username: req.body.user,
-            password: req.body.pass
+            password: req.body.pass,
+            isAdmin: false
         })
 
         try {
@@ -150,6 +158,17 @@ app.post('/api/users', mongoChecker, async (req, res) => {
                 res.status(400).send('Bad Request') // bad request for changing the student.
             }
         }
+    }
+})
+
+// A route to delete a user
+app.delete("/api/deleteUser/:id", mongoChecker, async (req, res) => {
+    try {
+        const deleteUser = await User.deleteOne({ username: req.params.id });
+        res.send(deleteUser);
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
     }
 })
 
@@ -244,6 +263,17 @@ app.delete("/api/deleteReview/:id", mongoChecker, async (req, res) => {
     try {
         const deleteReview = await Review.deleteOne({ _id: req.params.id });
         res.send(deleteReview);
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+})
+
+// A route to delete all reviews by a user
+app.delete("/api/deleteAllReviews/:id", mongoChecker, async (req, res) => {
+    try {
+        const deleteReviews = await Review.deleteMany({ username: req.params.id });
+        res.send(deleteReviews);
     } catch(error) {
         log(error)
         res.status(500).send("Internal Server Error")
