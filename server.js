@@ -31,7 +31,6 @@ const session = require("express-session");
 const e = require("express");
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
     return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
 }
@@ -201,7 +200,7 @@ app.post('/api/locations', mongoChecker, async (req, res) => {
 app.get("/api/loc/:id/reviewData", mongoChecker, async (req, res) => {
     // Get the locationData
     try {
-        const reviewData = await Review.find({ _id: req.params.id });
+        const reviewData = await Review.find({ locId: req.params.id });
         res.send(reviewData);
     } catch(error) {
         log(error)

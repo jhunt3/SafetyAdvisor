@@ -17,13 +17,12 @@ class LocationPage extends React.Component {
       reviews: []
     }
     checkSession(this);
-
-    this.getReviews();
+    this.getReviews(this);
   }
 
-  getReviews() {
+  getReviews(target) {
     // Since this is a GET request, simply call fetch on the URL
-    fetch(`/${this.props.history.location.pathname}/reviewData`)
+    fetch(`/api${target.props.history.location.pathname}/reviewData`)
         .then(res => {
             if (res.status === 200) {
                 // return a promise that resolves with the JSON body
@@ -34,7 +33,7 @@ class LocationPage extends React.Component {
         })
         .then((json) => {
             // the resolved promise with the JSON body
-            this.setState({ reviews: json });
+            target.setState({ reviews: json });
         })
         .catch(error => {
             console.log(error);
@@ -91,7 +90,7 @@ class LocationPage extends React.Component {
                           starEmptyColor="darkgrey"
                           starDimension='1.5vw'
                           starSpacing='0.15vw'/>
-                      {showDeleteButton(this.props.currentUser, review.username, locId, review._id, this.props.deleteReview)}
+                      {showDeleteButton(this.state.currentUser, review.username, locId, review._id, this.props.deleteReview)}
                   </div>
                 </div>
                 <div className="reviewContainer">

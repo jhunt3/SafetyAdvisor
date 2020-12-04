@@ -32,6 +32,7 @@ export const logout = (app) => {
                     currentUser: null,
                     message: { type: "", body: "" }
                 });
+                app.props.history.push('/');
             })
             .catch(error => {
                 console.log(error);

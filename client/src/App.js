@@ -27,20 +27,6 @@ export class App extends React.Component {
       userData: new UserData(),
     };
     // Adds hardcoded location data
-    /*
-    const ids = this.state.locData.state.locations.map((val) => {return val._id})
-
-    this.state.locData.updateTags(ids[0], [{name: defaultTags[4], val: 60}, {name: defaultTags[1], val: 95}, {name: defaultTags[0], val: 20}]);
-    this.state.locData.updateTags(ids[1], [{name: defaultTags[2], val: 42.5}, {name: defaultTags[3], val: 0.5}]);
-    this.state.locData.updateTags(ids[2], [{name: defaultTags[5], val: 100}]);
-
-
-    this.state.userData.addReview(ids[0], 1, 4.0, "Lots of hand sanitizer on hand!")
-    this.state.userData.addReview(ids[0], 2, 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
-    this.state.locData.addReview(ids[0], "user", 4.0, "Lots of hand sanitizer on hand!")
-    this.state.locData.addReview(ids[0], "janedoe", 4.5, "Washrooms infrequently cleaned. Terrible, but I'll give a high rating for testing purposes.")
-    */
-
     getLocations(this);
 
     this.state.userData.addUser("admin", "admin")
