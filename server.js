@@ -153,6 +153,7 @@ app.post('/api/users', mongoChecker, async (req, res) => {
     }
 })
 
+
 // A route get all location data
 app.get("/api/locationData", mongoChecker, async (req, res) => {
     // Get the locationData
@@ -206,10 +207,9 @@ app.get("/api/loc/:id/reviewData", mongoChecker, async (req, res) => {
         log(error)
         res.status(500).send("Internal Server Error")
     }
-
 })
 
-// A route to add review for a location
+// A route to add a review for a location
 app.post("/api/loc/:id/addReview", mongoChecker, async (req, res) => {
     log(req.body)
 
@@ -237,6 +237,17 @@ app.post("/api/loc/:id/addReview", mongoChecker, async (req, res) => {
         }
     }
 
+})
+
+// A route to delete a review
+app.delete("/api/deleteReview/:id", mongoChecker, async (req, res) => {
+    try {
+        const deleteReview = await Review.deleteOne({ _id: req.params.id });
+        res.send(deleteReview);
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
 })
 
 // A route get review data for a user

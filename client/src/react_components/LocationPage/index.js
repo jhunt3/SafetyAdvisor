@@ -90,7 +90,7 @@ class LocationPage extends React.Component {
                           starEmptyColor="darkgrey"
                           starDimension='1.5vw'
                           starSpacing='0.15vw'/>
-                      {showDeleteButton(this.state.currentUser, review.username, locId, review._id, this.props.deleteReview)}
+                      {showDeleteButton(this, this.state.currentUser, review.username, locId, review._id)}
                   </div>
                 </div>
                 <div className="reviewContainer">
