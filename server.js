@@ -44,8 +44,8 @@ const mongoChecker = (req, res, next) => {
         res.status(500).send('Internal server error')
         return;
     } else {
-        next()  
-    }   
+        next()
+    }
 }
 
 // Middleware for authentication of resources
@@ -206,6 +206,35 @@ app.get("/api/loc/:id/reviewData", mongoChecker, async (req, res) => {
     } catch(error) {
         log(error)
         res.status(500).send("Internal Server Error")
+    }
+
+})
+
+// A route to add review for a location
+app.post("/api/loc/:id/addReview", mongoChecker, async (req, res) => {
+    log(req.body)
+
+    // Create a new location
+    const review = new Review({
+        username: "placeholder",
+    	locId: req.params.id,
+    	rating: req.body.rating,
+    	imagePath: "placeholder",
+    	review: req.body.review
+    })
+
+    console.log(review);
+
+    try {
+        const newReview = await review.save()
+        res.send(newReview)
+    } catch (error) {
+        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
+            res.status(500).send('Internal server error')
+        } else {
+            log(error)
+            res.status(400).send('Bad Request') // bad request for changing the student.
+        }
     }
 
 })
