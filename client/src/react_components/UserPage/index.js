@@ -4,16 +4,24 @@ import StarRatings from 'react-star-ratings';
 import "./styles.css";
 import { withRouter } from "react-router-dom";
 import { showDeleteButton, showDeleteUserButton } from './../../helperJS/userFunctionalityHelperFunctions';
+import { checkIsAdmin, checkSession } from '../../helperJS/loginHelper';
 
 class UserPage extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.state =  {
+      currentUser: "",
+      isAdmin: false
+    }
+    checkSession(this);
+  }
   render() {
     const path = this.props.history.location.pathname.split('/')
     const userId = path[path.length - 1];
     return (
       <div className="body">
         <button className="backButton" onClick={this.props.history.goBack}>Back</button>
-        {showDeleteUserButton(this, this.props.currentUser, this.props.userData.getUser(userId).username)}
+        {showDeleteUserButton(this, this.state.isAdmin, this.props.userData.getUser(userId).username)}
         <div className="userInfoContainer">
         <img className="profilePic" alt="profilePic" src={this.props.userData.getUser(userId).imagePath}/>  
             <div className="userTitleContainer">
@@ -40,7 +48,7 @@ class UserPage extends React.Component {
                             starEmptyColor="darkgrey"
                             starDimension='1.5vw'
                             starSpacing='0.15vw'/>
-                        {showDeleteButton(this.props.currentUser, this.props.userData.getUser(userId).username , review.location_id, review.reviewId, this.props.deleteReview)}
+                        {showDeleteButton(this, this.state.isAdmin, this.state.currentUser, this.props.userData.getUser(userId).username , review.location_id, review.reviewId)}
                     </div>
                     </div>
                     <div className="reviewContainer">

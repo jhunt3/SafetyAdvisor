@@ -14,6 +14,7 @@ class LocationPage extends React.Component {
     super(props);
     this.state =  {
       currentUser: "",
+      isAdmin: false,
       reviews: []
     }
     checkSession(this);
@@ -51,6 +52,7 @@ class LocationPage extends React.Component {
   render() {
     const path = this.props.history.location.pathname.split('/')
     const locId = path[path.length - 1];
+    console.log(this.state);
     return (
       <div className="body">
         <div id="addReviewButton" className="purpleButton" onClick={() => {this.props.history.push(`/loc/${locId}/addReview`)}}>+ Review</div>
@@ -90,7 +92,7 @@ class LocationPage extends React.Component {
                           starEmptyColor="darkgrey"
                           starDimension='1.5vw'
                           starSpacing='0.15vw'/>
-                      {showDeleteButton(this, this.state.currentUser, review.username, locId, review._id)}
+                      {showDeleteButton(this, this.state.isAdmin, this.state.currentUser, review.username, locId, review._id)}
                   </div>
                 </div>
                 <div className="reviewContainer">

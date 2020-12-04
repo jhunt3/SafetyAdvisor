@@ -1,5 +1,5 @@
-export const showDeleteButton = (app, currentUser, username, locId ,reviewId) => {
-  if (currentUser === "admin" || currentUser === username) {
+export const showDeleteButton = (app, isAdmin, currentUser, username, locId ,reviewId) => {
+  if (isAdmin || currentUser === username) {
     return (<img className="deleteButton" alt="deleteButton" src={`/static/trash.png`} onClick={() => {
       // Send the request with fetch()
       if (window.confirm("Are you sure you want to delete this review?")) {
@@ -33,8 +33,8 @@ export const showDeleteButton = (app, currentUser, username, locId ,reviewId) =>
   return;
 };
 
-export const showDeleteUserButton = (app, currentUser, username) => {
-  if (currentUser === "admin" && username !== "admin" ) {
+export const showDeleteUserButton = (app, isAdmin, username) => {
+  if (isAdmin && username !== "admin" ) {
     return (<img className="deleteUserButton" alt="deleteUserButton" src={`/static/trash.png`} onClick={() => {
       if (window.confirm("Are you sure you want to delete this user?")) {
         // Send the request with fetch()

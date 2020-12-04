@@ -94,7 +94,11 @@ app.post("/users/login", (req, res) => {
             // We can check later if this exists to ensure we are logged in.
             req.session.user = user._id;
             req.session.username = user.username;
-            res.send({ currentUser: user.username });
+            req.session.isAdmin = user.isAdmin;
+            res.send({  
+                currentUser: user.username,
+                isAdmin: user.isAdmin
+             });
         })
         .catch((error) => {
             res.status(400).send(error)
@@ -116,7 +120,10 @@ app.get("/users/logout", (req, res) => {
 // A route to check if a user is logged in on the session
 app.get("/users/check-session", (req, res) => {
     if (req.session.user) {
-        res.send({ currentUser: req.session.username });
+        res.send({ 
+            currentUser: req.session.username,
+            isAdmin: req.session.isAdmin
+         });
     } else {
         res.status(401).send();
     }
@@ -135,7 +142,8 @@ app.post('/api/users', mongoChecker, async (req, res) => {
         // Create a new user
         const user = new User({
             username: req.body.user,
-            password: req.body.pass
+            password: req.body.pass,
+            isAdmin: false
         })
 
         try {

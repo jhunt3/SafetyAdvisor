@@ -15,6 +15,7 @@ class ReviewPage extends React.Component {
 
     this.state = {
       currentUser: "",
+      isAdmin: false,
       rating: 1,
       locImagePath: this.props.locData.getLoc(this.locId).imagePath,
       usrImagePath: "/static/profile.png",

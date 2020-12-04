@@ -13,7 +13,10 @@ export const checkSession = (app) => {
         })
         .then(json => {
             if (json && json.currentUser) {
-                app.setState({ currentUser: json.currentUser });
+                app.setState({ 
+                    currentUser: json.currentUser,
+                    isAdmin: json.isAdmin
+                });
             }
         })
         .catch(error => {
