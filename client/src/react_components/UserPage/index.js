@@ -13,7 +13,7 @@ class UserPage extends React.Component {
     return (
       <div className="body">
         <button className="backButton" onClick={this.props.history.goBack}>Back</button>
-        {showDeleteUserButton(this.props.currentUser, this.props.userData.getUser(userId).username, this.props.deleteUser)}
+        {showDeleteUserButton(this, this.props.currentUser, this.props.userData.getUser(userId).username)}
         <div className="userInfoContainer">
         <img className="profilePic" alt="profilePic" src={this.props.userData.getUser(userId).imagePath}/>  
             <div className="userTitleContainer">

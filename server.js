@@ -153,6 +153,17 @@ app.post('/api/users', mongoChecker, async (req, res) => {
     }
 })
 
+// A route to delete a user
+app.delete("/api/deleteUser/:id", mongoChecker, async (req, res) => {
+    try {
+        const deleteUser = await User.deleteOne({ username: req.params.id });
+        res.send(deleteUser);
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+})
+
 
 // A route get all location data
 app.get("/api/locationData", mongoChecker, async (req, res) => {
@@ -244,6 +255,17 @@ app.delete("/api/deleteReview/:id", mongoChecker, async (req, res) => {
     try {
         const deleteReview = await Review.deleteOne({ _id: req.params.id });
         res.send(deleteReview);
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+})
+
+// A route to delete all reviews by a user
+app.delete("/api/deleteAllReviews/:id", mongoChecker, async (req, res) => {
+    try {
+        const deleteReviews = await Review.deleteMany({ username: req.params.id });
+        res.send(deleteReviews);
     } catch(error) {
         log(error)
         res.status(500).send("Internal Server Error")
