@@ -119,14 +119,14 @@ export class App extends React.Component {
             <Route exact path="/loc/:id" render={ () => 
               <div className="sidePage">
                 {this.renderExitButton()}
-                <LocationPage locData={this.state.locData} openUserPage={this.openUserPage} currentUser={this.state.currentUser} deleteReview={this.deleteReview}/>
+                <LocationPage locData={this.state.locData} app={this} deleteReview={this.deleteReview}/>
               </div>
             }/>
             { /* Add Review Page  */ } 
             <Route exact path="/loc/:id/addReview" render={ () => 
               <div className="sidePage">
                 {this.renderExitButton()}
-                <ReviewPage locData={this.state.locData} currentUser={this.state.currentUser}/>
+                <ReviewPage locData={this.state.locData}/>
               </div>
             }/>
             { /* User Page  */ } 

@@ -216,10 +216,11 @@ app.post("/api/loc/:id/addReview", mongoChecker, async (req, res) => {
 
     // Create a new location
     const review = new Review({
-        username: "placeholder",
+        username: req.body.currentUser,
     	locId: req.params.id,
     	rating: req.body.rating,
-    	imagePath: "placeholder",
+        locImagePath: req.body.locImagePath,
+        usrImagePath: req.body.usrImagePath,
     	review: req.body.review
     })
 
@@ -250,33 +251,6 @@ app.get("/api/usr/:id/reviewData", mongoChecker, async (req, res) => {
         res.status(500).send("Internal Server Error")
     }
 
-})
-
-// A route to create a review
-app.post('/api/reviews', mongoChecker, async (req, res) => {
-    log(req.body)
-
-    // Create a new review
-    const review = new Review({
-        username: req.body.username,
-        locId: req.body.userId,
-        rating: req.body.rating,
-        imagePath: req.body.imagePath,
-        review: req.body.review
-    })
-
-    try {
-        // Save the review
-        const newReview = await review.save()
-        res.send(newReview)
-    } catch (error) {
-        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
-            res.status(500).send('Internal server error')
-        } else {
-            log(error)
-            res.status(400).send('Bad Request') // bad request for changing the student.
-        }
-    }
 })
 
 /*** Webpage routes below **********************************/

@@ -5,7 +5,8 @@ const ReviewSchema = new mongoose.Schema({
 	username: String,
 	locId: String,
 	rating: Number,
-	imagePath: String,
+	locImagePath: String,
+	usrImagePath: String,
 	review: String
 });
 

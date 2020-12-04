@@ -1,34 +1,39 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 import StarRatingComponent from 'react-star-rating-component';
+import { checkSession } from '../../helperJS/loginHelper';
 
 import ButtonTagIndicator from './../ButtonTagIndicator';
 
 import "./styles.css";
 
 class ReviewPage extends React.Component {
-    constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.path = this.props.history.location.pathname.split('/');
+    this.locId = this.path[this.path.length - 2];
 
     this.state = {
+      currentUser: "",
       rating: 1,
-      review: "",
+      locImagePath: this.props.locData.getLoc(this.locId).imagePath,
+      usrImagePath: "/static/profile.png",
+      review: ""
     };
+
+    checkSession(this);
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeReview = this.handleChangeReview.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    if (this.props.currentUser === "") {
+    if (this.state.currentUser === "") {
       alert("You must login to submit a review.");
       return;
     }
-    const path = this.props.history.location.pathname.split('/')
-    const locId = path[path.length - 2];
-    console.log(locId);
-    console.log(JSON.stringify(this.state));
-    const request = new Request(`/api/loc/${locId}/addReview`, {
+    const request = new Request(`/api/loc/${this.locId}/addReview`, {
       method: "post",
       body: JSON.stringify(this.state),
       headers: {
@@ -42,6 +47,12 @@ class ReviewPage extends React.Component {
             if (res.status === 200) {
                 return res.json();
             }
+        })
+        .then((json) => {
+          if (json) {
+            alert("Review posted.")
+            this.props.history.push(`/loc/${this.locId}`);
+          }
         })
         .catch((error) => {
             alert("Review submission failed.");
@@ -65,16 +76,14 @@ class ReviewPage extends React.Component {
 
   render() {
     const { rating } = this.state;
-    const path = this.props.history.location.pathname.split('/')
-    const locId = path[path.length - 2];
     return (
       <div className="body">
-        <img className="locImage" alt="locationImage" src={this.props.locData.getLoc(locId).imagePath}/>
+        <img className="locImage" alt="locationImage" src={this.state.locImagePath}/>
         <button className="backButton" onClick={this.props.history.goBack}>Back</button>
         <div className="infoContainer">
           <div className="titleContainer">
-            <h1 id="nameHeader">{this.props.locData.getLoc(locId).name}</h1>
-            <h3 id="venueHeader">{this.props.locData.getLoc(locId).venueType}</h3>
+            <h1 id="nameHeader">{this.props.locData.getLoc(this.locId).name}</h1>
+            <h3 id="venueHeader">{this.props.locData.getLoc(this.locId).venueType}</h3>
           </div>
           <div className="ratingsContainer">
 
@@ -89,7 +98,7 @@ class ReviewPage extends React.Component {
 
           </div>
           <p className="reviewPageText">Please select safety features present</p>
-          {this.generateButtonTagIndicators(this.props.locData.getLoc(locId).tags)}
+          {this.generateButtonTagIndicators(this.props.locData.getLoc(this.locId).tags)}
         </div>
         <p id="commentHeader" className="reviewPageText">Comments:</p>
       <form className="comment" onSubmit={this.handleSubmit}>

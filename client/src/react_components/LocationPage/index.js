@@ -6,19 +6,24 @@ import TagIndicator from './../TagIndicator';
 import { showDeleteButton } from './../../helperJS/userFunctionalityHelperFunctions';
 
 import "./styles.css";
+import { checkSession } from '../../helperJS/loginHelper';
 
 class LocationPage extends React.Component {
 
   constructor(props) {
     super(props);
     this.state =  {
+      currentUser: "",
       reviews: []
     }
+    checkSession(this);
+
+    this.getReviews();
   }
 
   getReviews() {
     // Since this is a GET request, simply call fetch on the URL
-    fetch(`${this.props.history.location.pathname}/reviewData`)
+    fetch(`/${this.props.history.location.pathname}/reviewData`)
         .then(res => {
             if (res.status === 200) {
                 // return a promise that resolves with the JSON body
@@ -73,7 +78,7 @@ class LocationPage extends React.Component {
             <div className="review">
                 <div className="reviewDataContainer">
                   <div className="profileIconContainer">
-                    <img className="profileIcon" alt="profileIcon" src={review.imagePath}/>
+                    <img className="profileIcon" alt="profileIcon" src={review.usrImagePath}/>
                   </div>
                   <div className="usernameContainer"  title={`Go to ${review.username}'s page`} onClick={() => {
                         this.props.history.push(`/usr/${review.username}`);
@@ -86,7 +91,7 @@ class LocationPage extends React.Component {
                           starEmptyColor="darkgrey"
                           starDimension='1.5vw'
                           starSpacing='0.15vw'/>
-                      {showDeleteButton(this.props.currentUser, review.username, locId, review.reviewId, this.props.deleteReview)}
+                      {showDeleteButton(this.props.currentUser, review.username, locId, review._id, this.props.deleteReview)}
                   </div>
                 </div>
                 <div className="reviewContainer">
