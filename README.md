@@ -7,6 +7,9 @@ To run our application, please execute the following commands in terminal:
     git clone https://github.com/csc309-fall-2020/team28.git
     cd team28
     npm install
+    cd client
+    npm run build
+    cd ..
     npm start
 
 ## User Features
