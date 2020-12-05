@@ -129,6 +129,40 @@ app.get("/users/check-session", (req, res) => {
     }
 });
 
+app.get('/api/isAdmin/:id', mongoChecker, async (req, res) => {
+    // Remove the session
+    try {
+        const userData = await User.findOne({username: req.params.id});
+        if (userData && userData.isAdmin) {
+            res.send({ isAdmin: true });
+        } else {
+            res.send({ isAdmin: false });
+        }
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
+
+app.patch('/api/makeAdmin/:id', mongoChecker, async (req, res) => {
+	try {
+		const user = await User.findOneAndUpdate({username: req.params.id}, {$set: {isAdmin: req.body.bool}}, {new: true, useFindAndModify: false});
+		if (!user) {
+			res.status(404).send('Resource not found');
+		} else {   
+			res.send(user)
+		}
+	} catch (error) {
+		log(error)
+		if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+			res.status(500).send('Internal server error')
+		} else {
+			res.status(400).send('Bad Request') // bad request
+		}
+	}
+});
+
 /*********************************************************/
 
 /*** API Routes below ************************************/

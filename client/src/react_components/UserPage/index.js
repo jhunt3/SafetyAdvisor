@@ -4,9 +4,9 @@ import StarRatings from 'react-star-ratings';
 import "./styles.css";
 import { checkSession } from '../../helperJS/loginHelper';
 import { withRouter } from "react-router-dom";
-import TagIndicator from './../TagIndicator';
-import { showDeleteButton, showDeleteUserButton } from './../../helperJS/userFunctionalityHelperFunctions';
-import { checkIsAdmin, checkSession } from '../../helperJS/loginHelper';
+
+import { showAdminButton, showDeleteButton, showDeleteUserButton } from './../../helperJS/userFunctionalityHelperFunctions';
+import { checkSession } from '../../helperJS/loginHelper';
 
 class UserPage extends React.Component {
   
@@ -41,21 +41,14 @@ class UserPage extends React.Component {
         });
 };
 
-  generateTagIndicators(tags) {
-    return tags.map((tag) => {return <TagIndicator
-                                        name={tag.tag}
-                                        val={tag.val}
-                                      />
-    });
-  }
-
   render() {
     const path = this.props.history.location.pathname.split('/')
     const userId = path[path.length - 1];
     return (
       <div className="body">
         <button className="backButton" onClick={this.props.history.goBack}>Back</button>
-        {showDeleteUserButton(this, this.state.isAdmin, this.props.userData.getUser(userId).username)}
+        {showAdminButton(this.props.app, this.state.isAdmin, this.state.currentUser, this.props.userData.getUser(userId).username)}
+        {showDeleteUserButton(this.props.app, this.state.isAdmin, this.props.userData.getUser(userId).username)}
         <div className="userInfoContainer">
         <img className="profilePic" alt="profilePic" src=""/>  
             <div className="userTitleContainer">

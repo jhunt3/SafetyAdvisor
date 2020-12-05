@@ -120,7 +120,7 @@ export class App extends React.Component {
             <Route exact path="/usr/:id" render={ () => 
               <div className="sidePage">
                 {this.renderExitButton()}
-                <UserPage locData={this.state.locData} userData={this.state.userData}/>
+                <UserPage locData={this.state.locData} userData={this.state.userData} app={this}/>
               </div>
             }/>
             { /* Search Query Page  */ } 
