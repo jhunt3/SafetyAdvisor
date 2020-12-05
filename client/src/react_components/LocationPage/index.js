@@ -52,7 +52,6 @@ class LocationPage extends React.Component {
   render() {
     const path = this.props.history.location.pathname.split('/')
     const locId = path[path.length - 1];
-    console.log(this.state);
     return (
       <div className="body">
         <div id="addReviewButton" className="purpleButton" onClick={() => {this.props.history.push(`/loc/${locId}/addReview`)}}>+ Review</div>

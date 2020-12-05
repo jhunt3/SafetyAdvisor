@@ -110,3 +110,14 @@ h3{
 .deleteUserButton:hover {
   cursor: pointer;
 }
+
+.makeAdminButton {
+  position: absolute;
+  height: 3vh;
+  left: 1vw;
+  bottom: 5vh;
+}
+
+.makeAdminButton:hover {
+  cursor: pointer;
+}
