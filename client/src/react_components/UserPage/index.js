@@ -6,7 +6,6 @@ import { checkSession } from '../../helperJS/loginHelper';
 import { withRouter } from "react-router-dom";
 
 import { showAdminButton, showDeleteButton, showDeleteUserButton } from './../../helperJS/userFunctionalityHelperFunctions';
-import { checkSession } from '../../helperJS/loginHelper';
 
 class UserPage extends React.Component {
   
@@ -14,7 +13,7 @@ class UserPage extends React.Component {
     super(props);
     this.state =  {
       currentUser: "",
-      isAdmin: false
+      isAdmin: false,
       reviews: []
     }
     checkSession(this);
@@ -47,12 +46,12 @@ class UserPage extends React.Component {
     return (
       <div className="body">
         <button className="backButton" onClick={this.props.history.goBack}>Back</button>
-        {showAdminButton(this.props.app, this.state.isAdmin, this.state.currentUser, this.props.userData.getUser(userId).username)}
-        {showDeleteUserButton(this.props.app, this.state.isAdmin, this.props.userData.getUser(userId).username)}
+        {showAdminButton(this.props.app, this.state.isAdmin, this.state.currentUser, userId)}
+        {showDeleteUserButton(this.props.app, this.state.isAdmin, userId)}
         <div className="userInfoContainer">
         <img className="profilePic" alt="profilePic" src=""/>  
             <div className="userTitleContainer">
-              <h1>{this.state.currentUser}</h1>
+              <h1>{userId}</h1>
               <h3>{this.state.reviews.length} Review</h3>
             </div>
         </div>
