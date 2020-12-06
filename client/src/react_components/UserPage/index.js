@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 import { showAdminButton, showDeleteButton, showDeleteUserButton } from './../../helperJS/userFunctionalityHelperFunctions';
 
 class UserPage extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state =  {
@@ -49,10 +49,10 @@ class UserPage extends React.Component {
         {showAdminButton(this.props.app, this.state.isAdmin, this.state.currentUser, userId)}
         {showDeleteUserButton(this.props.app, this.state.isAdmin, userId)}
         <div className="userInfoContainer">
-        <img className="profilePic" alt="profilePic" src=""/>  
+        <img className="profilePic" alt="profilePic" src=""/>
             <div className="userTitleContainer">
               <h1>{userId}</h1>
-              <h3>{this.state.reviews.length} Review</h3>
+              <h3>{this.state.reviews.length} Reviews</h3>
             </div>
         </div>
         <div className="reviewsContainer">

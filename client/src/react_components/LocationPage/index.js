@@ -52,6 +52,14 @@ class LocationPage extends React.Component {
   render() {
     const path = this.props.history.location.pathname.split('/')
     const locId = path[path.length - 1];
+    const averageRating = (reviews) => {if (reviews.length > 0) {
+        return reviews.reduce((total, review) => total + review.rating, 0) / reviews.length
+    } else {
+        return 0
+    }}
+
+    console.log(this.state.reviews);
+    console.log(averageRating(this.state.reviews));
     return (
       <div className="body">
         <div id="addReviewButton" className="purpleButton" onClick={() => {this.props.history.push(`/loc/${locId}/addReview`)}}>+ Review</div>
@@ -62,12 +70,12 @@ class LocationPage extends React.Component {
             <h3 id="venueHeader">{this.props.locData.getLoc(locId).venueType}</h3>
           </div>
           <div className="avgRatingsContainer">
-            <StarRatings rating={this.props.locData.getLoc(locId).avgRating}
+            <StarRatings rating={averageRating(this.state.reviews)}
                         starRatedColor="grey"
                         starEmptyColor="darkgrey"
                         starDimension='1.5vw'
                         starSpacing='0.1vw'/>
-            <h3 id="noRatings">({this.props.locData.getLoc(locId).numRatings} Ratings)</h3>
+            <h3 id="noRatings">({this.state.reviews.length} Ratings)</h3>
           </div>
           {this.generateTagIndicators(this.props.locData.getLoc(locId).tags.filter((tag) =>
               {return tag.val !== 0}))}
