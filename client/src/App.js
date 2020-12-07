@@ -29,7 +29,8 @@ export class App extends React.Component {
     };
     // Adds hardcoded location data
     getLocations(this);
-
+    console.log("Received State")
+    console.log(this.state.locData)
     this.state.userData.addUser("admin", "admin")
     this.state.userData.addUser("user", "js")
     this.state.userData.addUser("janedoe", "jd")
@@ -53,7 +54,6 @@ export class App extends React.Component {
   deleteUser(username) {
     this.setState({userData: this.state.userData.removeUser(username, this.state.locData)});
   }
-
   renderExitButton() {
     return (
       <Link to={"/"}>
@@ -87,11 +87,20 @@ export class App extends React.Component {
       <div id="loginButtonMain" className="purpleButton" onClick={() => {logout(this)}}>Logout</div>
     );
   }
+  showAllMarkers(this){
+    console.log("showallmarkers")
+    //console.log(this.state.currentUser)
+    this.state.locData.setShowtoTrue();
+  }
 
   render() {
-    if (this.state.locData === null) {
-      return null;
+    let map_locations = null;
+    if (this.state.locData !== null) {
+       map_locations = this.state.locData.getGeoLocData();
     }
+    console.log("to be generated")
+    console.log(map_locations)
+
     const path = this.props.history.location.pathname.split('/');
     return (
       <div>
@@ -143,7 +152,11 @@ export class App extends React.Component {
           <Link to={"/search"}>
             <button className = "searchButton purpleButton">Search</button>
           </Link>
-          <SiteMap locations={this.state.locData.getGeoLocData()} toggleMap={this.toggleMapClass}/>
+          <button onClick = {this.showAllMarkers(this)} id="showMarkersButton" className="purpleButton">
+          Show All
+          </button>
+	    
+          <SiteMap locations={map_locations} toggleMap={this.toggleMapClass}/>
           {this.renderLoginButton()}
           {this.renderUserPageButton()}
         </div>

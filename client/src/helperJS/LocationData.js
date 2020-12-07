@@ -15,6 +15,13 @@ export const getLocations = (app) => {
             // the resolved promise with the JSON body
             const locData = new LocationData();
             locData.locations = json;
+	    //console.log(locData)
+	    for (let i in locData.locations){
+		locData.locations[i].show = false;
+
+	    }
+	    console.log("Set state")
+	    console.log(locData)
             app.setState({ locData: locData });
         })
         .catch(error => {
@@ -112,11 +119,14 @@ export class LocationData {
             rating: target.avgRating,
             lat: target.lat,
             lng: target.lng,
-            tags: target.tags
+            tags: target.tags,
+	    show: target.show
         };
     }
 
     getGeoLocData() {
+	console.log("Getting GEOLOC")
+	console.log(this.locations)
         return this.locations.map((loc) => {return this.getGeoLoc(loc._id)});
     }
 
@@ -129,6 +139,9 @@ export class LocationData {
             }
         }
         return targets;
+    }
+    setShowtoTrue(){
+	return this.locations.map((loc) => {return console.log(loc.show)});
     }
 }
 

@@ -76,14 +76,20 @@ class SiteMap extends React.Component {
   }
 
   generateMarkers() {
+    if(this.props.locations === null){return null}
     return this.props.locations.flatMap((loc) => {
+      console.log(loc)
+      let size = 0;
+      if(loc.show){
+	size =32;
+      }
       return <Marker key={loc._id}
                     id={loc._id}
                     name={loc.name}
                     icon={{
                       url: `/static/markers/marker${Math.floor(loc.rating)}.png`,
                       anchor: new this.props.google.maps.Point(32,32),
-                      scaledSize: new this.props.google.maps.Size(32,32)
+                      scaledSize: new this.props.google.maps.Size(size,size)
                     }}
                     position={{
                       lat: loc.lat,
