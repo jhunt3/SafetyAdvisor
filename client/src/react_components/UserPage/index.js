@@ -48,6 +48,7 @@ class UserPage extends React.Component {
         <button className="backButton" onClick={this.props.history.goBack}>Back</button>
         {showAdminButton(this.props.app, this.state.isAdmin, this.state.currentUser, userId)}
         {showDeleteUserButton(this.props.app, this.state.isAdmin, userId)}
+
         <div className="userInfoContainer">
         <img className="profilePic" alt="profilePic" src=""/>  
             <div className="userTitleContainer">

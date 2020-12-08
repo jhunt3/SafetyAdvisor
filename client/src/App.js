@@ -20,6 +20,7 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     checkSession(this);
+    this.showMarker = this.showMarker.bind(this)
     this.state = {
       mapClass: "fullMap",
       currentUser: null,
@@ -57,7 +58,7 @@ export class App extends React.Component {
   renderExitButton() {
     return (
       <Link to={"/"}>
-        <img className="exitButton" alt='exitButton' src={`/static/exit.png`} 
+        <img className="exitButton" alt='exitButton' onClick={(e) => this.showMarker(null)} src={`/static/exit.png`} 
         title={'Close Side Panel'}/>
       </Link>);
   }
@@ -75,6 +76,18 @@ export class App extends React.Component {
     return;
   }
 
+  renderAddLocButton(){
+	if (this.state.isAdmin === true){
+	return (
+      <Link to={`/usr/${this.state.currentUser}`}>
+        <div id="addLocButton" className="purpleButton">
+          Add Location
+        </div>
+      </Link>
+      );
+	}
+  }
+
   renderLoginButton() {
     if (this.state.currentUser === null) {
       return (
@@ -87,11 +100,31 @@ export class App extends React.Component {
       <div id="loginButtonMain" className="purpleButton" onClick={() => {logout(this)}}>Logout</div>
     );
   }
-  showAllMarkers(this){
-    console.log("showallmarkers")
+  showMarker(query){
+    let LD = this.state.locData
+    console.log("QUERY")
+    console.log(query)
+    if (query == null){
+    for (let i in LD.locations) {
+
+	LD.locations[i].show = 10;
+    }
+    return
+    }
+    //console.log(LD)
+    for (let i in LD.locations) {
+      const locationNameLowercase = LD.locations[i].name.toLowerCase();
+      if (locationNameLowercase.includes(query.toLowerCase())) {
+        LD.locations[i].show = 32;
+      }else{LD.locations[i].show = 10;}
+    }
+    //console.log(LD)
+    this.setState({locData: LD})	   
+ }
+
     //console.log(this.state.currentUser)
-    this.state.locData.setShowtoTrue();
-  }
+   // this.state.locData.setShowtoTrue();
+ 
 
   render() {
     let map_locations = null;
@@ -136,14 +169,14 @@ export class App extends React.Component {
             <Route exact path="/search" render={ () => 
               <div className="sidePage">
               {this.renderExitButton()}
-              <SearchForm setSearchResult={this.setSearchResult}/>
+              <SearchForm setSearchResult={this.setSearchResult} showMarker = {this.showMarker}/>
             </div>
             }/>
             { /* Search Results Page  */ } 
             <Route exact path="/search/:query" render={ () => 
               <div className="sidePage">
               {this.renderExitButton()}
-              <SearchPage locData={this.state.locData}/>
+              <SearchPage locData={this.state.locData} />
             </div>
             }/>
         </Switch>
@@ -152,13 +185,11 @@ export class App extends React.Component {
           <Link to={"/search"}>
             <button className = "searchButton purpleButton">Search</button>
           </Link>
-          <button onClick = {this.showAllMarkers(this)} id="showMarkersButton" className="purpleButton">
-          Show All
-          </button>
 	    
           <SiteMap locations={map_locations} toggleMap={this.toggleMapClass}/>
           {this.renderLoginButton()}
           {this.renderUserPageButton()}
+	  {this.renderAddLocButton()}
         </div>
       </div>
     );

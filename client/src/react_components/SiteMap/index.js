@@ -1,9 +1,9 @@
 import React from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react';
 import { withRouter } from "react-router-dom";
+import { checkSession } from '../../helperJS/loginHelper';
 
 import TagIndicator from './../TagIndicator';
-
 
 import "./styles.css";
 
@@ -38,9 +38,11 @@ class SiteMap extends React.Component {
     this.state = {
       activePlace: {},
       showingInfoWindow: false,
-      activeMarker: null
+      activeMarker: null,
+      currentUser:"",
+      isAdmin: false
     };
-
+    checkSession(this);
     this.onMarkerMouseover = this.onMarkerMouseover.bind(this);
     this.onMarkerMouseout = this.onMarkerMouseout.bind(this);
   }
@@ -77,18 +79,18 @@ class SiteMap extends React.Component {
 
   generateMarkers() {
     if(this.props.locations === null){return null}
+    console.log("GenerateMarkers")
+    console.log(this.props.locations)
     return this.props.locations.flatMap((loc) => {
-      console.log(loc)
-      let size = 0;
-      if(loc.show){
-	size =32;
-      }
-      return <Marker key={loc._id}
+      console.log("Sizes")
+      console.log(loc.show)
+      let size = loc.show
+        return <Marker key={loc._id}
                     id={loc._id}
                     name={loc.name}
                     icon={{
                       url: `/static/markers/marker${Math.floor(loc.rating)}.png`,
-                      anchor: new this.props.google.maps.Point(32,32),
+                      anchor: new this.props.google.maps.Point(size,size),
                       scaledSize: new this.props.google.maps.Size(size,size)
                     }}
                     position={{
@@ -115,6 +117,7 @@ class SiteMap extends React.Component {
 
 
   render() {
+
     return (
         <Map
           google={this.props.google}

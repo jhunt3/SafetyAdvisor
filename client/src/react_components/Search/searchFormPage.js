@@ -25,6 +25,7 @@ class SearchForm extends React.Component {
       return;
     }
     this.props.history.push(`/search/${this.state.value}`);
+    this.props.showMarker(this.state.value)
   }
 
   render() {

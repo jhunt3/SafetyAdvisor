@@ -17,7 +17,7 @@ export const getLocations = (app) => {
             locData.locations = json;
 	    //console.log(locData)
 	    for (let i in locData.locations){
-		locData.locations[i].show = false;
+		locData.locations[i].show = 10;
 
 	    }
 	    console.log("Set state")
@@ -132,10 +132,13 @@ export class LocationData {
 
     getLocationsWithQuery(query) {
         const targets = [];
-        for (const loc of this.locations) {
-            const locationNameLowercase = loc.name.toLowerCase();
+        for (let i in this.locations) {
+	    console.log("Querying")
+	    console.log(this.locations[i])
+            const locationNameLowercase = this.locations[i].name.toLowerCase();
             if (locationNameLowercase.includes(query.toLowerCase())) {
-                targets.push(loc);
+
+                targets.push(this.locations[i]);
             }
         }
         return targets;
