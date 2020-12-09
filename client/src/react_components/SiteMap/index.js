@@ -115,9 +115,6 @@ class SiteMap extends React.Component {
         />
     });
   }
-  /*centerMoved(){
-	console.log("centerMoved")
-  }*/
   addMarker(){
     console.log('AddMarker')
     console.log(this.props.sidePage)

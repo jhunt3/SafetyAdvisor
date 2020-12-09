@@ -85,7 +85,7 @@ export class App extends React.Component {
   }
 
   renderAddLocButton(){
-	if (this.state.isAdmin === true){
+	if (this.state.isAdmin === true && this.state.currentUser !== null){
 	
 	return (
       <Link to={`/addLocation`}>
