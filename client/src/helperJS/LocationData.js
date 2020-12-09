@@ -1,3 +1,4 @@
+
 const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Checks Temperature", "Patio"];
 
 export const getLocations = (app) => {
@@ -15,6 +16,13 @@ export const getLocations = (app) => {
             // the resolved promise with the JSON body
             const locData = new LocationData();
             locData.locations = json;
+	    //console.log(locData)
+	    for (let i in locData.locations){
+		locData.locations[i].show = 10;
+
+	    }
+	    console.log("Set state")
+	    console.log(locData)
             app.setState({ locData: locData });
         })
         .catch(error => {
@@ -26,7 +34,6 @@ export class LocationData {
     constructor() {
         this.locations = [];
     }
-
     getLoc(id) {
         return this.locations.find((obj) => {return obj._id === id});
     }
@@ -112,23 +119,32 @@ export class LocationData {
             rating: target.avgRating,
             lat: target.lat,
             lng: target.lng,
-            tags: target.tags
+            tags: target.tags,
+	    show: target.show
         };
     }
 
     getGeoLocData() {
+	console.log("Getting GEOLOC")
+	console.log(this.locations)
         return this.locations.map((loc) => {return this.getGeoLoc(loc._id)});
     }
 
     getLocationsWithQuery(query) {
         const targets = [];
-        for (const loc of this.locations) {
-            const locationNameLowercase = loc.name.toLowerCase();
+        for (let i in this.locations) {
+	    console.log("Querying")
+	    console.log(this.locations[i])
+            const locationNameLowercase = this.locations[i].name.toLowerCase();
             if (locationNameLowercase.includes(query.toLowerCase())) {
-                targets.push(loc);
+
+                targets.push(this.locations[i]);
             }
         }
         return targets;
+    }
+    setShowtoTrue(){
+	return this.locations.map((loc) => {return console.log(loc.show)});
     }
 }
 

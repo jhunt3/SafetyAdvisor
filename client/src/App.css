@@ -40,6 +40,7 @@ body {
   font-size: 2vh;
 }
 
+
 .searchButton:hover {
   cursor:help;
 }
@@ -88,6 +89,11 @@ body {
 #userPageButton {
   bottom: 1vh;
   right: 6vh
+}
+
+#addLocButton{
+  bottom: 5vh;
+  right: 6vh;
 }
 
 .loginPage {

@@ -142,6 +142,8 @@ const toggleAdmin = (app, makeAdmin, currentUser, username) => {
 };
 
 export const showAdminButton = (app, isAdmin, currentUser, username) => {
+  console.log("ShowAdminButton")
+  console.log(isAdmin)
   if (isAdmin && username !== "admin") {
     return (<img className="makeAdminButton" alt="makeAdminButton" src={`/static/admin.png`} onClick={() => {
       fetch(`/api/isAdmin/${username}`)
@@ -168,4 +170,15 @@ export const showAdminButton = (app, isAdmin, currentUser, username) => {
     }} title="Delete User"/>);
   }
   return;
+};
+
+export const showNewMarker = (app, isAdmin) =>{
+	console.log("ShowNewMarker CALLED")
+	console.log(isAdmin)
+	if(isAdmin){
+		console.log("SHOULD ADD LOC BUT")
+		return(
+			<button className = "purpleButton">Add Location</button>
+		)
+	}
 };

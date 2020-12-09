@@ -1,9 +1,8 @@
 import React from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react';
 import { withRouter } from "react-router-dom";
-
+import { checkSession } from '../../helperJS/loginHelper';
 import TagIndicator from './../TagIndicator';
-
 
 import "./styles.css";
 
@@ -38,9 +37,14 @@ class SiteMap extends React.Component {
     this.state = {
       activePlace: {},
       showingInfoWindow: false,
-      activeMarker: null
+      activeMarker: null,
+      currentUser:"",
+      isAdmin: false,
+      lat:null,
+      lng:null
     };
-
+    //console.log('Does this run')
+    checkSession(this);
     this.onMarkerMouseover = this.onMarkerMouseover.bind(this);
     this.onMarkerMouseout = this.onMarkerMouseout.bind(this);
   }
@@ -74,16 +78,21 @@ class SiteMap extends React.Component {
     }
     return;
   }
-
   generateMarkers() {
+    if(this.props.locations === null){return null}
+    console.log("GenerateMarkers")
+    console.log(this.props.locations)
     return this.props.locations.flatMap((loc) => {
-      return <Marker key={loc._id}
+      console.log("Sizes")
+      console.log(loc.show)
+      let size = loc.show
+        return <Marker key={loc._id}
                     id={loc._id}
                     name={loc.name}
                     icon={{
                       url: `/static/markers/marker${Math.floor(loc.rating)}.png`,
-                      anchor: new this.props.google.maps.Point(32,32),
-                      scaledSize: new this.props.google.maps.Size(32,32)
+                      anchor: new this.props.google.maps.Point(size,size),
+                      scaledSize: new this.props.google.maps.Size(size,size)
                     }}
                     position={{
                       lat: loc.lat,
@@ -106,18 +115,42 @@ class SiteMap extends React.Component {
         />
     });
   }
+  addMarker(){
+    console.log('AddMarker')
+    console.log(this.props.sidePage)
+    if(this.props.is_Admin && (this.props.sidePage === 'addLocation')){
+      return <Marker 
+	  name={'New Location'}
+	  position={{lat: this.state.lat, lng: this.state.lng}}
+	  draggable={true}
+	  />
 
+	
+    }else{return null}
+  }
 
+  handleClick (t, map, coord){
+	if(this.props.sidePage === 'addLocation'){
+	const { latLng } = coord;
+	const lat = latLng.lat();
+	const lng = latLng.lng();
+	console.log(lat,lng)
+	this.setState({lat: lat, lng: lng})
+	this.props.setNewLoc(lat, lng)
+	}
+  }
   render() {
     return (
         <Map
+	  onClick={this.handleClick.bind(this)}
           google={this.props.google}
           zoom={16}
           style={mapStyle}
           initialCenter={{ lat: 43.663, lng: -79.392}}
           styles={hideStyle}>
           {this.generateMarkers()}
-          <InfoWindow marker={this.state.activeMarker}
+	    {this.addMarker()}		
+	    <InfoWindow marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
                     style={infoWindowStyle}>
               <h1 className="name">{this.state.activePlace.name}</h1>

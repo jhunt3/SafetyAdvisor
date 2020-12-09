@@ -19,6 +19,7 @@ class SearchPage extends React.Component {
       const path = this.props.history.location.pathname.split('/');
       const query = path[path.length - 1];
       const locData = this.props.locData.getLocationsWithQuery(query);
+      
       if (locData.length === 0) {
         return <h4>No results found.</h4>;
       }
@@ -46,7 +47,9 @@ class SearchPage extends React.Component {
                 {this.generateTagIndicators(location.tags.filter((tag) =>
                     {return tag.val !== 0}))}
             </div>
+	  	   
         </div>
+
     )));
   }
 
