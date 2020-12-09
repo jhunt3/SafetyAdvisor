@@ -14,6 +14,8 @@ import SearchPage from './react_components/Search/searchPage';
 import SearchForm from './react_components/Search/searchFormPage';
 import ReviewPage from './react_components/ReviewPage'
 import LoginPage from './react_components/LoginPage'
+import AddLocation from './react_components/AddLocation'
+
 
 
 export class App extends React.Component {
@@ -27,6 +29,9 @@ export class App extends React.Component {
       isAdmin: false,
       locData: null,
       userData: new UserData(),
+      sidePage: null,
+      lat: null,
+      lng: null
     };
     // Adds hardcoded location data
     getLocations(this);
@@ -39,6 +44,9 @@ export class App extends React.Component {
     this.toggleMapClass = this.toggleMapClass.bind(this);
     this.deleteReview = this.deleteReview.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
+    this.setNewLoc = this.setNewLoc.bind(this);
+    this.addLocation = this.addLocation.bind(this);
+
   }
 
   toggleMapClass() {
@@ -58,7 +66,7 @@ export class App extends React.Component {
   renderExitButton() {
     return (
       <Link to={"/"}>
-        <img className="exitButton" alt='exitButton' onClick={(e) => this.showMarker(null)} src={`/static/exit.png`} 
+        <img className="exitButton" alt='exitButton' onClick={(e) => {this.showMarker(null); this.state.sidePage = null}} src={`/static/exit.png`} 
         title={'Close Side Panel'}/>
       </Link>);
   }
@@ -78,9 +86,10 @@ export class App extends React.Component {
 
   renderAddLocButton(){
 	if (this.state.isAdmin === true){
+	
 	return (
-      <Link to={`/usr/${this.state.currentUser}`}>
-        <div id="addLocButton" className="purpleButton">
+      <Link to={`/addLocation`}>
+        <div id="addLocButton" onClick={() =>{this.state.sidePage = 'addLocation'}} className="purpleButton">
           Add Location
         </div>
       </Link>
@@ -121,18 +130,23 @@ export class App extends React.Component {
     //console.log(LD)
     this.setState({locData: LD})	   
  }
-
-    //console.log(this.state.currentUser)
-   // this.state.locData.setShowtoTrue();
- 
+ addLocation(name, type){
+   console.log("Add location data")
+   this.setState({sidePage: null})
+   console.log(name, type, this.state.lat, this.state.lng)
+   this.state.locData.addLocation(name, type, this.state.lat, this.state.lng)
+ }
+ setNewLoc(lat,lng){
+   this.setState({lat: lat, lng: lng})
+ }
 
   render() {
     let map_locations = null;
     if (this.state.locData !== null) {
        map_locations = this.state.locData.getGeoLocData();
     }
-    console.log("to be generated")
-    console.log(map_locations)
+    console.log("APP RENDER")
+    console.log(this.state.isAdmin)
 
     const path = this.props.history.location.pathname.split('/');
     return (
@@ -179,6 +193,14 @@ export class App extends React.Component {
               <SearchPage locData={this.state.locData} />
             </div>
             }/>
+	    { /* Add Location Page */ }
+            <Route exact path="/addLocation" render={ () => 
+              <div className="sidePage">
+              {this.renderExitButton()}
+              <AddLocation lat = {this.state.lat} lng = {this.state.lng} addLocation={this.addLocation} />
+            </div>
+            }/>
+
         </Switch>
         { /* Map  */ } 
         <div className={(path[path.length - 1] === "" || path[path.length - 1] === 'login') ? "fullMap" : "sideMap"}>
@@ -186,7 +208,7 @@ export class App extends React.Component {
             <button className = "searchButton purpleButton">Search</button>
           </Link>
 	    
-          <SiteMap locations={map_locations} toggleMap={this.toggleMapClass}/>
+          <SiteMap setNewLoc = {this.setNewLoc} is_Admin = {this.state.isAdmin} sidePage= {this.state.sidePage} locations={map_locations} toggleMap={this.toggleMapClass}/>
           {this.renderLoginButton()}
           {this.renderUserPageButton()}
 	  {this.renderAddLocButton()}

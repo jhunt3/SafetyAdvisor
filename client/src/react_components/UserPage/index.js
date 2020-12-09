@@ -41,6 +41,8 @@ class UserPage extends React.Component {
 };
 
   render() {
+    console.log("USERPAGE ADMIN")	  
+    console.log(this.state.isAdmin)
     const path = this.props.history.location.pathname.split('/')
     const userId = path[path.length - 1];
     return (

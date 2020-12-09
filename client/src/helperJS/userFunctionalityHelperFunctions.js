@@ -172,8 +172,8 @@ export const showAdminButton = (app, isAdmin, currentUser, username) => {
   return;
 };
 
-export const addLocButton = (app, isAdmin, currentUser, username) =>{
-	console.log("ADDLOCBUT CALLED")
+export const showNewMarker = (app, isAdmin) =>{
+	console.log("ShowNewMarker CALLED")
 	console.log(isAdmin)
 	if(isAdmin){
 		console.log("SHOULD ADD LOC BUT")

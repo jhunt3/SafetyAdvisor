@@ -1,3 +1,4 @@
+
 const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Checks Temperature", "Patio"];
 
 export const getLocations = (app) => {
@@ -33,7 +34,6 @@ export class LocationData {
     constructor() {
         this.locations = [];
     }
-
     getLoc(id) {
         return this.locations.find((obj) => {return obj._id === id});
     }
