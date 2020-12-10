@@ -137,9 +137,8 @@ export class App extends React.Component {
     console.log("QUERY")
     console.log(query)
     if (query == null){
-    for (let i in LD.locations) {
-
-	LD.locations[i].show = 10;
+      for (let i in LD.locations) {
+	    LD.locations[i].show = 32;
     }
     return
     }
@@ -148,7 +147,9 @@ export class App extends React.Component {
       const locationNameLowercase = LD.locations[i].name.toLowerCase();
       if (locationNameLowercase.includes(query.toLowerCase())) {
         LD.locations[i].show = 32;
-      }else{LD.locations[i].show = 10;}
+      } else {
+        LD.locations[i].show = 10;
+      }
     }
     //console.log(LD)
     this.setState({locData: LD})	   
@@ -244,7 +245,7 @@ export class App extends React.Component {
           <SiteMap setNewLoc = {this.setNewLoc} isAdmin = {this.state.isAdmin} sidePage= {this.state.sidePage} locations={map_locations} toggleMap={this.toggleMapClass}/>
           {this.renderLoginButton()}
           {this.renderUserPageButton()}
-	  {this.renderAddLocButton()}
+	      {this.renderAddLocButton()}
         </div>
       </div>
     );

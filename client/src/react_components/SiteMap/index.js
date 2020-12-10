@@ -86,8 +86,8 @@ class SiteMap extends React.Component {
                     name={loc.name}
                     icon={{
                       url: `/static/markers/marker${Math.floor(loc.rating)}.png`,
-                      anchor: new this.props.google.maps.Point(16,32),
-                      scaledSize: new this.props.google.maps.Size(32,32)
+                      anchor: new this.props.google.maps.Point(loc.show / 2,  loc.show),
+                      scaledSize: new this.props.google.maps.Size(loc.show, loc.show)
                     }}
                     position={{
                       lat: loc.lat,

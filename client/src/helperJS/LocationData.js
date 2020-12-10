@@ -18,7 +18,7 @@ export const getLocations = (app) => {
             locData.locations = json;
 	    //console.log(locData)
 	    for (let i in locData.locations){
-		locData.locations[i].show = 10;
+		locData.locations[i].show = 32;
 
 	    }
 	    console.log("Set state")
@@ -120,7 +120,7 @@ export class LocationData {
             lat: target.lat,
             lng: target.lng,
             tags: target.tags,
-	    show: target.show
+	        show: target.show
         };
     }
 
