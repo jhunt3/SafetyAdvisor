@@ -3,6 +3,7 @@ import StarRatings from 'react-star-ratings';
 
 import "./styles.css";
 import { checkSession } from '../../helperJS/loginHelper';
+import { addImage, getImage } from "../../helperJS/imageHelper";
 import { withRouter } from "react-router-dom";
 
 import { showAdminButton, showDeleteButton, showDeleteUserButton } from './../../helperJS/userFunctionalityHelperFunctions';
@@ -14,10 +15,35 @@ class UserPage extends React.Component {
     this.state =  {
       currentUser: "",
       isAdmin: false,
-      reviews: []
+      reviews: [],
+      profileImageUrl: ""
     }
     checkSession(this);
+    this.updateProfileImage(this);
     this.getReviews(this);
+  }
+
+  updateProfileImage(target) {
+    const path = this.props.history.location.pathname.split('/')
+    const userId = path[path.length - 1];
+    const url = `/images/${userId}`;
+
+    // Since this is a GET request, simply call fetch on the URL
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            } else {
+                alert("Could not get image");
+            }
+        })
+        .then((json) => {
+          // the resolved promise with the JSON body
+          target.setState({ profileImageUrl: json.image.image_url });
+        })
+        .catch(error => {
+            console.log(error);
+        });
   }
 
   getReviews(target) {
@@ -38,8 +64,27 @@ class UserPage extends React.Component {
         .catch(error => {
             console.log(error);
         });
-};
+  };
 
+  showChangePhotoForm() {
+    var form = document.getElementById("changePhotoForm");
+    if (form.style.display === "block") {
+      form.style.display = "none";
+    } else {
+      form.style.display = "block";
+    }
+  }
+
+
+  renderChangePictureButton(userId) {
+    if (this.state.currentUser === userId || this.state.currentUser === 'admin') {
+      return (
+        <button type="button" onClick={this.showChangePhotoForm}>Change Photo</button>
+      );
+    }
+    return;
+  }
+ 
   render() {
     const path = this.props.history.location.pathname.split('/')
     const userId = path[path.length - 1];
@@ -49,7 +94,23 @@ class UserPage extends React.Component {
         {showAdminButton(this.props.app, this.state.isAdmin, this.state.currentUser, userId)}
         {showDeleteUserButton(this.props.app, this.state.isAdmin, userId)}
         <div className="userInfoContainer">
-        <img className="profilePic" alt="profilePic" src=""/>
+        <img className="profilePic" alt="profilePic" src={this.state.profileImageUrl}/>
+        <div>
+        {this.renderChangePictureButton(userId)}
+        </div>
+        <div id="changePhotoForm">
+          <form className="image-form" onSubmit={(e) => {
+                    e.preventDefault();
+                    addImage(e.target, userId);
+                    this.updateProfileImage(this);
+                }}>
+            <div class="image-form__field">
+                <label>Image:</label>
+                <input name="image" type="file" />
+            </div>
+            <input type="submit" className="purpleButton loginPageButton" value="Upload"/>
+          </form>
+        </div>
             <div className="userTitleContainer">
               <h1>{userId}</h1>
               <h3>{this.state.reviews.length} Reviews</h3>
@@ -74,7 +135,7 @@ class UserPage extends React.Component {
                             starEmptyColor="darkgrey"
                             starDimension='1.5vw'
                             starSpacing='0.15vw'/>
-                        {showDeleteButton(this, this.state.isAdmin, this.state.currentUser, this.props.userData.getUser(userId).username , review.location_id, review.reviewId)}
+                        {showDeleteButton(this, this.state.isAdmin, this.state.currentUser, this.state.currentUser, review.location_id, review.reviewId)}
                     </div>
                     </div>
                     <div className="reviewContainer">
