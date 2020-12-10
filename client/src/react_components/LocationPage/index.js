@@ -1,7 +1,7 @@
 import React from 'react';
 import StarRatings from 'react-star-ratings';
 import { withRouter } from "react-router-dom";
-
+import { addImage, getImage } from "../../helperJS/imageHelper";
 import TagIndicator from './../TagIndicator';
 import { showDeleteButton } from './../../helperJS/userFunctionalityHelperFunctions';
 
@@ -15,10 +15,34 @@ class LocationPage extends React.Component {
     this.state =  {
       currentUser: "",
       isAdmin: false,
-      reviews: []
+      reviews: [],
+      profileImageUrl: ""
     }
     checkSession(this);
+    this.updateProfileImage(this);
     this.getReviews(this);
+  }
+  updateProfileImage(target) {
+    const path = this.props.history.location.pathname.split('/')
+    const locId = path[path.length - 1];
+    const url = `/images/${locId}`;
+
+    // Since this is a GET request, simply call fetch on the URL
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            } else {
+                alert("Could not get image");
+            }
+        })
+        .then((json) => {
+          // the resolved promise with the JSON body
+          target.setState({ profileImageUrl: json.image.image_url });
+        })
+        .catch(error => {
+            console.log(error);
+        });
   }
 
   getReviews(target) {
@@ -49,6 +73,23 @@ class LocationPage extends React.Component {
     });
   }
 
+  showChangePhotoForm() {
+    var form = document.getElementById("changePhotoForm");
+    if (form.style.display === "block") {
+      form.style.display = "none";
+    } else {
+      form.style.display = "block";
+    }
+  }
+
+  renderChangePictureButton(locId) {
+    if (this.state.isAdmin === true) {
+      return (
+        <button type="button" onClick={this.showChangePhotoForm}>Change Photo</button>
+      );
+    }
+    return;
+  }
   render() {
     const path = this.props.history.location.pathname.split('/')
     const locId = path[path.length - 1];
@@ -63,7 +104,25 @@ class LocationPage extends React.Component {
     return (
       <div className="body">
         <div id="addReviewButton" className="purpleButton" onClick={() => {this.props.history.push(`/loc/${locId}/addReview`)}}>+ Review</div>
-        <img className="locImage" alt="locationImage" src={this.props.locData.getLoc(locId).imagePath}/>
+        <img className="locImage" alt="locationImage" src={this.state.profileImageUrl}/>
+
+	<div>
+        {this.renderChangePictureButton(locId)}
+        </div>
+        <div id="changePhotoForm">
+          <form className="image-form" onSubmit={(e) => {
+                    e.preventDefault();
+                    addImage(e.target, locId);
+                    this.updateProfileImage(this);
+                }}>
+            <div class="image-form__field">
+                <label>Image:</label>
+                <input name="image" type="file" />
+            </div>
+            <input type="submit" className="purpleButton loginPageButton" value="Upload"/>
+          </form>
+        </div>
+
         <div className="infoContainer">
           <div className="locationTitleContainer">
             <h1 id="nameHeader">{this.props.locData.getLoc(locId).name}</h1>
