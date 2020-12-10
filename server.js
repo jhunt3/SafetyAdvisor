@@ -15,6 +15,7 @@ mongoose.set('useFindAndModify', false); // for some deprecation issues
 const { Location } = require("./models/location");
 const { User } = require("./models/user");
 const { Review } = require("./models/review");
+const { Image } = require("./models/image");
 
 // to validate object IDs
 const { ObjectID } = require("mongodb");
@@ -29,6 +30,15 @@ app.use(bodyParser.json());
 // express-session for managing user sessions
 const session = require("express-session");
 const e = require("express");
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'csc309team28',
+    api_key: '955476213153433',
+    api_secret: '8oo_dXyCeKmw7UAfFD7H8VCtGbw'
+});
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
@@ -326,6 +336,42 @@ app.get("/api/usr/:id/reviewData", mongoChecker, async (req, res) => {
     }
 
 })
+
+// a POST route to *create* an image
+app.post("/images", multipartMiddleware, (req, res) => {
+    console.log(req.body);
+    // Use uploader.upload API to upload image to cloudinary server.
+    cloudinary.uploader.upload(
+        req.files.image.path, 
+        function (result) {
+            // Replace the one from before if found, otherwise just insert normally
+            Image.findOneAndUpdate(
+                { "reference_id" :  req.body.referenceId },
+                { $set: { "image_id" : result.public_id, "image_url": result.url, "reference_id": req.body.referenceId, "created_at": new Date()}},
+                { upsert: true }
+             ).then(
+                saveRes => {
+                    res.send(saveRes);
+                },
+                error => {
+                    res.status(400).send(error); 
+                }
+            );
+        });
+});
+
+app.get("/images/:refId", (req, res) => {
+    const refId = req.params.refId;
+    console.log(refId);
+    Image.findOne({ reference_id: refId }).then(
+        image => {
+            res.send({ image }); // can wrap in object if want to add more properties
+        },
+        error => {
+            res.status(500).send(error); // server error
+        }
+    );
+});
 
 /*** Webpage routes below **********************************/
 // Serve the build

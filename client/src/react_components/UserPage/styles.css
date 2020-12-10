@@ -121,3 +121,7 @@ h3{
 .makeAdminButton:hover {
   cursor: pointer;
 }
+
+#changePhotoForm {
+  display: none;
+}
