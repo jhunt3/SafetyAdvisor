@@ -85,16 +85,39 @@ export class App extends React.Component {
   }
 
   renderAddLocButton(){
-	if (this.state.isAdmin === true && this.state.currentUser !== null){
-	
-	return (
-      <Link to={`/addLocation`}>
-        <div id="addLocButton" onClick={() =>{this.setState({sidePage: 'addLocation'});}} className="purpleButton">
-          Add Location
-        </div>
-      </Link>
+    if (this.state.isAdmin === true && this.state.currentUser !== null){
+      if (this.props.history.location.pathname === '/addLocation') {
+        return (
+          <Link to={`/`}>
+            <div id="addLocButton" onClick={() =>{this.setState({sidePage: null});}} className="purpleButton">
+              Add Location
+            </div>
+          </Link>
+        );
+      }
+      return (
+          <Link to={`/addLocation`}>
+            <div id="addLocButton" onClick={() =>{this.setState({sidePage: 'addLocation'});}} className="purpleButton">
+              Add Location
+            </div>
+          </Link>
       );
-	}
+    }
+  }
+
+  renderSearchButton(){
+  if (this.props.history.location.pathname === '/search') {
+    return (
+      <Link to={"/"}>
+        <button className = "searchButton purpleButton">Search</button>
+      </Link>
+    );
+  }
+  return (
+    <Link to={"/search"}>
+      <button className = "searchButton purpleButton">Search</button>
+    </Link>
+  );
   }
 
   renderLoginButton() {
@@ -131,17 +154,15 @@ export class App extends React.Component {
     this.setState({locData: LD})	   
  }
  addLocation(name, type){
-   checkSession(this).then(() => {
-      if (this.state.currentUser && this.state.isAdmin) {
-        console.log("Add location data");
-        this.setState({sidePage: null});
-        console.log(name, type, this.state.lat, this.state.lng)
-        this.state.locData.addLocation(name, type, this.state.lat, this.state.lng)
-      }
-      else {
-        alert("You are not authorized to add a location.");
-      }
-   });
+  if (this.state.currentUser && this.state.isAdmin) {
+    console.log("Add location data");
+    this.setState({sidePage: null});
+    console.log(name, type, this.state.lat, this.state.lng)
+    this.state.locData.addLocation(name, type, this.state.lat, this.state.lng)
+  }
+  else {
+    alert("You are not authorized to add a location.");
+  }
  }
  setNewLoc(lat,lng){
    this.setState({lat: lat, lng: lng})
@@ -219,11 +240,8 @@ export class App extends React.Component {
         </Switch>
         { /* Map  */ } 
         <div className={(path[path.length - 1] === "" || path[path.length - 1] === 'login') ? "fullMap" : "sideMap"}>
-          <Link to={"/search"}>
-            <button className = "searchButton purpleButton">Search</button>
-          </Link>
-	    
-          <SiteMap setNewLoc = {this.setNewLoc} is_Admin = {this.state.isAdmin} sidePage= {this.state.sidePage} locations={map_locations} toggleMap={this.toggleMapClass}/>
+          {this.renderSearchButton()}
+          <SiteMap setNewLoc = {this.setNewLoc} isAdmin = {this.state.isAdmin} sidePage= {this.state.sidePage} locations={map_locations} toggleMap={this.toggleMapClass}/>
           {this.renderLoginButton()}
           {this.renderUserPageButton()}
 	  {this.renderAddLocButton()}

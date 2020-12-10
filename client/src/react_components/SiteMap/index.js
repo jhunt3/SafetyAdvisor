@@ -80,19 +80,14 @@ class SiteMap extends React.Component {
   }
   generateMarkers() {
     if(this.props.locations === null){return null}
-    console.log("GenerateMarkers")
-    console.log(this.props.locations)
     return this.props.locations.flatMap((loc) => {
-      console.log("Sizes")
-      console.log(loc.show)
-      let size = loc.show
         return <Marker key={loc._id}
                     id={loc._id}
                     name={loc.name}
                     icon={{
                       url: `/static/markers/marker${Math.floor(loc.rating)}.png`,
-                      anchor: new this.props.google.maps.Point(size,size),
-                      scaledSize: new this.props.google.maps.Size(size,size)
+                      anchor: new this.props.google.maps.Point(16,32),
+                      scaledSize: new this.props.google.maps.Size(32,32)
                     }}
                     position={{
                       lat: loc.lat,
@@ -118,11 +113,16 @@ class SiteMap extends React.Component {
   addMarker(){
     console.log('AddMarker')
     console.log(this.props.sidePage)
-    if(this.props.is_Admin && (this.props.sidePage === 'addLocation')){
+    if(this.props.isAdmin && (this.props.sidePage === 'addLocation')){
       return <Marker 
-	  name={'New Location'}
-	  position={{lat: this.state.lat, lng: this.state.lng}}
-	  draggable={true}
+      name={'New Location'}
+      icon={{
+        url: `/static/markers/markerNew.png`,
+        anchor: new this.props.google.maps.Point(16,32),
+        scaledSize: new this.props.google.maps.Size(32,32)
+      }}
+      position={{lat: this.state.lat, lng: this.state.lng}}
+      draggable={true}
 	  />
 
 	
