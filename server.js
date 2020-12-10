@@ -105,7 +105,7 @@ app.post("/users/login", (req, res) => {
             req.session.user = user._id;
             req.session.username = user.username;
             req.session.isAdmin = user.isAdmin;
-            res.send({  
+            res.send({
                 currentUser: user.username,
                 isAdmin: user.isAdmin
              });
@@ -130,7 +130,7 @@ app.get("/users/logout", (req, res) => {
 // A route to check if a user is logged in on the session
 app.get("/users/check-session", (req, res) => {
     if (req.session.user) {
-        res.send({ 
+        res.send({
             currentUser: req.session.username,
             isAdmin: req.session.isAdmin
          });
@@ -160,7 +160,7 @@ app.patch('/api/makeAdmin/:id', mongoChecker, async (req, res) => {
 		const user = await User.findOneAndUpdate({username: req.params.id}, {$set: {isAdmin: req.body.bool}}, {new: true, useFindAndModify: false});
 		if (!user) {
 			res.status(404).send('Resource not found');
-		} else {   
+		} else {
 			res.send(user)
 		}
 	} catch (error) {
@@ -342,7 +342,7 @@ app.post("/images", multipartMiddleware, (req, res) => {
     console.log(req.body);
     // Use uploader.upload API to upload image to cloudinary server.
     cloudinary.uploader.upload(
-        req.files.image.path, 
+        req.files.image.path,
         function (result) {
             // Replace the one from before if found, otherwise just insert normally
             Image.findOneAndUpdate(
@@ -351,10 +351,10 @@ app.post("/images", multipartMiddleware, (req, res) => {
                 { upsert: true }
              ).then(
                 saveRes => {
-                    res.send(saveRes);
+                    res.send({ url: result.url });
                 },
                 error => {
-                    res.status(400).send(error); 
+                    res.status(400).send(error);
                 }
             );
         });
@@ -371,6 +371,24 @@ app.get("/images/:refId", (req, res) => {
             res.status(500).send(error); // server error
         }
     );
+});
+
+app.patch('/api/reviews/userImage/:id', mongoChecker, async (req, res) => {
+	try {
+		const reviews = await Review.updateMany({username: req.params.id}, {usrImagePath: req.body.imagePath});
+		if (!reviews) {
+			res.status(404).send('Resource not found');
+		} else {
+			res.send(reviews)
+		}
+	} catch (error) {
+		log(error)
+		if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+			res.status(500).send('Internal server error')
+		} else {
+			res.status(400).send('Bad Request') // bad request
+		}
+	}
 });
 
 /*** Webpage routes below **********************************/

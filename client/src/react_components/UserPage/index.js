@@ -84,9 +84,9 @@ class UserPage extends React.Component {
     }
     return;
   }
- 
+
   render() {
-    console.log("USERPAGE ADMIN")	  
+    console.log("USERPAGE ADMIN")
     console.log(this.state.isAdmin)
     const path = this.props.history.location.pathname.split('/')
     const userId = path[path.length - 1];
@@ -104,8 +104,7 @@ class UserPage extends React.Component {
         <div id="changePhotoForm">
           <form className="image-form" onSubmit={(e) => {
                     e.preventDefault();
-                    addImage(e.target, userId);
-                    this.updateProfileImage(this);
+                    addImage(this, e.target, userId);
                 }}>
             <div class="image-form__field">
                 <label>Image:</label>
@@ -138,7 +137,7 @@ class UserPage extends React.Component {
                             starEmptyColor="darkgrey"
                             starDimension='1.5vw'
                             starSpacing='0.15vw'/>
-                        {showDeleteButton(this, this.state.isAdmin, this.state.currentUser, this.state.currentUser, review.location_id, review.reviewId)}
+                        {showDeleteButton(this, this.state.isAdmin, this.state.currentUser, userId, review.location_id, review.reviewId)}
                     </div>
                     </div>
                     <div className="reviewContainer">
