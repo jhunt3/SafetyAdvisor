@@ -66,7 +66,7 @@ export class App extends React.Component {
   renderExitButton() {
     return (
       <Link to={"/"}>
-        <img className="exitButton" alt='exitButton' onClick={(e) => {this.showMarker(null); this.state.sidePage = null}} src={`/static/exit.png`} 
+        <img className="exitButton" alt='exitButton' onClick={(e) => {this.showMarker(null); this.setState({sidePage: null}); }} src={`/static/exit.png`} 
         title={'Close Side Panel'}/>
       </Link>);
   }
@@ -89,7 +89,7 @@ export class App extends React.Component {
 	
 	return (
       <Link to={`/addLocation`}>
-        <div id="addLocButton" onClick={() =>{this.state.sidePage = 'addLocation'}} className="purpleButton">
+        <div id="addLocButton" onClick={() =>{this.setState({sidePage: 'addLocation'});}} className="purpleButton">
           Add Location
         </div>
       </Link>
@@ -131,14 +131,29 @@ export class App extends React.Component {
     this.setState({locData: LD})	   
  }
  addLocation(name, type){
-   console.log("Add location data")
-   this.setState({sidePage: null})
-   console.log(name, type, this.state.lat, this.state.lng)
-   this.state.locData.addLocation(name, type, this.state.lat, this.state.lng)
+   checkSession(this).then(() => {
+      if (this.state.currentUser && this.state.isAdmin) {
+        console.log("Add location data");
+        this.setState({sidePage: null});
+        console.log(name, type, this.state.lat, this.state.lng)
+        this.state.locData.addLocation(name, type, this.state.lat, this.state.lng)
+      }
+      else {
+        alert("You are not authorized to add a location.");
+      }
+   });
  }
  setNewLoc(lat,lng){
    this.setState({lat: lat, lng: lng})
  }
+
+  renderAddLocation() {
+  if (this.state.currentUser && this.state.isAdmin) {
+    return <AddLocation lat = {this.state.lat} lng = {this.state.lng} addLocation={this.addLocation} />;
+  } 
+  this.props.history.push('/');
+  return;
+  }
 
   render() {
     let map_locations = null;
@@ -197,7 +212,7 @@ export class App extends React.Component {
             <Route exact path="/addLocation" render={ () => 
               <div className="sidePage">
               {this.renderExitButton()}
-              <AddLocation lat = {this.state.lat} lng = {this.state.lng} addLocation={this.addLocation} />
+              {this.renderAddLocation()} 
             </div>
             }/>
 

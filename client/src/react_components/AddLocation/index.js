@@ -50,20 +50,19 @@ class AddLocation extends React.Component {
     const el = document.getElementById('googlemap');
     console.log('map element');
     console.log(el);
-
     return(
-        <div className="AddLocationForm">
-            <h2 id="searchHeader">Add Location</h2>
-            <br></br>
-            <form id = "addLocForm" onSubmit={this.handleSubmit}>
-	        <label>Venue Name: </label><br/>
-                <input type="text" value={this.state.name} onChange={this.handleNameChange}/><br/>
-	    	<label>Venue Type: </label><br/>
-	        <input type="text" value={this.state.type} onChange={this.handleTypeChange}/><br/>
-                <input class="purpleButton " type="submit" value="Submit" />
-            </form>
-        </div>
-    )
+      <div className="AddLocationForm">
+          <h2 id="searchHeader">Add Location</h2>
+          <br></br>
+          <form id = "addLocForm" onSubmit={this.handleSubmit}>
+        <label>Venue Name: </label><br/>
+              <input type="text" value={this.state.name} onChange={this.handleNameChange}/><br/>
+      <label>Venue Type: </label><br/>
+        <input type="text" value={this.state.type} onChange={this.handleTypeChange}/><br/>
+              <input class="purpleButton " type="submit" value="Submit" />
+          </form>
+      </div>
+  );
   }   
 }
 export default withRouter(AddLocation);
