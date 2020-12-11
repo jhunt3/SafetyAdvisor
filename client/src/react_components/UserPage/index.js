@@ -16,11 +16,13 @@ class UserPage extends React.Component {
       currentUser: "",
       isAdmin: false,
       reviews: [],
+      showForm: false,
       profileImageUrl: ""
     }
     checkSession(this);
     this.updateProfileImage(this);
     this.getReviews(this);
+    this.showChangePhotoForm = this.showChangePhotoForm.bind(this);
   }
 
   updateProfileImage(target) {
@@ -67,22 +69,39 @@ class UserPage extends React.Component {
   };
 
   showChangePhotoForm() {
-    var form = document.getElementById("changePhotoForm");
-    if (form.style.display === "block") {
-      form.style.display = "none";
-    } else {
-      form.style.display = "block";
-    }
+    this.setState({showForm: (this.state.showForm) ? false : true});
   }
 
-
-  renderChangePictureButton(userId) {
+  renderChangePictureButton(locId) {
+    const path = this.props.history.location.pathname.split('/')
+    const userId = path[path.length - 1];
     if (this.state.currentUser === userId || this.state.isAdmin) {
       return (
-        <button type="button" onClick={this.showChangePhotoForm}>Change Photo</button>
+        <div id="showFormUsr" className='purpleButton' type="button" onClick={this.showChangePhotoForm}>Change Photo</div>
       );
     }
     return;
+  }
+
+  renderForm() {
+    const path = this.props.history.location.pathname.split('/')
+    const userId = path[path.length - 1];
+    if (this.state.showForm) {
+      return (<div id="changePhotoForm">
+        <form className="image-form" onSubmit={(e) => {
+                  e.preventDefault();
+                  addImage(this, e.target, userId, 'usr');
+              }}>
+          <div class="image-form__field">
+              <label>Image:</label>
+              <br/>
+              <input id="locInputImage" name="image" type="file" />
+          </div>
+          <input type="submit" className="purpleButton loginPageButton" value="Upload"/>
+        </form>
+      </div>);
+    }
+    return <img className="profilePic" alt="profilePic" src={this.state.profileImageUrl}/>;
   }
 
   render() {
@@ -95,26 +114,11 @@ class UserPage extends React.Component {
         <button className="backButton" onClick={this.props.history.goBack}>Back</button>
         {showAdminButton(this.props.app, this.state.isAdmin, this.state.currentUser, userId)}
         {showDeleteUserButton(this.props.app, this.state.isAdmin, userId)}
-
         <div className="userInfoContainer">
-        <img className="profilePic" alt="profilePic" src={this.state.profileImageUrl}/>
-        <div>
-        {this.renderChangePictureButton(userId)}
-        </div>
-        <div id="changePhotoForm">
-          <form className="image-form" onSubmit={(e) => {
-                    e.preventDefault();
-                    addImage(this, e.target, userId, 'usr');
-                }}>
-            <div class="image-form__field">
-                <label>Image:</label>
-                <input name="image" type="file" />
-            </div>
-            <input type="submit" className="purpleButton loginPageButton" value="Upload"/>
-          </form>
-        </div>
+        {this.renderForm()}
             <div className="userTitleContainer">
               <h1>{userId}</h1>
+              {this.renderChangePictureButton(userId)}
               <h3>{this.state.reviews.length} Reviews</h3>
             </div>
         </div>

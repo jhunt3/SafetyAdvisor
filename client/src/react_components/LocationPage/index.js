@@ -83,7 +83,7 @@ class LocationPage extends React.Component {
   renderChangePictureButton(locId) {
     if (this.state.isAdmin) {
       return (
-        <button id="showForm" className='purpleButton' type="button" onClick={this.showChangePhotoForm}>Change Photo</button>
+        <button id="showFormLoc" className='purpleButton' type="button" onClick={this.showChangePhotoForm}>Change Photo</button>
       );
     }
     return;
