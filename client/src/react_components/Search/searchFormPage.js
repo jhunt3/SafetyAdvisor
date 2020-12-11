@@ -7,7 +7,7 @@ class SearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Venue Name'
+      value: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -19,7 +19,8 @@ class SearchForm extends React.Component {
   }
 
   handleSubmit(event) {
-    if (this.state.value === "Venue Name") {
+    let no_spaces=this.state.value.replace(/\s/g,'')
+    if (no_spaces === "") {
       event.preventDefault();
       alert("Please enter a valid search query.");
       return;
@@ -34,6 +35,7 @@ class SearchForm extends React.Component {
             <h2 id="searchHeader">Search for Venues</h2>
             <br></br>
             <form onSubmit={this.handleSubmit}>
+	        <label>Search: </label>
                 <input type="text" value={this.state.value} onChange={this.handleChange}/>
                 <br></br>
                 <br></br>
