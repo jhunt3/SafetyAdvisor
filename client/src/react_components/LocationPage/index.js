@@ -148,13 +148,13 @@ class LocationPage extends React.Component {
       <div className="body">
         <div id="addReviewButton" className="purpleButton" onClick={() => {this.props.history.push(`/loc/${locId}/addReview`)}}>+ Review</div>
         <img className="locImage" alt="locationImage" src={this.state.profileImageUrl}/>
-	{showDeleteLocButton(this.props.app, this.state.isAdmin, locId)}
+	<button className="backButton purpleButton" onClick={this.props.history.goBack}>Back</button>
+	
         {this.renderChangePictureButton(locId)}
         {this.renderForm()}
         <div className="infoContainer">
           <div className="locationTitleContainer">
-            <h1 id="nameHeader">{this.props.locData.getLoc(locId).name}</h1>
-            <h3 id="venueHeader">{this.props.locData.getLoc(locId).venueType}</h3>
+            <h1 id="nameHeader">{this.props.locData.getLoc(locId).name}{showDeleteLocButton(this.props.app, this.state.isAdmin, locId)}</h1>            <h3 id="venueHeader">{this.props.locData.getLoc(locId).venueType}</h3>
           </div>
           <div className="avgRatingsContainer">
             <StarRatings rating={averageRating(this.state.reviews)}
