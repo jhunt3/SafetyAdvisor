@@ -17,7 +17,7 @@ class UserPage extends React.Component {
       isAdmin: false,
       reviews: [],
       showForm: false,
-      profileImageUrl: ""
+      profileImageUrl: "/static/profile.png"
     }
     checkSession(this);
     this.updateProfileImage(this);

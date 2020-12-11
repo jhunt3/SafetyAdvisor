@@ -75,25 +75,6 @@ export class LocationData {
             });
     };
 
-    addReview(id, username, rating, review){
-        this.getLoc(id).reviews.push({
-            username: username,
-            rating: rating,
-            imagePath: `/static/profile.png`,
-            reviewId: this.reviewId,
-            review: review
-        })
-        this.reviewId++;
-        this.getLoc(id).avgRating = ((this.getLoc(id).numRatings === 0) ? rating :
-            (this.getLoc(id).avgRating * this.getLoc(id).numRatings + rating ) / (this.getLoc(id).numRatings + 1));
-        this.getLoc(id).numRatings = this.getLoc(id).numRatings + 1
-    }
-
-    removeReview(locationId, reviewId) {
-        this.locations[locationId].reviews = this.locations[locationId].reviews.filter((review) => {return review.reviewId !== reviewId});
-        return this;
-    }
-
     updateTagVal(id, tagName, newVal) {
         const ind = this.getLoc(id).tags.findIndex((val) => {return val.name === tagName});
         if (ind !== -1) {
@@ -120,21 +101,17 @@ export class LocationData {
             lat: target.lat,
             lng: target.lng,
             tags: target.tags,
-	        show: target.show
+	           show: target.show
         };
     }
 
     getGeoLocData() {
-	console.log("Getting GEOLOC")
-	console.log(this.locations)
         return this.locations.map((loc) => {return this.getGeoLoc(loc._id)});
     }
 
     getLocationsWithQuery(query) {
         const targets = [];
         for (let i in this.locations) {
-	    console.log("Querying")
-	    console.log(this.locations[i])
             const locationNameLowercase = this.locations[i].name.toLowerCase();
             if (locationNameLowercase.includes(query.toLowerCase())) {
 
@@ -144,7 +121,7 @@ export class LocationData {
         return targets;
     }
     setShowtoTrue(){
-	return this.locations.map((loc) => {return console.log(loc.show)});
+	      return this.locations.map((loc) => {return console.log(loc.show)});
     }
 }
 

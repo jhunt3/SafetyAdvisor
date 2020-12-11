@@ -17,7 +17,7 @@ class LocationPage extends React.Component {
       isAdmin: false,
       showForm: false,
       reviews: [],
-      profileImageUrl: ""
+      profileImageUrl: "/static/placeholder.jpg"
     }
     checkSession(this);
     this.updateProfileImage(this);

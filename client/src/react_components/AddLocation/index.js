@@ -16,7 +16,7 @@ class AddLocation extends React.Component {
     checkSession(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
-   
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleNameChange(event){
@@ -54,16 +54,15 @@ class AddLocation extends React.Component {
     return(
         <div className="AddLocationForm">
             <h2 id="searchHeader">Add Location</h2>
-            <br></br>
             <form id = "addLocForm" onSubmit={this.handleSubmit}>
 	        <label>Venue Name: </label><br/>
                 <input type="text" value={this.state.name} onChange={this.handleNameChange}/><br/>
 	    	<label>Venue Type: </label><br/>
 	        <input type="text" value={this.state.type} onChange={this.handleTypeChange}/><br/>
-                <input class="purpleButton " type="submit" value="Submit" />
+                <input class="purpleButton searchButtonFormPage" type="submit" value="Submit" />
             </form>
         </div>
     )
-  }   
+  }
 }
 export default withRouter(AddLocation);

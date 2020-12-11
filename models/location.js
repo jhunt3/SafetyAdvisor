@@ -11,8 +11,7 @@ const LocationSchema = mongoose.Schema({
 	tags: [{
 		tag: String,
 		val: Number
-	}],
-	imagePath: String
+	}]
 });
 
 const Location = mongoose.model('Location', LocationSchema, "Locations");
