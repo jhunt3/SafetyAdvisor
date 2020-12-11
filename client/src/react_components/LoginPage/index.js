@@ -5,7 +5,7 @@ import "./styles.css";
 
 class LoginPage extends React.Component {
   constructor(props) {
-    super(props) 
+    super(props)
     this.state =  {
       pageState: "prompt",
       user: "",
@@ -41,7 +41,7 @@ class LoginPage extends React.Component {
     } else if (this.state.pass === "") {
       alert("Password field is blank.");
       return;
-    } 
+    }
     const request = new Request("/users/login", {
       method: "post",
       body: JSON.stringify(this.state),
@@ -59,7 +59,7 @@ class LoginPage extends React.Component {
         })
         .then((json) => {
             if (json.currentUser !== undefined) {
-                this.props.app.setState({ 
+                this.props.app.setState({
                   currentUser: json.currentUser,
                   isAdmin: json.isAdmin
                  });
@@ -105,9 +105,12 @@ class LoginPage extends React.Component {
         })
         .then((json) => {
             if (json.currentUser !== undefined) {
-                this.props.app.setState({ currentUser: json.currentUser });
-                this.props.history.push('/');
-                alert("Registration Successful.");
+              this.props.app.setState({
+                currentUser: json.currentUser,
+                isAdmin: json.isAdmin
+               });
+               this.props.history.push('/');
+               alert("Registration Successful.");
             }
         })
         .catch((error) => {

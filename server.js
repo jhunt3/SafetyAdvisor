@@ -173,6 +173,9 @@ app.post('/api/users', mongoChecker, async (req, res) => {
         try {
             // Save the user
             const newUser = await user.save();
+            req.session.user = newUser._id;
+            req.session.username = newUser.username;
+            req.session.isAdmin = newUser.isAdmin;
             res.send({ currentUser: req.body.user });
         } catch (error) {
             if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
