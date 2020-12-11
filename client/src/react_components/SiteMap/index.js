@@ -40,8 +40,8 @@ class SiteMap extends React.Component {
       activeMarker: null,
       currentUser:"",
       isAdmin: false,
-      lat:null,
-      lng:null
+      //lat:null,
+      //lng:null
     };
     //console.log('Does this run')
     checkSession(this);
@@ -121,7 +121,7 @@ class SiteMap extends React.Component {
         anchor: new this.props.google.maps.Point(16,32),
         scaledSize: new this.props.google.maps.Size(32,32)
       }}
-      position={{lat: this.state.lat, lng: this.state.lng}}
+      position={{lat: this.props.lat, lng: this.props.lng}}
       draggable={true}
 	  />
 

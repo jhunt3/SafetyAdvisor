@@ -47,7 +47,7 @@ export class App extends React.Component {
   renderExitButton() {
     return (
       <Link to={"/"}>
-        <img className="exitButton" alt='exitButton' onClick={(e) => {this.showMarker(null); this.setState({sidePage: null}); }} src={`/static/exit.png`}
+        <img className="exitButton" alt='exitButton' onClick={(e) => {this.showMarker(null); this.setState({sidePage: null, lat:null, lng:null}); }} src={`/static/exit.png`}
         title={'Close Side Panel'}/>
       </Link>);
   }
@@ -70,7 +70,7 @@ export class App extends React.Component {
       if (this.props.history.location.pathname === '/addLocation') {
         return (
           <Link to={`/`}>
-            <div id="addLocButton" onClick={() =>{this.setState({sidePage: null});}} className="purpleButton">
+            <div id="addLocButton" onClick={() =>{this.setState({sidePage: null, lat:null, lng:null});}} className="purpleButton">
               Add Location
             </div>
           </Link>
@@ -90,7 +90,7 @@ export class App extends React.Component {
   if (this.props.history.location.pathname === '/search') {
     return (
       <Link to={"/"}>
-        <button className = "searchButton purpleButton">Search</button>
+        <button className = "searchButton purpleButton" onClick={() =>{this.setState({sidePage: null, lat:null, lng:null});}}>Search</button>
       </Link>
     );
   }
@@ -223,7 +223,7 @@ export class App extends React.Component {
         { /* Map  */ }
         <div className={(path[path.length - 1] === "" || path[path.length - 1] === 'login') ? "fullMap" : "sideMap"}>
           {this.renderSearchButton()}
-          <SiteMap setNewLoc = {this.setNewLoc} isAdmin = {this.state.isAdmin} sidePage= {this.state.sidePage} locations={map_locations} toggleMap={this.toggleMapClass}/>
+          <SiteMap setNewLoc = {this.setNewLoc} lat={this.state.lat} lng = {this.state.lng} isAdmin = {this.state.isAdmin} sidePage= {this.state.sidePage} locations={map_locations} toggleMap={this.toggleMapClass}/>
           {this.renderLoginButton()}
           {this.renderUserPageButton()}
 	      {this.renderAddLocButton()}
