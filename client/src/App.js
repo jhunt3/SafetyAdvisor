@@ -136,6 +136,8 @@ export class App extends React.Component {
   if (this.state.currentUser && this.state.isAdmin) {
     this.setState({sidePage: null});
     this.state.locData.addLocation(name, type, this.state.lat, this.state.lng)
+    this.props.history.push(`/`);
+    window.location.reload(false);
   }
   else {
     alert("You are not authorized to add a location.");
