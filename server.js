@@ -328,6 +328,25 @@ app.post("/api/loc/:id/addReview", mongoChecker, async (req, res) => {
 
 })
 
+app.patch('/api/loc/:id', mongoChecker, async (req, res) => {
+	try {
+        const updatedLocation = await Location.update({_id: req.params.id},
+            { $set: {avgRating: req.body.avgRating, numRatings: req.body.numRatings, tags: req.body.tags}}
+        );
+		if (!updatedLocation) {
+			res.status(404).send('Resource not found');
+		} else {
+			res.send(updatedLocation)
+		}
+	} catch (error) {
+		log(error)
+		if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+			res.status(500).send('Internal server error')
+		} else {
+			res.status(400).send('Bad Request') // bad request
+		}
+	}
+});
 // A route to delete a review
 app.delete("/api/deleteReview/:id", mongoChecker, async (req, res) => {
     try {

@@ -78,6 +78,7 @@ class SiteMap extends React.Component {
     }
     return;
   }
+  
   generateMarkers() {
     if(this.props.locations === null){return null}
     return this.props.locations.flatMap((loc) => {
