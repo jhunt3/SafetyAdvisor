@@ -70,7 +70,7 @@ class LocationPage extends React.Component {
 
   generateTagIndicators(tags) {
     return tags.map((tag) => {return <TagIndicator
-                                        name={tag.tag}
+                                        tag={tag.tag}
                                         val={tag.val}
                                       />
     });
@@ -116,6 +116,24 @@ class LocationPage extends React.Component {
     } else {
         return 0
     }}
+    const cumulativeTags = (reviews) => {if (reviews.length > 0) {
+        console.log(reviews)
+        reviews.map(review => (review.tags.map(indvtag => indvtag.val = (indvtag.val) ? 1 : 0)))
+        console.log(reviews)
+        const tagList = reviews.reduce( (result, review) => {return result.concat(review.tags)}, [])
+        const sumTagList = Object.entries(tagList.reduce((result, tag) => {
+            if(!result[tag.tag]) {
+                result[tag.tag] = tag.val;
+            } else {
+                result[tag.tag] += tag.val;
+            }
+            return result}, {}))
+        const finalResult = sumTagList.map(tag => ( {"tag": tag[0], "val": tag[1]/reviews.length * 100}))
+        return finalResult
+    } else {
+        return [{"tag": "placeholder", "val": 0}]
+    }};
+    console.log(this.state.reviews);
 
     return (
       <div className="body">
@@ -136,8 +154,9 @@ class LocationPage extends React.Component {
                         starSpacing='0.1vw'/>
             <h3 id="noRatings">({this.state.reviews.length} Ratings)</h3>
           </div>
-          {this.generateTagIndicators(this.props.locData.getLoc(locId).tags.filter((tag) =>
-              {return tag.val !== 0}))}
+          {console.log(cumulativeTags(this.state.reviews))}
+          {this.generateTagIndicators(cumulativeTags(this.state.reviews).filter((tag) =>
+          {return tag.val !== 0}))}
         </div>
         <div className="reviewsContainer">
         <h2 id="reviewHeader">Reviews</h2>
