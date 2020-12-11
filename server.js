@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 
 // express-session for managing user sessions
 const session = require("express-session");
-const e = require("express");
+
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart();
 const cloudinary = require('cloudinary');
@@ -57,25 +57,6 @@ const mongoChecker = (req, res, next) => {
     }
 }
 
-// Middleware for authentication of resources
-const authenticate = (req, res, next) => {
-    if (req.session.user) {
-        User.findById(req.session.user).then((user) => {
-            if (!user) {
-                return Promise.reject()
-            } else {
-                req.user = user
-                next()
-            }
-        }).catch((error) => {
-            res.status(401).send("Unauthorized")
-        })
-    } else {
-        res.status(401).send("Unauthorized")
-    }
-}
-
-
 /*** Session handling **************************************/
 // Create a session and session cookie
 app.use(
@@ -84,7 +65,6 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            expires: 60000,
             httpOnly: true
         }
     })
@@ -278,11 +258,12 @@ app.post("/api/loc/:id/addReview", mongoChecker, async (req, res) => {
 
     // Create a new location
     const review = new Review({
-        username: req.body.currentUser,
+      username: req.body.currentUser,
     	locId: req.params.id,
     	rating: req.body.rating,
-        locImagePath: req.body.locImagePath,
-        usrImagePath: req.body.usrImagePath,
+      locImagePath: req.body.locImagePath,
+      usrImagePath: req.body.usrImagePath,
+      tags: req.body.tags,
     	review: req.body.review
     })
 
@@ -339,7 +320,7 @@ app.get("/api/usr/:id/reviewData", mongoChecker, async (req, res) => {
 
 // a POST route to *create* an image
 app.post("/images", multipartMiddleware, (req, res) => {
-    console.log(req.body);
+    log(req.body);
     // Use uploader.upload API to upload image to cloudinary server.
     cloudinary.uploader.upload(
         req.files.image.path,
@@ -362,7 +343,6 @@ app.post("/images", multipartMiddleware, (req, res) => {
 
 app.get("/images/:refId", (req, res) => {
     const refId = req.params.refId;
-    console.log(refId);
     Image.findOne({ reference_id: refId }).then(
         image => {
             res.send({ image }); // can wrap in object if want to add more properties

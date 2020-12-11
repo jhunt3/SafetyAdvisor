@@ -1,5 +1,5 @@
 
-const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Checks Temperature", "Patio"];
+export const defaultTags = ["Curbside Pickup", "Hand Sanitizer", "Masks", "Gloves", "Checks Temperature", "Patio"];
 
 export const getLocations = (app) => {
     // Since this is a GET request, simply call fetch on the URL

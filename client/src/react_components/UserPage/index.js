@@ -141,7 +141,7 @@ class UserPage extends React.Component {
                             starEmptyColor="darkgrey"
                             starDimension='1.5vw'
                             starSpacing='0.15vw'/>
-                        {showDeleteButton(this, this.state.isAdmin, this.state.currentUser, userId, review.location_id, review.reviewId)}
+                        {showDeleteButton(this, this.state.isAdmin, this.state.currentUser, userId, review.locId, review._id)}
                     </div>
                     </div>
                     <div className="reviewContainer">

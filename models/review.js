@@ -7,6 +7,10 @@ const ReviewSchema = new mongoose.Schema({
 	rating: Number,
 	locImagePath: String,
 	usrImagePath: String,
+	tags: [{
+		tag: String,
+		val: Boolean
+	}],
 	review: String
 });
 

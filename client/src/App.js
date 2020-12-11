@@ -5,7 +5,6 @@ import { Route, Switch, withRouter, Link } from "react-router-dom";
 
 import './App.css';
 import { getLocations } from './helperJS/LocationData';
-import UserData from './helperJS/UserData';
 import { checkSession, logout } from "./helperJS/loginHelper";
 import SiteMap from './react_components/SiteMap';
 import LocationPage from './react_components/LocationPage';
@@ -28,22 +27,14 @@ export class App extends React.Component {
       currentUser: null,
       isAdmin: false,
       locData: null,
-      userData: new UserData(),
       sidePage: null,
       lat: null,
       lng: null
     };
-    // Adds hardcoded location data
+    // Adds location data
     getLocations(this);
-    console.log("Received State")
-    console.log(this.state.locData)
-    this.state.userData.addUser("admin", "admin")
-    this.state.userData.addUser("user", "js")
-    this.state.userData.addUser("janedoe", "jd")
 
     this.toggleMapClass = this.toggleMapClass.bind(this);
-    this.deleteReview = this.deleteReview.bind(this);
-    this.deleteUser = this.deleteUser.bind(this);
     this.setNewLoc = this.setNewLoc.bind(this);
     this.addLocation = this.addLocation.bind(this);
 
@@ -53,20 +44,10 @@ export class App extends React.Component {
     this.setState({mapClass: (("sideMap" ===  this.state.mapClass) ? "fullMap" : "sideMap")});
   }
 
-  deleteReview(username, locId, id) {
-    const uid = this.state.userData.getUser(username).uid;
-    this.setState({locData: this.state.locData.removeReview(locId, id),
-                   userData: this.state.userData.removeReview(uid, id)
-    });
-  }
-
-  deleteUser(username) {
-    this.setState({userData: this.state.userData.removeUser(username, this.state.locData)});
-  }
   renderExitButton() {
     return (
       <Link to={"/"}>
-        <img className="exitButton" alt='exitButton' onClick={(e) => {this.showMarker(null); this.setState({sidePage: null}); }} src={`/static/exit.png`} 
+        <img className="exitButton" alt='exitButton' onClick={(e) => {this.showMarker(null); this.setState({sidePage: null}); }} src={`/static/exit.png`}
         title={'Close Side Panel'}/>
       </Link>);
   }
@@ -127,7 +108,7 @@ export class App extends React.Component {
           <div id="loginButtonMain" className="purpleButton">Register/Login</div>
         </Link>
       );
-    } 
+    }
     return (
       <div id="loginButtonMain" className="purpleButton" onClick={() => {logout(this)}}>Logout</div>
     );
@@ -152,7 +133,7 @@ export class App extends React.Component {
       }
     }
     //console.log(LD)
-    this.setState({locData: LD})	   
+    this.setState({locData: LD})
  }
  addLocation(name, type){
   if (this.state.currentUser && this.state.isAdmin) {
@@ -172,7 +153,7 @@ export class App extends React.Component {
   renderAddLocation() {
   if (this.state.currentUser && this.state.isAdmin) {
     return <AddLocation lat = {this.state.lat} lng = {this.state.lng} addLocation={this.addLocation} />;
-  } 
+  }
   this.props.history.push('/');
   return;
   }
@@ -189,57 +170,57 @@ export class App extends React.Component {
     return (
       <div>
         <Switch>
-            { /* Login Page  */ } 
-            <Route exact path="/login" render={ () => 
+            { /* Login Page  */ }
+            <Route exact path="/login" render={ () =>
               <div className="loginPage">
                 <LoginPage app={this}/>
               </div>
             }/>
-            { /* Location Page  */ } 
-            <Route exact path="/loc/:id" render={ () => 
+            { /* Location Page  */ }
+            <Route exact path="/loc/:id" render={ () =>
               <div className="sidePage">
                 {this.renderExitButton()}
                 <LocationPage locData={this.state.locData} app={this}/>
               </div>
             }/>
-            { /* Add Review Page  */ } 
-            <Route exact path="/loc/:id/addReview" render={ () => 
+            { /* Add Review Page  */ }
+            <Route exact path="/loc/:id/addReview" render={ () =>
               <div className="sidePage">
                 {this.renderExitButton()}
                 <ReviewPage locData={this.state.locData}/>
               </div>
             }/>
-            { /* User Page  */ } 
-            <Route exact path="/usr/:id" render={ () => 
+            { /* User Page  */ }
+            <Route exact path="/usr/:id" render={ () =>
               <div className="sidePage">
                 {this.renderExitButton()}
-                <UserPage locData={this.state.locData} userData={this.state.userData} app={this}/>
+                <UserPage locData={this.state.locData} app={this}/>
               </div>
             }/>
-            { /* Search Query Page  */ } 
-            <Route exact path="/search" render={ () => 
+            { /* Search Query Page  */ }
+            <Route exact path="/search" render={ () =>
               <div className="sidePage">
               {this.renderExitButton()}
               <SearchForm setSearchResult={this.setSearchResult} showMarker = {this.showMarker}/>
             </div>
             }/>
-            { /* Search Results Page  */ } 
-            <Route exact path="/search/:query" render={ () => 
+            { /* Search Results Page  */ }
+            <Route exact path="/search/:query" render={ () =>
               <div className="sidePage">
               {this.renderExitButton()}
               <SearchPage locData={this.state.locData} />
             </div>
             }/>
 	    { /* Add Location Page */ }
-            <Route exact path="/addLocation" render={ () => 
+            <Route exact path="/addLocation" render={ () =>
               <div className="sidePage">
               {this.renderExitButton()}
-              {this.renderAddLocation()} 
+              {this.renderAddLocation()}
             </div>
             }/>
 
         </Switch>
-        { /* Map  */ } 
+        { /* Map  */ }
         <div className={(path[path.length - 1] === "" || path[path.length - 1] === 'login') ? "fullMap" : "sideMap"}>
           {this.renderSearchButton()}
           <SiteMap setNewLoc = {this.setNewLoc} isAdmin = {this.state.isAdmin} sidePage= {this.state.sidePage} locations={map_locations} toggleMap={this.toggleMapClass}/>
