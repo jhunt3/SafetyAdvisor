@@ -8,6 +8,7 @@ To run our application, please execute the following commands in terminal:
     cd team28
     npm install
     cd client
+    npm install
     npm run build
     cd ..
     npm start
