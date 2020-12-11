@@ -79,3 +79,14 @@
   margin: 0 auto;
   text-align: center;
 }
+
+.deleteLocButton {
+  position: absolute;
+  height: 3vh;
+  left: 1vw;
+  top: 1vh;
+}
+
+.deleteLocButton:hover {
+  cursor: pointer;
+}

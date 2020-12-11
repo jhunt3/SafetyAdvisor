@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { addImage } from "../../helperJS/imageHelper";
 import TagIndicator from './../TagIndicator';
 import { showDeleteButton } from './../../helperJS/userFunctionalityHelperFunctions';
+import { showDeleteLocButton } from './../../helperJS/LocationData';
 
 import "./styles.css";
 import { checkSession } from '../../helperJS/loginHelper';
@@ -147,6 +148,7 @@ class LocationPage extends React.Component {
       <div className="body">
         <div id="addReviewButton" className="purpleButton" onClick={() => {this.props.history.push(`/loc/${locId}/addReview`)}}>+ Review</div>
         <img className="locImage" alt="locationImage" src={this.state.profileImageUrl}/>
+	{showDeleteLocButton(this.props.app, this.state.isAdmin, locId)}
         {this.renderChangePictureButton(locId)}
         {this.renderForm()}
         <div className="infoContainer">

@@ -125,4 +125,60 @@ export class LocationData {
     }
 }
 
+export const showDeleteLocButton = (app, isAdmin, locId) => {
+  if (isAdmin) {
+    return (<img className="deleteLocButton" alt="deleteLocButton" src={`/static/trash.png`} onClick={() => {
+      if (window.confirm("Are you sure you want to delete this location?")) {
+         //Send the request with fetch()
+        const requestDeleteReviews = new Request(`/api/deleteLocReviews/${locId}`, {
+          method: "delete",
+          headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json"
+          }
+        });
+        fetch(requestDeleteReviews)
+            .then((res) => {
+                if (res.status === 200) {
+                    return res.json();
+                }
+            })
+            .then((json) => {
+                if (json.ok) {
+                  const requestDeleteLoc = new Request(`/api/deleteLocation/${locId}`, {
+                    method: "delete",
+                    headers: {
+                        Accept: "application/json, text/plain, */*",
+                        "Content-Type": "application/json"
+                    }
+                  });
+                  // Send the request with fetch()
+                  fetch(requestDeleteLoc)
+                      .then((res) => {
+                          if (res.status === 200) {
+                              return res.json();
+                          }
+                      })
+                      .then((json) => {
+                          if (json.ok) {
+                            alert("Location deleted.");
+                            app.props.history.push(`/`);
+                          }
+                      })
+                      .catch((error) => {
+                          alert("Location deletion Failed.");
+                          console.log(error);
+                      });
+                }
+            })
+            .catch((error) => {
+                alert("Location deletion Failed.");
+                console.log(error);
+            });
+      }
+    }} title="Delete Location"/>);
+  }
+  return;
+};
+
 export default LocationData;

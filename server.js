@@ -274,6 +274,17 @@ app.post('/api/locations', mongoChecker, async (req, res) => {
     }
 })
 
+// A route to delete a location
+app.delete("/api/deleteLocation/:id", mongoChecker, async (req, res) => {
+    try {
+        const deleteLoc = await Location.deleteOne({ _id: req.params.id });
+        res.send(deleteLoc);
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+})
+
 // A route get review data for a location
 app.get("/api/loc/:id/reviewData", mongoChecker, async (req, res) => {
     // Get the locationData
@@ -332,6 +343,17 @@ app.delete("/api/deleteReview/:id", mongoChecker, async (req, res) => {
 app.delete("/api/deleteAllReviews/:id", mongoChecker, async (req, res) => {
     try {
         const deleteReviews = await Review.deleteMany({ username: req.params.id });
+        res.send(deleteReviews);
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+})
+
+// A route to delete all reviews for a location
+app.delete("/api/deleteLocReviews/:id", mongoChecker, async (req, res) => {
+    try {
+        const deleteReviews = await Review.deleteMany({ locId: req.params.id });
         res.send(deleteReviews);
     } catch(error) {
         log(error)
