@@ -373,9 +373,14 @@ app.get("/images/:refId", (req, res) => {
     );
 });
 
-app.patch('/api/reviews/userImage/:id', mongoChecker, async (req, res) => {
+app.patch('/api/reviews/:type/:id', mongoChecker, async (req, res) => {
 	try {
-		const reviews = await Review.updateMany({username: req.params.id}, {usrImagePath: req.body.imagePath});
+    let reviews;
+    if (req.params.type === 'usr') {
+		    reviews = await Review.updateMany({username: req.params.id}, {usrImagePath: req.body.imagePath});
+    } else {
+        reviews = await Review.updateMany({locId: req.params.id}, {locImagePath: req.body.imagePath});
+    }
 		if (!reviews) {
 			res.status(404).send('Resource not found');
 		} else {

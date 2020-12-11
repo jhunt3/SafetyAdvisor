@@ -51,3 +51,31 @@
   top: 38%;
   right: 2%;
 }
+
+#showForm {
+  top: 38%;
+  left: 2%;
+}
+
+#changePhotoFormLoc {
+  background-color: #e0e0e0;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: inline-flex;
+  position: absolute;
+  top: 15%;
+  left: 30%;
+  text-align: center;
+  z-index: 3;
+  padding-left: 4%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-right: 2%;
+  justify-content: center;
+}
+
+#locInputImage {
+  display: inline-block;
+  margin: 0 auto;
+  text-align: center;
+}

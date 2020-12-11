@@ -1,5 +1,5 @@
 // A function to send a POST request with a new image
-export const addImage = (app, form, referenceId) => {
+export const addImage = (app, form, referenceId, usrOrLoc) => {
     // the URL for the request
     const url = "/images";
 
@@ -19,7 +19,7 @@ export const addImage = (app, form, referenceId) => {
             }
         })
         .then(json => {
-          const requestUpdateReviews = new Request(`/api/reviews/userImage/${referenceId}`, {
+          const requestUpdateReviews = new Request(`/api/reviews/${usrOrLoc}/${referenceId}`, {
             method: "PATCH",
             body: JSON.stringify({
               imagePath: json.url
@@ -33,8 +33,9 @@ export const addImage = (app, form, referenceId) => {
           fetch(requestUpdateReviews)
               .then((res) => {
                   if (res.status === 200) {
+                      alert('Image updated.');
                       app.props.history.push(`/`);
-                      app.props.history.push(`/usr/${referenceId}`);
+                      app.props.history.push(`/${usrOrLoc}/${referenceId}`);
                   }
               }).catch((error) => {
                   console.log(error);

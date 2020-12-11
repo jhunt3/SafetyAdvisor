@@ -1,7 +1,7 @@
 import React from 'react';
 import StarRatings from 'react-star-ratings';
 import { withRouter } from "react-router-dom";
-import { addImage, getImage } from "../../helperJS/imageHelper";
+import { addImage } from "../../helperJS/imageHelper";
 import TagIndicator from './../TagIndicator';
 import { showDeleteButton } from './../../helperJS/userFunctionalityHelperFunctions';
 
@@ -15,12 +15,15 @@ class LocationPage extends React.Component {
     this.state =  {
       currentUser: "",
       isAdmin: false,
+      showForm: false,
       reviews: [],
       profileImageUrl: ""
     }
     checkSession(this);
     this.updateProfileImage(this);
     this.getReviews(this);
+
+    this.showChangePhotoForm = this.showChangePhotoForm.bind(this);
   }
   updateProfileImage(target) {
     const path = this.props.history.location.pathname.split('/')
@@ -74,19 +77,34 @@ class LocationPage extends React.Component {
   }
 
   showChangePhotoForm() {
-    var form = document.getElementById("changePhotoForm");
-    if (form.style.display === "block") {
-      form.style.display = "none";
-    } else {
-      form.style.display = "block";
-    }
+    this.setState({showForm: (this.state.showForm) ? false : true});
   }
 
   renderChangePictureButton(locId) {
-    if (this.state.isAdmin === true) {
+    if (this.state.isAdmin) {
       return (
-        <button type="button" onClick={this.showChangePhotoForm}>Change Photo</button>
+        <button id="showForm" className='purpleButton' type="button" onClick={this.showChangePhotoForm}>Change Photo</button>
       );
+    }
+    return;
+  }
+  renderForm() {
+    const path = this.props.history.location.pathname.split('/')
+    const locId = path[path.length - 1];
+    if (this.state.showForm) {
+      return (<div id="changePhotoFormLoc">
+        <form className="image-form" onSubmit={(e) => {
+                  e.preventDefault();
+                  addImage(this, e.target, locId, 'loc');
+              }}>
+          <div class="image-form__field">
+              <label>Image:</label>
+              <br/>
+              <input id="locInputImage" name="image" type="file" />
+          </div>
+          <input type="submit" className="purpleButton loginPageButton" value="Upload"/>
+        </form>
+      </div>);
     }
     return;
   }
@@ -99,30 +117,12 @@ class LocationPage extends React.Component {
         return 0
     }}
 
-    console.log(this.state.reviews);
-    console.log(averageRating(this.state.reviews));
     return (
       <div className="body">
         <div id="addReviewButton" className="purpleButton" onClick={() => {this.props.history.push(`/loc/${locId}/addReview`)}}>+ Review</div>
         <img className="locImage" alt="locationImage" src={this.state.profileImageUrl}/>
-
-	<div>
         {this.renderChangePictureButton(locId)}
-        </div>
-        <div id="changePhotoForm">
-          <form className="image-form" onSubmit={(e) => {
-                    e.preventDefault();
-                    addImage(e.target, locId);
-                    this.updateProfileImage(this);
-                }}>
-            <div class="image-form__field">
-                <label>Image:</label>
-                <input name="image" type="file" />
-            </div>
-            <input type="submit" className="purpleButton loginPageButton" value="Upload"/>
-          </form>
-        </div>
-
+        {this.renderForm()}
         <div className="infoContainer">
           <div className="locationTitleContainer">
             <h1 id="nameHeader">{this.props.locData.getLoc(locId).name}</h1>

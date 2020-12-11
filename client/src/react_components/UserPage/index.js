@@ -3,7 +3,7 @@ import StarRatings from 'react-star-ratings';
 
 import "./styles.css";
 import { checkSession } from '../../helperJS/loginHelper';
-import { addImage, getImage } from "../../helperJS/imageHelper";
+import { addImage } from "../../helperJS/imageHelper";
 import { withRouter } from "react-router-dom";
 
 import { showAdminButton, showDeleteButton, showDeleteUserButton } from './../../helperJS/userFunctionalityHelperFunctions';
@@ -77,7 +77,7 @@ class UserPage extends React.Component {
 
 
   renderChangePictureButton(userId) {
-    if (this.state.currentUser === userId || this.state.currentUser === 'admin') {
+    if (this.state.currentUser === userId || this.state.isAdmin) {
       return (
         <button type="button" onClick={this.showChangePhotoForm}>Change Photo</button>
       );
@@ -104,7 +104,7 @@ class UserPage extends React.Component {
         <div id="changePhotoForm">
           <form className="image-form" onSubmit={(e) => {
                     e.preventDefault();
-                    addImage(this, e.target, userId);
+                    addImage(this, e.target, userId, 'usr');
                 }}>
             <div class="image-form__field">
                 <label>Image:</label>
