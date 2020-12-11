@@ -70,18 +70,20 @@ class SiteMap extends React.Component {
   generateTagIndicators(activePlace) {
     if (activePlace.tags) {
       const tags = activePlace.tags.filter((tag) => {return tag.val !== 0});
+      console.log(tags);
       return tags.map((tag) => {return <TagIndicator
-                                          name={tag.name}
+                                          tag={tag.tag}
                                           val={tag.val}
                                         />
       });
     }
     return;
   }
-  
+
   generateMarkers() {
     if(this.props.locations === null){return null}
-    return this.props.locations.flatMap((loc) => {
+    return this.props.locations.flatMap((loc) => {        
+        const finalResult = loc.tags.map(tag => ( {"tag": tag.tag, "val": tag.val/loc.numRatings * 100} ))
         return <Marker key={loc._id}
                     id={loc._id}
                     name={loc.name}
@@ -94,7 +96,7 @@ class SiteMap extends React.Component {
                       lat: loc.lat,
                       lng: loc.lng
                     }}
-                    tags={loc.tags}
+                    tags={finalResult}
                     onClick={() => {
                       const path = this.props.history.location.pathname.split('/');
                       if (path[path.length - 1] === "" || path[path.length - 1] !== loc._id) {

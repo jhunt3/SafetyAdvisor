@@ -126,9 +126,7 @@ class LocationPage extends React.Component {
         return 0
     }}
     const cumulativeTags = (reviews) => {if (reviews.length > 0) {
-        console.log(reviews)
         reviews.map(review => (review.tags.map(indvtag => indvtag.val = (indvtag.val) ? 1 : 0)))
-        console.log(reviews)
         const tagList = reviews.reduce( (result, review) => {return result.concat(review.tags)}, [])
         const sumTagList = Object.entries(tagList.reduce((result, tag) => {
             if(!result[tag.tag]) {

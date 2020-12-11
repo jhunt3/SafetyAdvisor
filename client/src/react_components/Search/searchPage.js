@@ -6,10 +6,10 @@ import TagIndicator from '../TagIndicator';
 import "./styles.css";
 
 class SearchPage extends React.Component {
-    
+
   generateTagIndicators(tags) {
     return tags.map((tag) => {return <TagIndicator
-                                        name={tag.name}
+                                        name={tag.tag}
                                         val={tag.val}
                                         />
     });
@@ -19,7 +19,7 @@ class SearchPage extends React.Component {
       const path = this.props.history.location.pathname.split('/');
       const query = path[path.length - 1];
       const locData = this.props.locData.getLocationsWithQuery(query);
-      
+
       if (locData.length === 0) {
         return <h4>No results found.</h4>;
       }
@@ -28,9 +28,9 @@ class SearchPage extends React.Component {
             <div className="reviewInfoContainer">
 
                 <img className="searchLocImage" alt="searchLocationImage" src={location.imagePath}/>
-           
+
                 <div className="titleContainer">
-                    
+
                     <p className="resultTitle" onClick={() => {
                     this.props.history.push(`/loc/${location._id}`);
                     }}>{location.name}</p>
@@ -47,7 +47,7 @@ class SearchPage extends React.Component {
                 {this.generateTagIndicators(location.tags.filter((tag) =>
                     {return tag.val !== 0}))}
             </div>
-	  	   
+
         </div>
 
     )));
@@ -61,6 +61,6 @@ class SearchPage extends React.Component {
             {this.generateSearchResults()}
         </div>
     )
-  }   
+  }
 }
 export default withRouter(SearchPage);

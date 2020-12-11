@@ -21,11 +21,13 @@ class ReviewPage extends React.Component {
       rating: 1,
       locImagePath: '/static/placeholder.jpg',
       usrImagePath: "/static/profile.png",
+      locReviews: [],
       review: ""
     };
 
     checkSession(this);
     this.updateLocationImage(this);
+    this.updateReviews(this);
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeTags = this.handleChangeTags.bind(this);
@@ -75,6 +77,26 @@ class ReviewPage extends React.Component {
         });
   }
 
+  updateReviews(target) {
+      // get numRatings and avgRating
+      fetch(`/api/loc/${this.locId}/reviewData`)
+          .then(res => {
+              if (res.status === 200) {
+                  // return a promise that resolves with the JSON body
+                  return res.json();
+              } else {
+                  alert("Could not get reviews");
+              }
+          })
+          .then((json) => {
+              // the resolved promise with the JSON body
+              target.setState({ locReviews: json });
+          })
+          .catch(error => {
+              console.log(error);
+          });
+
+  }
   handleChangeTags() {
     console.log(this.state.tags.map((tag) => {
       if (document.getElementById(`buttonTagIndicator${tag.tag}`).checked) {
@@ -87,7 +109,7 @@ class ReviewPage extends React.Component {
     }));
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
     if (this.state.currentUser === "") {
       alert("You must login to submit a review.");
@@ -119,7 +141,7 @@ class ReviewPage extends React.Component {
       }
     });
     // Send the request with fetch()
-    fetch(request)
+    await fetch(request)
         .then((res) => {
             if (res.status === 200) {
                 return res.json();
@@ -135,8 +157,69 @@ class ReviewPage extends React.Component {
             alert("Review submission failed.");
             console.log(error);
         });
+
+    const averageRating = (reviews) => {if (reviews.length > 0) {
+        return reviews.reduce((total, review) => total + review.rating, 0) / reviews.length
+    } else {
+            return 0
+    }}
+
+    const cumulativeTags = (reviews) => {if (reviews.length > 0) {
+        reviews.map(review => (review.tags.map(indvtag => indvtag.val = (indvtag.val) ? 1 : 0)))
+        const tagList = reviews.reduce( (result, review) => {return result.concat(review.tags)}, [])
+        const sumTagList = Object.entries(tagList.reduce((result, tag) => {
+            if(!result[tag.tag]) {
+                result[tag.tag] = tag.val;
+            } else {
+                result[tag.tag] += tag.val;
+            }
+            return result}, {}))
+        const finalResult = sumTagList.map(tag => ( {"tag": tag[0], "val": tag[1]}))
+        return finalResult
+    }}
+
+    console.log(this.state.locReviews);
+    console.log(averageRating(this.state.locReviews));
+    console.log(cumulativeTags(this.state.locReviews));
+
+    const updatedState = this.state.locReviews.concat(reqObj)
+    console.log(reqObj)
+    const patchObj = {
+        "avgRating": averageRating(updatedState),
+        "numRatings": updatedState.length,
+        "tags": cumulativeTags(updatedState)};
+
+    console.log("check the patch");
+    console.log(patchObj);
+
+    const patchReq = new Request(`/api/loc/${this.locId}`, {
+      method: "PATCH",
+      body: JSON.stringify(patchObj),
+      headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json"
+      }
+    });
+
+    // Send the request with fetch()
+    await fetch(patchReq)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .catch((error) => {
+            alert("Review submission failed.");
+            console.log(error);
+        });
+
+
     return;
+
+
   }
+
+
 
   generateButtonTagIndicators(tags) {
     return tags.map((tag) => {return <ButtonTagIndicator

@@ -81,6 +81,8 @@ export class LocationData {
 
     getGeoLoc(id) {
         const target = this.getLoc(id);
+        console.log("hi");
+        console.log(target);
         return {
             name: target.name,
             _id: id,
@@ -88,7 +90,8 @@ export class LocationData {
             lat: target.lat,
             lng: target.lng,
             tags: target.tags,
-	           show: target.show
+	        show: target.show,
+            numRatings: target.numRatings,
         };
     }
 

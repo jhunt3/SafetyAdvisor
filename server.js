@@ -330,7 +330,7 @@ app.post("/api/loc/:id/addReview", mongoChecker, async (req, res) => {
 
 app.patch('/api/loc/:id', mongoChecker, async (req, res) => {
 	try {
-        const updatedLocation = await Location.update({_id: req.params.id},
+        const updatedLocation = await Location.updateMany({_id: req.params.id},
             { $set: {avgRating: req.body.avgRating, numRatings: req.body.numRatings, tags: req.body.tags}}
         );
 		if (!updatedLocation) {
