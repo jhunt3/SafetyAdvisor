@@ -210,6 +210,40 @@ app.get("/api/locationData", mongoChecker, async (req, res) => {
 
 })
 
+// A route get all location data
+app.get("/api/loc/:id", mongoChecker, async (req, res) => {
+    const id = req.params.id
+
+    // validate id immediately
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send('Invalid ID')  // if invalid, definitely can't find resource, so return 404
+		return;  // don't run the rest of the handler
+	}
+
+    // check mongoose connection established.
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return;
+	}
+
+	// if id is valid, get restaurant by id
+	try {
+		const location = await Location.findById(id)
+		if (!location) {
+			res.status(404).send('Resource not found')  // could not find the restaurant
+		} else {
+            console.log(location)
+			res.send(location)
+		}
+	} catch(error) {
+		log(error)
+		res.status(500).send('Internal server error')
+	}
+
+
+})
+
 // A route to create a location
 app.post('/api/locations', mongoChecker, async (req, res) => {
     log(req.body)
@@ -258,12 +292,12 @@ app.post("/api/loc/:id/addReview", mongoChecker, async (req, res) => {
 
     // Create a new location
     const review = new Review({
-      username: req.body.currentUser,
+        username: req.body.currentUser,
     	locId: req.params.id,
     	rating: req.body.rating,
-      locImagePath: req.body.locImagePath,
-      usrImagePath: req.body.usrImagePath,
-      tags: req.body.tags,
+        locImagePath: req.body.locImagePath,
+        usrImagePath: req.body.usrImagePath,
+        tags: req.body.tags,
     	review: req.body.review
     })
 
