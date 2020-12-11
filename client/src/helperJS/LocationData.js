@@ -75,19 +75,6 @@ export class LocationData {
             });
     };
 
-    updateTagVal(id, tagName, newVal) {
-        const ind = this.getLoc(id).tags.findIndex((val) => {return val.name === tagName});
-        if (ind !== -1) {
-            this.getLoc(id).tags[ind].val = newVal;
-        }
-    }
-
-    updateTags(id, tagValMaps) {
-        for (let map of tagValMaps) {
-            this.updateTagVal(id, map.name, map.val);
-        }
-    }
-
     getTags(id) {
         this.getLoc(id).tags.filter((tag) => {return tag.val !== 0});
     }
@@ -163,6 +150,7 @@ export const showDeleteLocButton = (app, isAdmin, locId) => {
                           if (json.ok) {
                             alert("Location deleted.");
                             app.props.history.push(`/`);
+                            window.location.reload(false);
                           }
                       })
                       .catch((error) => {

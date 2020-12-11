@@ -37,7 +37,6 @@ export class App extends React.Component {
     this.toggleMapClass = this.toggleMapClass.bind(this);
     this.setNewLoc = this.setNewLoc.bind(this);
     this.addLocation = this.addLocation.bind(this);
-
   }
 
   toggleMapClass() {
@@ -115,8 +114,6 @@ export class App extends React.Component {
   }
   showMarker(query){
     let LD = this.state.locData
-    console.log("QUERY")
-    console.log(query)
     if (query == null){
       for (let i in LD.locations) {
 	    LD.locations[i].show = 32;
@@ -137,9 +134,7 @@ export class App extends React.Component {
  }
  addLocation(name, type){
   if (this.state.currentUser && this.state.isAdmin) {
-    console.log("Add location data");
     this.setState({sidePage: null});
-    console.log(name, type, this.state.lat, this.state.lng)
     this.state.locData.addLocation(name, type, this.state.lat, this.state.lng)
   }
   else {
@@ -163,8 +158,6 @@ export class App extends React.Component {
     if (this.state.locData !== null) {
        map_locations = this.state.locData.getGeoLocData();
     }
-    console.log("APP RENDER")
-    console.log(this.state.isAdmin)
 
     const path = this.props.history.location.pathname.split('/');
     return (

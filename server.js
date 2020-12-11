@@ -230,13 +230,12 @@ app.get("/api/loc/:id", mongoChecker, async (req, res) => {
 		return;
 	}
 
-	// if id is valid, get restaurant by id
+	// if id is valid, location by id
 	try {
 		const location = await Location.findById(id)
 		if (!location) {
-			res.status(404).send('Resource not found')  // could not find the restaurant
+			res.status(404).send('Resource not found')  // could not find the location
 		} else {
-            console.log(location)
 			res.send(location)
 		}
 	} catch(error) {
@@ -314,8 +313,6 @@ app.post("/api/loc/:id/addReview", mongoChecker, async (req, res) => {
         tags: req.body.tags,
     	review: req.body.review
     })
-
-    console.log(review);
 
     try {
         const newReview = await review.save()

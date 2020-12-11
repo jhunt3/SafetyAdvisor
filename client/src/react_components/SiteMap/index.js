@@ -102,7 +102,7 @@ class SiteMap extends React.Component {
                       } else {
                         this.props.history.push(`/`);
                       }
-                      
+
                       this.onMarkerMouseout();
                     }}
                     onMouseover={this.onMarkerMouseover}
@@ -111,10 +111,8 @@ class SiteMap extends React.Component {
     });
   }
   addMarker(){
-    console.log('AddMarker')
-    console.log(this.props.sidePage)
     if(this.props.isAdmin && (this.props.sidePage === 'addLocation')){
-      return <Marker 
+      return <Marker
       name={'New Location'}
       icon={{
         url: `/static/markers/markerNew.png`,
@@ -125,7 +123,7 @@ class SiteMap extends React.Component {
       draggable={true}
 	  />
 
-	
+
     }else{return null}
   }
 
@@ -134,7 +132,6 @@ class SiteMap extends React.Component {
 	const { latLng } = coord;
 	const lat = latLng.lat();
 	const lng = latLng.lng();
-	console.log(lat,lng)
 	this.setState({lat: lat, lng: lng})
 	this.props.setNewLoc(lat, lng)
 	}
@@ -149,7 +146,7 @@ class SiteMap extends React.Component {
           initialCenter={{ lat: 43.663, lng: -79.392}}
           styles={hideStyle}>
           {this.generateMarkers()}
-	    {this.addMarker()}		
+	    {this.addMarker()}
 	    <InfoWindow marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
                     style={infoWindowStyle}>

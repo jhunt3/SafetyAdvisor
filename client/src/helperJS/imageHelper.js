@@ -11,7 +11,6 @@ export const addImage = (app, form, referenceId, usrOrLoc) => {
         method: "post",
         body: data
     });
-    console.log(request)
     fetch(request)
         .then(function (res) {
             if (res.status === 200) {
