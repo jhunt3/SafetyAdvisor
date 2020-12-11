@@ -108,6 +108,14 @@ class LocationPage extends React.Component {
     }
     return;
   }
+
+  formatName(string) {
+    if (string.length > 15) {
+      return string.slice(0, 14) + '...';
+    }
+    return string;
+  }
+
   render() {
     const path = this.props.history.location.pathname.split('/')
     const locId = path[path.length - 1];
@@ -144,13 +152,9 @@ class LocationPage extends React.Component {
         {this.state.reviews.map(review => (
             <div className="review">
                 <div className="reviewDataContainer">
-                  <div className="profileIconContainer">
+                  <div className="profileIconContainer" title={`Go to ${review.username}'s page`} onClick={() => {
+                        this.props.history.push(`/usr/${review.username}`);}}>
                     <img className="profileIcon" alt="profileIcon" src={review.usrImagePath}/>
-                  </div>
-                  <div className="usernameContainer"  title={`Go to ${review.username}'s page`} onClick={() => {
-                        this.props.history.push(`/usr/${review.username}`);
-                      }}>
-                      <span className="username">{review.username}</span>
                   </div>
                   <div className="reviewRatingContainer">
                       <StarRatings rating={review.rating}
@@ -163,6 +167,9 @@ class LocationPage extends React.Component {
                 </div>
                 <div className="reviewContainer">
                     {review.review}
+                    <div className="username" title={`Go to ${review.username}'s page`} onClick={() => {
+                        this.props.history.push(`/usr/${review.username}`);
+                    }}>{`By: ${this.formatName(review.username)}`}</div>
                 </div>
             </div>
         ))}

@@ -104,6 +104,13 @@ class UserPage extends React.Component {
     return <img className="profilePic" alt="profilePic" src={this.state.profileImageUrl}/>;
   }
 
+  formatName(string) {
+    if (string.length > 15) {
+      return string.slice(0, 14) + '...';
+    }
+    return string;
+  }
+
   render() {
     console.log("USERPAGE ADMIN")
     console.log(this.state.isAdmin)
@@ -127,13 +134,9 @@ class UserPage extends React.Component {
             {this.state.reviews.map(review => (
                 <div className="review">
                   <div className="reviewDataContainer">
-                    <div className="profileIconContainer">
-                        <img className="profileIcon" alt="profileIcon" src={review.locImagePath}/>
-                    </div>
-                    <div className="usernameContainer" title={`Go to ${this.props.locData.getLoc(review.locId).name}'s page`} onClick={() => {
-                        this.props.history.push(`/loc/${review.locId}`);
-                      }}>
-                      <span className="username">{this.props.locData.getLoc(review.locId).name}</span>
+                    <div className="profileIconContainer" title={`Go to ${this.props.locData.getLoc(review.locId).name}'s page`} onClick={() => {
+                        this.props.history.push(`/loc/${review.locId}`);}}>
+                        <img className="profileIcon" alt="profileIcon" src={review.locImagePath} />
                     </div>
                     <div className="reviewRatingContainer">
                         <StarRatings rating={review.rating}
@@ -146,6 +149,9 @@ class UserPage extends React.Component {
                     </div>
                     <div className="reviewContainer">
                         {review.review}
+                        <div className="username" title={`Go to ${this.props.locData.getLoc(review.locId).name}'s page`} onClick={() => {
+                            this.props.history.push(`/loc/${review.locId}`);
+                        }}>{`Location Reviewed: ${this.formatName(this.props.locData.getLoc(review.locId).name)}`}</div>
                     </div>
                 </div>
             ))}
