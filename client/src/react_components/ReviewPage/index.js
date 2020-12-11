@@ -239,7 +239,7 @@ class ReviewPage extends React.Component {
     return (
       <div className="body">
         <img className="locImage" alt="locationImage" src={this.state.locImagePath}/>
-        <button className="backButton" onClick={this.props.history.goBack}>Back</button>
+        <button className="backButton purpleButton" onClick={this.props.history.goBack}>Back</button>
         <div className="infoContainer">
           <div className="titleContainer">
             <h1 id="nameHeader">{this.props.locData.getLoc(this.locId).name}</h1>

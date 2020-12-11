@@ -57,7 +57,7 @@ class SearchPage extends React.Component {
     return(
         <div className="searchResultsContainer">
             <h2 id="resultsHeader">Results</h2>
-            <button className="backButton" onClick={this.props.history.goBack}>Back</button>
+            <button className="backButton purpleButton" onClick={this.props.history.goBack}>Back</button>
             {this.generateSearchResults()}
         </div>
     )

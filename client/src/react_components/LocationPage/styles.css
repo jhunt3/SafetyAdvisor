@@ -81,10 +81,7 @@
 }
 
 .deleteLocButton {
-  position: absolute;
-  height: 3vh;
-  left: 1vw;
-  top: 1vh;
+  height: 2vh;
 }
 
 .deleteLocButton:hover {
