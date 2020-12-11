@@ -55,7 +55,7 @@ export class App extends React.Component {
     if (this.state.currentUser !== null) {
       return (
       <Link to={`/usr/${this.state.currentUser}`}>
-        <div id="userPageButton" className="purpleButton">
+        <div id="userPageButton" onClick={() =>{this.setState({sidePage: null, lat:null, lng:null});}} className="purpleButton">
           {`${this.state.currentUser}'s Page`}
         </div>
       </Link>
@@ -95,7 +95,7 @@ export class App extends React.Component {
   }
   return (
     <Link to={"/search"}>
-      <button className = "searchButton purpleButton">Search</button>
+      <button className = "searchButton purpleButton" onClick={() =>{this.setState({sidePage: null, lat:null, lng:null});}}>Search</button>
     </Link>
   );
   }
@@ -109,7 +109,7 @@ export class App extends React.Component {
       );
     }
     return (
-      <div id="loginButtonMain" className="purpleButton" onClick={() => {logout(this)}}>Logout</div>
+      <div id="loginButtonMain" className="purpleButton" onClick={() => {logout(this);this.setState({sidePage: null, lat:null, lng:null});}}>Logout</div>
     );
   }
   showMarker(query){
