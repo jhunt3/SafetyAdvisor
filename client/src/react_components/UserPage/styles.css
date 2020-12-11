@@ -67,17 +67,15 @@ h3{
 .username {
   padding-top: 1vh;
   text-align: right;
-  text-weight: bold;
+  font-weight: bold;
 }
 .username:hover {
   cursor: pointer;
 }
 
 .reviewRatingContainer {
-  top: 20%;
   display:flex;
   float: right;
-  width: 35%;
   height: 3vw;
   padding-top: 2vw;
 }
@@ -94,6 +92,7 @@ h3{
   font-size: 1vw;
   margin-top: 2vh;
   margin-bottom: 2vh;
+  overflow-x: hidden;
   width:90%;
   padding-left: 5%;
   padding-right: 5%;

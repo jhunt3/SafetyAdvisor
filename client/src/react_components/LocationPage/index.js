@@ -142,7 +142,7 @@ class LocationPage extends React.Component {
                         starEmptyColor="darkgrey"
                         starDimension='1.5vw'
                         starSpacing='0.1vw'/>
-            <h3 id="noRatings">({this.state.reviews.length} Ratings)</h3>
+            <h3 id="noRatings">{`(${this.state.reviews.length} Rating${(this.state.reviews.length !== 1) ? 's' : ''})`}</h3>
           </div>
           {this.generateTagIndicators(this.props.locData.getLoc(locId).tags.filter((tag) =>
               {return tag.val !== 0}))}

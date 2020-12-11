@@ -126,7 +126,7 @@ class UserPage extends React.Component {
             <div className="userTitleContainer">
               <h1>{userId}</h1>
               {this.renderChangePictureButton(userId)}
-              <h3>{this.state.reviews.length} Reviews</h3>
+              <h3>{`${this.state.reviews.length} Rating${(this.state.reviews.length !== 1) ? 's' : ''}`}</h3>
             </div>
         </div>
         <div className="reviewsContainer">
@@ -151,7 +151,8 @@ class UserPage extends React.Component {
                         {review.review}
                         <div className="username" title={`Go to ${this.props.locData.getLoc(review.locId).name}'s page`} onClick={() => {
                             this.props.history.push(`/loc/${review.locId}`);
-                        }}>{`Location Reviewed: ${this.formatName(this.props.locData.getLoc(review.locId).name)}`}</div>
+                        }}>
+                        {`Location Reviewed: ${this.formatName(this.props.locData.getLoc(review.locId).name)}`}</div>
                     </div>
                 </div>
             ))}
