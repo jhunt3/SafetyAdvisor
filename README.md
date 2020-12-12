@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-To run our application, please execute the following commands in terminal:
+To run our application using the source code, please execute the following commands in terminal:
 
     git clone https://github.com/csc309-fall-2020/team28.git
     cd team28
@@ -12,6 +12,8 @@ To run our application, please execute the following commands in terminal:
     npm run build
     cd ..
     npm start
+
+Alternatively, visit our app online at https://safetyadvisor.herokuapp.com/.
 
 ## User Features
 
@@ -46,6 +48,46 @@ When logged in, administrators can:
 - delete the past reviews of any user on the site
 - delete any user (except for "admin") by clicking the trashcan on the bottom left handside of each user page
 - logout (by clicking "Logout" on the upper right handside)
+
+## API Routes
+
+POST /api/users
+- used for signing users up for an account
+- expects object {"user": "example", "pass": "1234"}
+- returns object
+{    
+    "currentUser": "example"
+}
+
+DELETE /api/deleteUser/:id
+
+GET /api/locationData
+
+GET /api/loc/:id
+
+POST /api/locations
+
+DELETE /api/deleteLocation/:id
+
+GET /api/loc/:id/reviewData
+
+POST /api/loc/:id/addReview
+
+PATCH /api/loc/:id
+
+DELETE /api/deleteReview/:id
+
+DELETE /api/delete/AllReviews/:id
+
+DELETE /api/deleteLocReviews/:id
+
+GET /api/usr/:id/reviewData
+
+POST /images
+
+GET /images/:refId
+
+PATCH /api/reviews/:type/:id
 
 ## Third Party Packages Used
 
