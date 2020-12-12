@@ -53,11 +53,8 @@ When logged in, administrators can:
 
 POST /api/users
 - used for signing users up for an account
-- expects object {"user": "example", "pass": "1234"}
-- returns object
-{    
-    "currentUser": "example"
-}
+- expects object: {"user": "example", "pass": "1234"}
+- returns object: {"currentUser": "example"}
 
 DELETE /api/deleteUser/:id
 
