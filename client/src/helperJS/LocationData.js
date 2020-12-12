@@ -21,8 +21,6 @@ export const getLocations = (app) => {
 		locData.locations[i].show = 32;
 
 	    }
-	    console.log("Set state")
-	    console.log(locData)
             app.setState({ locData: locData });
         })
         .catch(error => {
@@ -81,8 +79,6 @@ export class LocationData {
 
     getGeoLoc(id) {
         const target = this.getLoc(id);
-        console.log("hi");
-        console.log(target);
         return {
             name: target.name,
             _id: id,

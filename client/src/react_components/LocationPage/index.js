@@ -42,7 +42,9 @@ class LocationPage extends React.Component {
         })
         .then((json) => {
           // the resolved promise with the JSON body
-          target.setState({ profileImageUrl: json.image.image_url });
+          if (json.image) {
+            target.setState({ profileImagePath: json.image.image_url });
+          }
         })
         .catch(error => {
             console.log(error);
@@ -140,14 +142,13 @@ class LocationPage extends React.Component {
     } else {
         return [{"tag": "placeholder", "val": 0}]
     }};
-    console.log(this.state.reviews);
 
     return (
       <div className="body">
         <div id="addReviewButton" className="purpleButton" onClick={() => {this.props.history.push(`/loc/${locId}/addReview`)}}>+ Review</div>
         <img className="locImage" alt="locationImage" src={this.state.profileImageUrl}/>
 	<button className="backButton purpleButton" onClick={this.props.history.goBack}>Back</button>
-	
+
         {this.renderChangePictureButton(locId)}
         {this.renderForm()}
         <div className="infoContainer">
@@ -162,7 +163,6 @@ class LocationPage extends React.Component {
                         starSpacing='0.1vw'/>
             <h3 id="noRatings">{`(${this.state.reviews.length} Rating${(this.state.reviews.length !== 1) ? 's' : ''})`}</h3>
           </div>
-          {console.log(cumulativeTags(this.state.reviews))}
           {this.generateTagIndicators(cumulativeTags(this.state.reviews).filter((tag) =>
           {return tag.val !== 0}))}
         </div>

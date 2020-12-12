@@ -41,7 +41,9 @@ class UserPage extends React.Component {
         })
         .then((json) => {
           // the resolved promise with the JSON body
-          target.setState({ profileImageUrl: json.image.image_url });
+          if (json.image) {
+            target.setState({ profileImageUrl: json.image.image_url });
+          }
         })
         .catch(error => {
             console.log(error);

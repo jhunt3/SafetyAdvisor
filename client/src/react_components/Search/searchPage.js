@@ -6,6 +6,22 @@ import TagIndicator from '../TagIndicator';
 import "./styles.css";
 
 class SearchPage extends React.Component {
+  constructor(props) {
+      super(props);
+      const path = this.props.history.location.pathname.split('/');
+      const query = path[path.length - 1];
+      this.locData = this.props.locData.getLocationsWithQuery(query);
+      this.state = {};
+    }
+
+    componentDidMount() {
+      this.locData.forEach((val) => {
+          const returnObj = {}
+          returnObj[val._id] = "/static/placeholder.jpg";
+          this.setState(returnObj);
+          this.updateLocImage(this, val._id);
+      });
+    }
 
   generateTagIndicators(tags, numRatings) {
     return tags.map((tag) => {return <TagIndicator
@@ -15,19 +31,40 @@ class SearchPage extends React.Component {
     });
   }
 
-  generateSearchResults() {
-      const path = this.props.history.location.pathname.split('/');
-      const query = path[path.length - 1];
-      const locData = this.props.locData.getLocationsWithQuery(query);
+  updateLocImage(target, locId) {
+    const url = `/images/${locId}`;
 
-      if (locData.length === 0) {
+    // Since this is a GET request, simply call fetch on the URL
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            } else {
+                alert("Could not get image");
+            }
+        })
+        .then((json) => {
+          // the resolved promise with the JSON body
+          if (json.image) {
+            const returnObj = {};
+            returnObj[locId] = json.image.image_url;
+            target.setState(returnObj);
+          }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+  }
+
+  generateSearchResults() {
+      if (this.locData.length === 0) {
         return <h4>No results found.</h4>;
       }
-      return (locData.map(location => (
+      return (this.locData.map(location => (
         <div className="review">
             <div className="reviewInfoContainer">
 
-                <img className="searchLocImage" alt="searchLocationImage" src={location.imagePath}/>
+                <img className="searchLocImage" alt="searchLocationImage" src={this.state[location._id]}/>
 
                 <div className="titleContainer">
 
@@ -55,11 +92,13 @@ class SearchPage extends React.Component {
 
   render() {
     return(
+      <div className="body">
         <div className="searchResultsContainer">
             <h2 id="resultsHeader">Results</h2>
             <button className="backButton purpleButton" onClick={this.props.history.goBack}>Back</button>
             {this.generateSearchResults()}
         </div>
+      </div>
     )
   }
 }
