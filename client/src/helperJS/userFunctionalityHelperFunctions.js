@@ -167,7 +167,7 @@ export const showAdminButton = (app, isAdmin, currentUser, username) => {
               alert(`Could not make ${username} an administrator.\n Reason: Error.`);
               console.log(error);
           });
-    }} title="Delete User"/>);
+    }} title="Make this user an administrator"/>);
   }
   return;
 };

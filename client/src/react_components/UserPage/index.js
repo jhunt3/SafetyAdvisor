@@ -120,13 +120,13 @@ class UserPage extends React.Component {
     const userId = path[path.length - 1];
     return (
       <div className="body">
-        <button className="backButton" onClick={this.props.history.goBack}>Back</button>
-        {showAdminButton(this.props.app, this.state.isAdmin, this.state.currentUser, userId)}
-        {showDeleteUserButton(this.props.app, this.state.isAdmin, userId)}
+        <button className="backButton purpleButton" onClick={this.props.history.goBack}>Back</button>
+
         <div className="userInfoContainer">
         {this.renderForm()}
             <div className="userTitleContainer">
-              <h1>{userId}</h1>
+              <h1>{userId}         {showAdminButton(this.props.app, this.state.isAdmin, this.state.currentUser, userId)}
+        {showDeleteUserButton(this.props.app, this.state.isAdmin, userId)}</h1>
               {this.renderChangePictureButton(userId)}
               <h3>{`${this.state.reviews.length} Rating${(this.state.reviews.length !== 1) ? 's' : ''}`}</h3>
             </div>
