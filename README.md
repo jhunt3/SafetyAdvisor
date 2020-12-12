@@ -79,7 +79,7 @@ GET /api/locationData
     "avgRating":2,
     "numRatings":3,
     "tags":[
-        {"_id":"5fd3d12ee5b3efc774333045","tag":"Mask","val":1},
+        {"_id":"5fd3d12ee5b3efc774333045","tag":"Mask","val":1}
         {"_id":"5fd3d12fe5b3efc774333046","tag":"Gloves","val":1}
     ],
     "imagePath":"/static/venue_0.jpg",
