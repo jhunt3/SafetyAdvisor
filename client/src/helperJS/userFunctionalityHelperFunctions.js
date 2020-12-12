@@ -19,8 +19,9 @@ export const showDeleteButton = (app, isAdmin, currentUser, username, locId ,rev
             .then((json) => {
               if (json.ok) {
                 alert("Review deleted.");
+                const path = app.props.history.location.pathname;
                 app.props.history.push(`/`);
-                app.props.history.push(`/loc/${locId}`);
+                app.props.history.push(path);
               }
             })
             .catch((error) => {
@@ -113,7 +114,7 @@ const toggleAdmin = (app, makeAdmin, currentUser, username) => {
           app.props.history.push(`/`);
           app.props.history.push(`/usr/${username}`);
           return;
-        } 
+        }
         if (currentUser === username) {
           alert(`You are no longer an administrator. You will be logged out for changes to take affect.`);
           const url = "/users/logout";
