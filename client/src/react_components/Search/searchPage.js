@@ -7,10 +7,10 @@ import "./styles.css";
 
 class SearchPage extends React.Component {
 
-  generateTagIndicators(tags) {
+  generateTagIndicators(tags, numRatings) {
     return tags.map((tag) => {return <TagIndicator
-                                        name={tag.tag}
-                                        val={tag.val}
+                                        tag={tag.tag}
+                                        val={tag.val/numRatings * 100}
                                         />
     });
   }
@@ -45,7 +45,7 @@ class SearchPage extends React.Component {
                     <h3 className="resultSubtitle">({location.numRatings} Ratings)</h3>
                 </div>
                 {this.generateTagIndicators(location.tags.filter((tag) =>
-                    {return tag.val !== 0}))}
+                    {return tag.val !== 0}), location.numRatings)}
             </div>
 
         </div>
