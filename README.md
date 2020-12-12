@@ -55,9 +55,12 @@ POST /api/users
 - used for signing users up for an account
 - expects object {"user": "example", "pass": "1234"}
 - returns object
+```javascript
 {    
     "currentUser": "example"
 }
+```
+
 
 DELETE /api/deleteUser/:id
 - used for deleting the user with the given username
