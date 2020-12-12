@@ -19,21 +19,25 @@ Alternatively, visit our app online at https://safetyadvisor.herokuapp.com/.
 
 When first launching the app, users can:
 
-- search by venue name by clicking "Search" on the upper right handside
 - understand the average rating of venues that have been reviewed from the color of each marker
 - see a summary of the amenities offered at each venue by hovering over each marker
 - click on venue markers to see all reviews for that location
 - click on usernames to see all reviews for that user
+- search by venue name by clicking "Search" on the upper right handside (the markers corresponding to search results are displayed larger than the other marker on the map)
+- sign up for an account by choosing a username and password
 
 Login by clicking "Register/Login" on the upper right handside, "Login", and enter the following credentials:
 
     Username: user
     Password: user
 
+(or login with account credentials of your own choosing)
+
 When logged in, users can:
 
+- submit new reviews (click "+Review" on venue page)
 - delete their past reviews (on the venue page or on their own user page)
-- submit new reviews (click "+Review" on venue pages)
+- change their profile picture (by navigating to their page and clicking "Change Photo")
 - logout (by clicking "Logout" on the upper right handside)
 
 ## Administrator Features
@@ -45,15 +49,27 @@ Login by clicking "Register/Login" on the upper right handside, "Login", and ent
 
 When logged in, administrators can:
 
+- give normal users admin status (click the crown above the reviews on the user's page)
+- take away admin status (click the crown again)
+- submit new reviews (click "+Review" on venue page)
+- add new locations (click "Add Location" on the bottom right, fill in the venue information, and click a point on the map to provide the location's coordinates)
+- change the profile picture for any user
+- change the picture for any location
+
 - delete the past reviews of any user on the site
-- delete any user (except for "admin") by clicking the trashcan on the bottom left handside of each user page
-- logout (by clicking "Logout" on the upper right handside)
+- delete any user (except for "admin") by navigating to their page and clicking the trashcan under the crown
+- delete any location by clicking the trashcan next to the location name
+
+- logout (by clicking "Logout" on the upper right)
 
 ## API Routes
 
 POST /api/users
 - used for signing users up for an account
-- expects object {"user": "example", "pass": "1234"}
+- expects object
+```javascript
+{"user": "example", "pass": "1234"}
+```
 - returns object
 ```javascript
 {    
