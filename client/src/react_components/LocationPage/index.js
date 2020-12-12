@@ -43,7 +43,7 @@ class LocationPage extends React.Component {
         .then((json) => {
           // the resolved promise with the JSON body
           if (json.image) {
-            target.setState({ profileImagePath: json.image.image_url });
+            target.setState({ profileImageUrl: json.image.image_url });
           }
         })
         .catch(error => {
