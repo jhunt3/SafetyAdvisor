@@ -53,26 +53,75 @@ When logged in, administrators can:
 
 POST /api/users
 - used for signing users up for an account
-- expects object: {"user": "example", "pass": "1234"}
-- returns object: {"currentUser": "example"}
+- expects object {"user": "example", "pass": "1234"}
+- returns object
+{    
+    "currentUser": "example"
+}
 
 DELETE /api/deleteUser/:id
 - used for deleting the user with the given username
 - returns default DELETE response
 
 GET /api/locationData
+- gets all data required by the app for each location
+- no request parameters
+- returns list of objects each with a location's data, e.g.
+[
+{    "_id":"5fc96a89f64848aba8edb448",
+    "name":"Sidney Smith",
+    "venueType":"Lecture Hall",
+    "lat":43.663098,
+    "lng":-79.398568,
+    "avgRating":2,
+    "numRatings":3,
+    "tags":[
+        {"_id":"5fd3d12ee5b3efc774333045","tag":"Mask","val":1},
+        {"_id":"5fd3d12fe5b3efc774333046","tag":"Gloves","val":1}
+    ],
+    "imagePath":"/static/venue_0.jpg",
+    "__v":0
+},...
+]
 
 GET /api/loc/:id
+- finds location object by unique ID
+- expects object {"id": "example"}
+- returns location object as shown above
 
 POST /api/locations
+- posts a new location to the locations collections
+- expects object {
+                    "name": "example-name",
+                    "venueType": "example-venueType",
+                    "lat": example-lat,
+                    "lng": example-lng,
+                    "avgRating": example-avgRating,
+                    "numRatings": example-numRatings,
+                    "tags": "example-tags",
+                    "imagePath": "example-imagePath"
+                 }
+- returns save object                 
 
 DELETE /api/deleteLocation/:id
 - used for deleting a location by id
 - returns default DELETE response
 
 GET /api/loc/:id/reviewData
+- gets the review data of a location identified by ID
+- expects object {"id": "example-location-id"}
 
 POST /api/loc/:id/addReview
+- posts review to a specified location by ID
+- expects object {
+                    "username": "example-username",
+                    "locId": "example-locId",
+                    "rating": example-rating,
+                    "locImagePath": "example-locImagePath",
+                    "usrImagePath": "example-usrImagePath",
+                    "tags": "example-tags",
+                    "review": "example-review"
+                 }
 
 PATCH /api/loc/:id
 - used for updating average review
