@@ -57,6 +57,8 @@ POST /api/users
 - returns object: {"currentUser": "example"}
 
 DELETE /api/deleteUser/:id
+- used for deleting the user with the given username
+- returns default DELETE response
 
 GET /api/locationData
 
@@ -65,26 +67,49 @@ GET /api/loc/:id
 POST /api/locations
 
 DELETE /api/deleteLocation/:id
+- used for deleting a location by id
+- returns default DELETE response
 
 GET /api/loc/:id/reviewData
 
 POST /api/loc/:id/addReview
 
 PATCH /api/loc/:id
+- used for updating average review
+- expects object: {"avgRating": 1, "numRatings": 0,
+"tags": [{"tag": "Curbside Pickup", "val": 1}, {"tag": "Hand Sanitizer", "val": 1}, {"tag": "Masks", "val": 1}, {"tag": "Gloves", "val": 1}, {"tag": "Checks Temperature", "val": 1}, {"tag": "Patio", "val": 1}]}
+- note: it's important to pass the counts of 6 default tags
+- returns default PATCH response
 
 DELETE /api/deleteReview/:id
+- used for deleting the review with the given id
+- returns default DELETE response
 
-DELETE /api/delete/AllReviews/:id
+DELETE /api/deleteAllReviews/:id
+- used for deleting all reviews for the user with the given id
+- returns default DELETE response
 
 DELETE /api/deleteLocReviews/:id
+- used for deleting all reviews associated with a specific location with the given id
+- returns default DELETE response
 
 GET /api/usr/:id/reviewData
-
-POST /images
+- used for retrieving all user reviews given username in url (e.g., GET /api/usr/user/reviewData)
+- returns array of Reviews
 
 GET /images/:refId
+- used for returning cloudinary image path given reference_id
+- returns object: {
+    "image": {
+        "_id": "5fd400268b1cb1b7c1911c0e",
+        "reference_id": "5fd3f344c54d2e486d7a35c4",
+        "__v": 0,
+        "created_at": "Fri Dec 11 2020 18:26:31 GMT-0500 (Eastern Standard Time)",
+        "image_id": "p1mipkdcuyreezj3xfy3",
+        "image_url": "http://res.cloudinary.com/csc309team28/image/upload/v1607729190/p1mipkdcuyreezj3xfy3.jpg"
+    }
+}
 
-PATCH /api/reviews/:type/:id
 
 ## Third Party Packages Used
 
